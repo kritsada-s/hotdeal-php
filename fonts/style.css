@@ -1,0 +1,98 @@
+@font-face {
+  font-family: 'DBHeavent';
+  src: url('DBHeavent-Thin.woff') format('woff'),
+       url('DBHeavent-Thin.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DBHeavent';
+  src: url('DBHeavent-Thin-It.woff') format('woff'),
+       url('DBHeavent-Thin-It.woff2') format('woff2');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DBHeavent';
+  src: url('DBHeavent-Light.woff') format('woff'),
+       url('DBHeavent-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DBHeavent';
+  src: url('DBHeavent-Light-It.woff') format('woff'),
+       url('DBHeavent-Light-It.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DBHeavent';
+  src: url('DBHeavent.woff2') format('woff2'),
+       url('DBHeavent.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DBHeavent';
+  src: url('DBHeavent-Med.woff') format('woff'),
+       url('DBHeavent-Med.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DBHeavent';
+  src: url('DBHeavent-Med-It.woff') format('woff'),
+       url('DBHeavent-Med-It.woff2') format('woff2');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DBHeavent';
+  src: url('DBHeavent-Bold.woff2') format('woff2'),
+       url('DBHeavent-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DBHeavent';
+  src: url('DBHeavent-Bold-It.woff') format('woff'),
+       url('DBHeavent-Bold-It.woff2') format('woff2');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DBHeavent';
+  src: url('DBHeavent-Black.woff2') format('woff2'),
+       url('DBHeavent-Black.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DBHeavent';
+  src: url('DBHeavent-Black-It.woff') format('woff'),
+       url('DBHeavent-Black-It.woff2') format('woff2');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}

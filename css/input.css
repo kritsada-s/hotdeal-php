@@ -1,7 +1,62 @@
 @import "tailwindcss";
 
+:root {
+  --color-primary: #123F6D;
+  --color-secondary: #1B93FA;
+  --color-accent: #F1683B;
+  --color-navy: #0C3F6C;
+
+  --swiper-navigation-size: 85px;
+  --swiper-navigation-color: #fff;
+  --swiper-navigation-sides-offset: 40px;
+  --swiper-pagination-bullet-inactive-color: #fff;
+  --swiper-pagination-bullet-inactive-opacity: 0.5;
+  --swiper-pagination-bullet-size: 10px;
+  --swiper-pagination-bullet-horizontal-gap: 4px;
+  --swiper-pagination-color: #fff;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --swiper-navigation-size: 40px;
+    --swiper-navigation-sides-offset: 10px;
+    --swiper-pagination-bullet-size: 8px;
+    --swiper-pagination-bullet-horizontal-gap: 2px;
+  }
+}
+
+body {
+  font-family: 'DBHeavent', sans-serif;
+}
+
+@layer components {
+  .container {
+    @apply mx-auto;
+  }
+}
+
 p {
   a {
     @apply text-blue-500;
   }
+}
+
+.btn-main {
+  background-color: var(--color-primary);
+  @apply text-white font-medium py-1 px-7 h-auto transition-all duration-300;
+  &:hover {
+    @apply scale-105;
+  }
+}
+
+.footer-menu {
+  li {
+    a {
+      @apply font-light text-sm;
+    }
+  }
+}
+
+.shadow-1 {
+  text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
 }

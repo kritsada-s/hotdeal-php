@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Tailwind Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-white shadow-lg p-4">
+        <div class="container mx-auto">
+            <h1 class="text-2xl font-bold text-gray-800">My Website</h1>
+        </div>
+    </nav>
+
+    <main class="container mx-auto mt-8 px-4">
+        <section class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">Welcome</h2>
+            <p class="text-gray-600">
+                This is a simple webpage built with Tailwind CSS. It includes a navigation bar,
+                main content section, and a responsive layout.
+            </p>
+        </section>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">Card 1</h3>
+                <p class="text-gray-600">Some content for card 1</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">Card 2</h3>
+                <p class="text-gray-600">Some content for card 2</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">Card 3</h3>
+                <p class="text-gray-600">Some content for card 3</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-12 py-6">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 My Website. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
