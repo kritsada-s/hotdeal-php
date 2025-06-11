@@ -29,6 +29,10 @@ body {
   font-family: 'DBHeavent', sans-serif;
 }
 
+.container {
+  @apply px-4 2xl:px-0;
+}
+
 @layer components {
   .container {
     @apply mx-auto;

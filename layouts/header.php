@@ -10,10 +10,10 @@
   <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
   <link rel="icon" href="<?php echo BASE_URL; ?>/favicon.ico">
-  <link rel="stylesheet" href="<?php echo BASE_URL; ?>css/output.css">
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>css/output.css?v=<?php echo time(); ?>">
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>fonts/style.css">
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script src="<?php echo BASE_URL; ?>scripts/script.js" defer></script>
+  <script src="<?php echo BASE_URL; ?>scripts/script.js?v=<?php echo time(); ?>" defer></script>
 </head>
 <body>
   <header class="px-2 md:px-0 py-3 md:py-4 shadow-md fixed top-0 left-0 right-0 z-50 bg-white">

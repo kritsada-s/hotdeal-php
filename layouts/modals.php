@@ -7,14 +7,8 @@
       document.getElementById('emailInput').style.display = 'none';
       document.getElementById('otpInput').style.display = 'block';
     });
-
-    document.getElementById('closeModal').addEventListener('click', function() {
-      document.getElementById('emailInput').style.display = 'block';
-      document.getElementById('otpInput').style.display = 'none';
-    });
   });
 </script>
-
 <dialog id="memberModal" class="modal">
   <div class="modal-box">
     <div id="emailInput">
