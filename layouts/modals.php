@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
   document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('emailInput').style.display = 'block';
     document.getElementById('otpInput').style.display = 'none';
@@ -10,7 +10,7 @@
   });
 </script>
 <dialog id="memberModal" class="modal">
-  <div class="modal-box">
+  <div class="modal-box w-11/12 aspect-[3/4]">
     <div id="emailInput">
       <h3 class="text-2xl font-bold mb-5">กรุณากรอกอีเมล</h3>
       <input type="email" placeholder="example@gmail.com" class="input input-bordered input-xl" />
@@ -31,4 +31,4 @@
     <button>ปิด</button>
   </form>
 
-</dialog>
+</dialog> -->

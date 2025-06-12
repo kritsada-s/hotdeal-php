@@ -1,12 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --color-primary: #123F6D;
-  --color-secondary: #1B93FA;
-  --color-accent: #F1683B;
-  --color-navy: #0C3F6C;
-
-  --swiper-navigation-size: 85px;
+  --swiper-navigation-size: 100px;
   --swiper-navigation-color: #fff;
   --swiper-navigation-sides-offset: 40px;
   --swiper-pagination-bullet-inactive-color: #fff;
@@ -14,11 +9,20 @@
   --swiper-pagination-bullet-size: 10px;
   --swiper-pagination-bullet-horizontal-gap: 4px;
   --swiper-pagination-color: #fff;
+
+  --swal2-confirm-button-background-color: var(--color-green-600);
+}
+
+@theme {
+  --color-primary: #123F6D;
+  --color-secondary: #1B93FA;
+  --color-accent: #F1683B;
+  --color-navy: #0C3F6C;
 }
 
 @media (max-width: 768px) {
   :root {
-    --swiper-navigation-size: 40px;
+    --swiper-navigation-size: 60px;
     --swiper-navigation-sides-offset: 10px;
     --swiper-pagination-bullet-size: 8px;
     --swiper-pagination-bullet-horizontal-gap: 2px;
@@ -31,6 +35,9 @@ body {
 
 .container {
   @apply px-4 2xl:px-0;
+  &.no-padding {
+    @apply px-0 md:px-4 2xl:px-0;
+  }
 }
 
 @layer components {
@@ -63,4 +70,8 @@ p {
 
 .shadow-1 {
   text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.animate__animated {
+  animation-duration: 0.3s;
 }

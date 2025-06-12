@@ -8,7 +8,7 @@ $units = get_units()['data']['units'];
 
 ?>
 
-<section id="unitsListed" class="px-4 2xl:px-0 py-10">
+<section id="unitsListed" class="py-8 md:py-10">
   <div class="container">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-7">
       <?php foreach ($units as $unit) : ?>
