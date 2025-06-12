@@ -1,0 +1,306 @@
+
+Array
+(
+    [timestamp] => 2025-06-12 09:50:08
+    [method] => GET
+    [url] => https://aswservice.com/hotdealapi/HomeContent/GetHomeBanners
+    [data] => Array
+        (
+            [resourceTypeID] => 1
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 09:50:09
+    [method] => GET
+    [url] => https://aswservice.com/hotdealapi/HomeContent/GetHomeBanners
+    [data] => Array
+        (
+            [resourceTypeID] => 2
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 09:50:09
+    [method] => GET
+    [url] => https://aswservice.com/hotdealapi/Unit/GetUnits
+    [data] => Array
+        (
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 09:50:38
+    [method] => GET
+    [url] => https://aswservice.com/hotdealapi/HomeContent/GetHomeBanners
+    [data] => Array
+        (
+            [resourceTypeID] => 1
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 09:50:38
+    [method] => GET
+    [url] => https://aswservice.com/hotdealapi/HomeContent/GetHomeBanners
+    [data] => Array
+        (
+            [resourceTypeID] => 2
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 09:50:38
+    [method] => GET
+    [url] => https://aswservice.com/hotdealapi/Unit/GetUnits
+    [data] => Array
+        (
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 09:50:43
+    [method] => POST
+    [url] => https://aswservice.com/hotdealapi/Member/RequestOTP
+    [data] => Array
+        (
+            [email] => kritsada.s@assetwise.co.th
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 09:53:01
+    [method] => GET
+    [url] => https://aswservice.com/hotdealapi/HomeContent/GetHomeBanners
+    [data] => Array
+        (
+            [resourceTypeID] => 1
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 09:53:01
+    [method] => GET
+    [url] => https://aswservice.com/hotdealapi/HomeContent/GetHomeBanners
+    [data] => Array
+        (
+            [resourceTypeID] => 2
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 09:53:01
+    [method] => GET
+    [url] => https://aswservice.com/hotdealapi/Unit/GetUnits
+    [data] => Array
+        (
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 09:53:06
+    [method] => POST
+    [url] => https://aswservice.com/hotdealapi/Member/RequestOTP
+    [data] => kritsada.s@assetwise.co.th
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 09:54:57
+    [method] => GET
+    [url] => https://aswservice.com/hotdealapi/HomeContent/GetHomeBanners
+    [data] => Array
+        (
+            [resourceTypeID] => 1
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 09:54:57
+    [method] => GET
+    [url] => https://aswservice.com/hotdealapi/HomeContent/GetHomeBanners
+    [data] => Array
+        (
+            [resourceTypeID] => 2
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 09:54:57
+    [method] => GET
+    [url] => https://aswservice.com/hotdealapi/Unit/GetUnits
+    [data] => Array
+        (
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 09:55:03
+    [method] => POST
+    [url] => https://aswservice.com/hotdealapi/Member/RequestOTP
+    [data] => "kritsada.s@assetwise.co.th"
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 09:56:23
+    [method] => GET
+    [url] => https://aswservice.com/hotdealapi/HomeContent/GetHomeBanners
+    [data] => Array
+        (
+            [resourceTypeID] => 1
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 09:56:23
+    [method] => GET
+    [url] => https://aswservice.com/hotdealapi/HomeContent/GetHomeBanners
+    [data] => Array
+        (
+            [resourceTypeID] => 2
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 09:56:23
+    [method] => GET
+    [url] => https://aswservice.com/hotdealapi/Unit/GetUnits
+    [data] => Array
+        (
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 09:56:28
+    [method] => POST
+    [url] => https://aswservice.com/hotdealapi/Member/RequestOTP
+    [data] => {"email":"kritsada.s@assetwise.co.th"}
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 09:57:12
+    [method] => GET
+    [url] => https://aswservice.com/hotdealapi/HomeContent/GetHomeBanners
+    [data] => Array
+        (
+            [resourceTypeID] => 1
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 09:57:12
+    [method] => GET
+    [url] => https://aswservice.com/hotdealapi/HomeContent/GetHomeBanners
+    [data] => Array
+        (
+            [resourceTypeID] => 2
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 09:57:12
+    [method] => GET
+    [url] => https://aswservice.com/hotdealapi/Unit/GetUnits
+    [data] => Array
+        (
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 09:57:18
+    [method] => POST
+    [url] => https://aswservice.com/hotdealapi/Member/RequestOTP
+    [data] => Array
+        (
+            [email] => kritsada.s@assetwise.co.th
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 10:05:04
+    [method] => GET
+    [url] => https://aswservice.com/hotdealapi/HomeContent/GetHomeBanners
+    [data] => Array
+        (
+            [resourceTypeID] => 1
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 10:05:04
+    [method] => GET
+    [url] => https://aswservice.com/hotdealapi/HomeContent/GetHomeBanners
+    [data] => Array
+        (
+            [resourceTypeID] => 2
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 10:05:04
+    [method] => GET
+    [url] => https://aswservice.com/hotdealapi/Unit/GetUnits
+    [data] => Array
+        (
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-12 10:05:09
+    [method] => POST
+    [url] => https://aswservice.com/hotdealapi/Member/RequestOTP
+    [data] => Array
+        (
+            [email] => kritsada.s@assetwise.co.th
+        )
+
+)
+

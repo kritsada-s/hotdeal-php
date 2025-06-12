@@ -2,7 +2,15 @@
 function ajaxRequest(url, callback, method = 'GET', data = null) {
   const xhr = new XMLHttpRequest();
   xhr.open(method, url, true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
+  
+  // Set appropriate headers based on data type
+  if (method === 'POST') {
+    if (data instanceof FormData) {
+      // Don't set Content-Type for FormData, browser will handle it
+    } else {
+      xhr.setRequestHeader('Content-Type', 'application/json');
+    }
+  }
 
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
@@ -26,7 +34,11 @@ function ajaxRequest(url, callback, method = 'GET', data = null) {
     callback({ error: true, message: 'Network error occurred' });
   };
 
-  if (data) {
+  // Send the request with appropriate data
+  if (data instanceof FormData) {
+    xhr.send(data);
+    console.log(data);
+  } else if (data) {
     xhr.send(JSON.stringify(data));
   } else {
     xhr.send();
@@ -69,6 +81,29 @@ document.addEventListener('DOMContentLoaded', function() {
       },
       hideClass: {
         popup: 'animate__animated animate__fadeOutUp'
+      },
+    }).then(function(result) {
+      if (result.isConfirmed) {
+        var data = new FormData();
+        data.append('email', result.value);
+        data.append('action', 'send_otp');
+
+        // Make AJAX request to the PHP API
+        ajaxRequest('hotdeal/utils/api.php', function(response) {
+          if (response.error) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: response.message
+            });
+          } else {
+            Swal.fire({
+              icon: 'success', 
+              title: 'Success',
+              text: 'OTP has been sent to your email'
+            });
+          }
+        }, 'POST', data);
       }
     });
   });

@@ -4,11 +4,30 @@
 function fetch_from_api($method, $url, $data = false) {
     $curl = curl_init();
 
+    // Debug logging
+    $log_file = __DIR__ . '/api_debug.log';
+    $log_data = [
+        'timestamp' => date('Y-m-d H:i:s'),
+        'method' => $method,
+        'url' => $url,
+        'data' => $data
+    ];
+
+    error_log(print_r($log_data, true) . "\n", 3, $log_file);
+
+    // Determine if data is form data or JSON
+    $isFormData = is_array($data) && ($method === "POST");
+    
     switch ($method) {
         case "POST":
             curl_setopt($curl, CURLOPT_POST, true);
-            if ($data)
-                curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+            if ($data) {
+                if ($isFormData) {
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, $data); // Form data
+                } else {
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data)); // JSON
+                }
+            }
             break;
         case "PUT":
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
@@ -22,9 +41,16 @@ function fetch_from_api($method, $url, $data = false) {
 
     // Options
     curl_setopt($curl, CURLOPT_URL, $url);
-    curl_setopt($curl, CURLOPT_HTTPHEADER, [
-        'Content-Type: application/json',
-    ]);
+    
+    // Set headers based on data type
+    if ($isFormData) {
+        // Let cURL set Content-Type automatically for multipart/form-data
+        curl_setopt($curl, CURLOPT_HTTPHEADER, []);
+    } else {
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+        ]);
+    }
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
 
@@ -84,6 +110,9 @@ if (!empty($_REQUEST['action'])) {
     $response = null;
 
     switch ($action) {
+        case 'send_otp':
+            $response = send_otp($_REQUEST['email']);
+            break;
         case 'get_units':
             // You might want to sanitize or validate parameters from $_REQUEST
             $params = isset($_REQUEST['params']) && is_array($_REQUEST['params']) ? $_REQUEST['params'] : array();
@@ -150,6 +179,12 @@ function getImagePath($path) {
 function getProjectDetail($projectCode) {
     $endpoint = API_BASE_URL . '/Project/GetProject?projectID=' . $projectCode;
     return fetch_from_api('GET', $endpoint);
+}
+
+function send_otp($email) {
+    $endpoint = API_BASE_URL . '/Member/RequestOTP';
+    $data = ['email' => $email];
+    return fetch_from_api('POST', $endpoint, $data);
 }
 
 ?>
