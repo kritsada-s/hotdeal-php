@@ -1,10 +1,6 @@
 <?php
 
-// Generic function to fetch data from an API
-function fetch_from_api($method, $url, $data = false) {
-    $curl = curl_init();
-
-    // Debug logging
+function log_api_request($method, $url, $data) {
     $log_file = __DIR__ . '/api_debug.log';
     $log_data = [
         'timestamp' => date('Y-m-d H:i:s'),
@@ -12,8 +8,14 @@ function fetch_from_api($method, $url, $data = false) {
         'url' => $url,
         'data' => $data
     ];
-
     error_log(print_r($log_data, true) . "\n", 3, $log_file);
+}
+
+// Generic function to fetch data from an API
+function fetch_from_api($method, $url, $data = false) {
+    $curl = curl_init();
+
+    //log_api_request($method, $url, $data);
 
     // Determine if data is form data or JSON
     $isFormData = is_array($data) && ($method === "POST");
@@ -25,6 +27,7 @@ function fetch_from_api($method, $url, $data = false) {
                 if ($isFormData) {
                     curl_setopt($curl, CURLOPT_POSTFIELDS, $data); // Form data
                 } else {
+                    //log_api_request($method, $url, json_encode($data));
                     curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data)); // JSON
                 }
             }
@@ -56,6 +59,9 @@ function fetch_from_api($method, $url, $data = false) {
 
     // Execution
     $result = curl_exec($curl);
+
+    //log_api_request($method, $url, $result);
+
     if ($result === false) {
         // Handle cURL errors
         $error_message = curl_error($curl);
@@ -104,6 +110,7 @@ function get_unit_detail($id) {
 // --- Handle AJAX requests ---
 // Check if the script is called via an AJAX request (or any direct HTTP request)
 // and an 'action' parameter is set.
+//log_api_request('POST', API_BASE_URL . '/Member/AddMember', $_REQUEST);
 if (!empty($_REQUEST['action'])) {
     header('Content-Type: application/json'); // Set content type to JSON for AJAX responses
     $action = $_REQUEST['action'];
@@ -112,6 +119,12 @@ if (!empty($_REQUEST['action'])) {
     switch ($action) {
         case 'send_otp':
             $response = send_otp($_REQUEST['email']);
+            break;
+        case 'verify_otp':
+            $response = verify_otp($_REQUEST['email'], $_REQUEST['otp']);
+            break;
+        case 'add_member':
+            $response = add_member($_REQUEST['data']);
             break;
         case 'get_units':
             // You might want to sanitize or validate parameters from $_REQUEST
@@ -185,6 +198,18 @@ function send_otp($email) {
     $endpoint = API_BASE_URL . '/Member/RequestOTP';
     $data = ['email' => $email];
     return fetch_from_api('POST', $endpoint, $data);
+}
+
+function verify_otp($email, $otp) {
+    $endpoint = API_BASE_URL . '/Member/OTPSubmit';
+    $data = ['email' => $email, 'otp' => $otp];
+    return fetch_from_api('POST', $endpoint, $data);
+}
+
+function add_member($userData) {
+    $endpoint = API_BASE_URL . '/Member/AddMember';
+    log_api_request('POST', $endpoint, $userData);
+    return fetch_from_api('POST', $endpoint, json_decode($userData));
 }
 
 ?>

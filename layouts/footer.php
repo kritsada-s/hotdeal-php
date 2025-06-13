@@ -112,48 +112,48 @@ $menus = [
       </div>
       <div class="w-full md:w-8/12 grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-0 md:flex-row justify-between">
         <div class="footer-menu">
-          <h4 class="text-white text-[18px]">แอสเซทไวส์</h4>
-          <ul>
+          <h4 class="text-white text-[18px] mb-2">แอสเซทไวส์</h4>
+          <ul class="flex flex-col gap-1">
             <?php foreach ($menus["menu1"] as $menu) : ?>
               <li>
-                <a href="<?= $menu["link"] ?>" class="text-neutral-400 text-[18px] hover:text-white transition"><?= $menu["name"] ?></a>
+                <a href="<?= $menu["link"] ?>" class="text-neutral-400 text-[20px] hover:text-white transition"><?= $menu["name"] ?></a>
               </li>
             <?php endforeach; ?>
           </ul>
         </div>
         <div class="footer-menu">
-          <h4 class="text-white text-[18px]">บริการ</h4>
-          <ul>
+          <h4 class="text-white text-[18px] mb-2">บริการ</h4>
+          <ul class="flex flex-col gap-1">
             <?php foreach ($menus["menu2"] as $menu) : ?>
               <li>
-                <a href="<?= $menu["link"] ?>" class="text-neutral-400 text-[18px] hover:text-white transition"><?= $menu["name"] ?></a>
+                <a href="<?= $menu["link"] ?>" class="text-neutral-400 text-[20px] hover:text-white transition"><?= $menu["name"] ?></a>
               </li>
             <?php endforeach; ?>
           </ul>
         </div>
         <div class="footer-menu">
-          <h4 class="text-white text-[18px]">สนใจทำธุรกิจกับเรา</h4>
-          <ul>
+          <h4 class="text-white text-[18px] mb-2">สนใจทำธุรกิจกับเรา</h4>
+          <ul class="flex flex-col gap-1">
             <?php foreach ($menus["menu3"] as $menu) : ?>
               <li>
-                <a href="<?= $menu["link"] ?>" class="text-neutral-400 text-[18px] hover:text-white transition"><?= $menu["name"] ?></a>
+                <a href="<?= $menu["link"] ?>" class="text-neutral-400 text-[20px] hover:text-white transition"><?= $menu["name"] ?></a>
               </li>
             <?php endforeach; ?>
           </ul>
         </div>
         <div class="footer-menu">
-          <h4 class="text-white text-[18px]">ติดต่อ</h4>
-          <ul>
+          <h4 class="text-white text-[18px] mb-2">ติดต่อ</h4>
+          <ul class="flex flex-col gap-1">
             <?php foreach ($menus["menu4"] as $menu) : ?>
               <li>
-                <a href="<?= $menu["link"] ?>" class="text-neutral-400 text-[18px] hover:text-white transition"><?= $menu["name"] ?></a>
+                <a href="<?= $menu["link"] ?>" class="text-neutral-400 text-[20px] hover:text-white transition"><?= $menu["name"] ?></a>
               </li>
             <?php endforeach; ?>
           </ul>
         </div>
       </div>
     </div>
-    <p class="text-neutral-400 font-thin text-sm text-center pt-4 mt-4 border-t border-t-neutral-400">© สงวนลิขสิทธิ์ พ.ศ. 2568 บริษัท แอสเซทไวส์ จำกัด (มหาชน)</p>
+    <p class="text-neutral-400 font-thin text-sm text-center pt-4 mt-10 border-t border-t-neutral-400">© สงวนลิขสิทธิ์ พ.ศ. 2568 บริษัท แอสเซทไวส์ จำกัด (มหาชน)</p>
   </div>
 </footer>
 </body>
