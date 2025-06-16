@@ -15,6 +15,7 @@ function log_api_request($method, $url, $data) {
 function fetch_from_api($method, $url, $data = false) {
     $curl = curl_init();
 
+    // Enable logging for debugging
     //log_api_request($method, $url, $data);
 
     // Determine if data is form data or JSON
@@ -59,8 +60,10 @@ function fetch_from_api($method, $url, $data = false) {
 
     // Execution
     $result = curl_exec($curl);
-
-    //log_api_request($method, $url, $result);
+    $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    
+    // Log the response for debugging
+    //log_api_request($method, $url . ' - Response', ['http_code' => $http_code, 'response' => $result]);
 
     if ($result === false) {
         // Handle cURL errors
@@ -69,7 +72,13 @@ function fetch_from_api($method, $url, $data = false) {
         curl_close($curl);
         return ['error' => true, 'message' => "cURL Error ({$error_no}): " . $error_message];
     }
+    
     curl_close($curl);
+    
+    // Check for HTTP errors
+    if ($http_code >= 400) {
+        return ['error' => true, 'message' => "HTTP Error: {$http_code}", 'raw_response' => $result];
+    }
     
     $decoded_result = json_decode($result, true);
     if (json_last_error() !== JSON_ERROR_NONE) {
@@ -116,26 +125,47 @@ if (!empty($_REQUEST['action'])) {
     $action = $_REQUEST['action'];
     $response = null;
 
-    switch ($action) {
-        case 'send_otp':
-            $response = send_otp($_REQUEST['email']);
-            break;
-        case 'verify_otp':
-            $response = verify_otp($_REQUEST['email'], $_REQUEST['otp']);
-            break;
-        case 'add_member':
-            $response = add_member($_REQUEST['data']);
-            break;
-        case 'get_units':
-            // You might want to sanitize or validate parameters from $_REQUEST
-            $params = isset($_REQUEST['params']) && is_array($_REQUEST['params']) ? $_REQUEST['params'] : array();
-            $response = get_units($params);
-            break;
-        // Add more cases for other functions you want to expose via AJAX
-        default:
-            $response = ['error' => true, 'message' => 'Invalid action specified.'];
-            http_response_code(400); // Bad Request
-            break;
+    try {
+        switch ($action) {
+            case 'send_otp':
+                if (empty($_REQUEST['email'])) {
+                    $response = ['error' => true, 'message' => 'Email is required'];
+                } else {
+                    $response = send_otp($_REQUEST['email']);
+                }
+                break;
+            case 'verify_otp':
+                if (empty($_REQUEST['email']) || empty($_REQUEST['otp'])) {
+                    $response = ['error' => true, 'message' => 'Email and OTP are required'];
+                } else {
+                    $response = verify_otp($_REQUEST['email'], $_REQUEST['otp']);
+                }
+                break;
+            case 'add_member':
+                if (empty($_REQUEST['data'])) {
+                    $response = ['error' => true, 'message' => 'Member data is required'];
+                } else {
+                    $response = add_member($_REQUEST['data']);
+                }
+                break;
+            case 'get_units':
+                // You might want to sanitize or validate parameters from $_REQUEST
+                $params = isset($_REQUEST['params']) && is_array($_REQUEST['params']) ? $_REQUEST['params'] : array();
+                $response = get_units($params);
+                break;
+            case 'test':
+                $response = ['success' => true, 'message' => 'API is working correctly', 'timestamp' => date('Y-m-d H:i:s')];
+                break;
+            // Add more cases for other functions you want to expose via AJAX
+            default:
+                $response = ['error' => true, 'message' => 'Invalid action specified.'];
+                http_response_code(400); // Bad Request
+                break;
+        }
+    } catch (Exception $e) {
+        $response = ['error' => true, 'message' => 'Server error: ' . $e->getMessage()];
+        http_response_code(500);
+        error_log('API Error: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
     }
 
     if ($response !== null) {
@@ -208,8 +238,15 @@ function verify_otp($email, $otp) {
 
 function add_member($userData) {
     $endpoint = API_BASE_URL . '/Member/AddMember';
-    log_api_request('POST', $endpoint, $userData);
-    return fetch_from_api('POST', $endpoint, json_decode($userData));
+    
+    // Parse the JSON string to array
+    $parsedData = json_decode($userData, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        return ['error' => true, 'message' => 'Invalid JSON data: ' . json_last_error_msg()];
+    }
+    
+    //log_api_request('POST', $endpoint, $parsedData);
+    return fetch_from_api('POST', $endpoint, $parsedData);
 }
 
 ?>

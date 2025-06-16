@@ -2,7 +2,7 @@
 function ajaxRequest(url, callback, method = 'GET', data = null) {
   const xhr = new XMLHttpRequest();
   xhr.open(method, url, true);
-  
+
   // Set appropriate headers based on data type
   if (method === 'POST') {
     if (data instanceof FormData) {
@@ -23,7 +23,7 @@ function ajaxRequest(url, callback, method = 'GET', data = null) {
           callback({ error: true, message: 'Invalid JSON response' });
         }
       } else {
-        console.error('Request failed with status:', xhr.status);
+        console.error('Request failed with status:', xhr.status, 'URL:', url);
         callback({ error: true, message: `Request failed: ${xhr.status}` });
       }
     }
@@ -50,7 +50,7 @@ function fetchUnits(params = {}, callback) {
     .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
     .join('&');
     
-  ajaxRequest(`utils/api.php?action=get_units&${queryString}`, callback);
+  ajaxRequest(`${window.BASE_URL}utils/api.php?action=get_units&${queryString}`, callback);
 }
 
 function checkLogin() {
@@ -71,7 +71,7 @@ function addMember(userData) {
   data.append('action', 'add_member');
   
   try {
-    const response = ajaxRequest('hotdeal/utils/api.php', function(response) {
+    const response = ajaxRequest(`${window.BASE_URL}utils/api.php`, function(response) {
       console.log(response);
     }, 'POST', data);
   } catch (error) {
@@ -89,6 +89,7 @@ function checkAuthToken() {
   const decodedData = decodeToken(token);
 
   if (decodedData.ID) {
+    console.log(decodedData);
     return true;
   } else {
     return false;
@@ -103,8 +104,8 @@ function requestOTP(email) {
   data.append('action', 'send_otp');
 
   try {
-    const response = ajaxRequest('hotdeal/utils/api.php', function(response) {
-      if (response.data) {
+    const response = ajaxRequest(`${window.BASE_URL}utils/api.php`, function(response) {
+      if (typeof response.data === 'string') {
         const decodedData = decodeToken(response.data);
         if (decodedData.ID) {
           localStorage.setItem('hotdeal_token', response.data);
@@ -127,7 +128,7 @@ function verifyOTP(email, otp) {
   data.append('action', 'verify_otp');
 
   try {
-    const response = ajaxRequest('hotdeal/utils/api.php', function(response) {
+    const response = ajaxRequest(`${window.BASE_URL}utils/api.php`, function(response) {
       if (response.data) {
         const decodedData = decodeToken(response.data);        
         if (decodedData.ID) {
@@ -203,7 +204,12 @@ function showMemberModal() {
   const member = decodeToken(localStorage.getItem('hotdeal_token'));
   Swal.fire({
     title: 'ข้อมูลส่วนตัว',
-    html: `<p class="text-sm text-gray-500">ยินดีต้อนรับกลับ ${member.Email}</p>`,
+    html: `
+    <p class="text-sm text-gray-500">Email: ${member.Email}</p>
+    <p class="text-sm text-gray-500">ชื่อ: ${member.Firstname} ${member.Lastname}</p>
+    <p class="text-sm text-gray-500">เบอร์โทรศัพท์: ${member.Tel}</p>
+    <p class="text-sm text-gray-500">Line ID: ${member.LineID}</p>
+    `,
     confirmButtonText: 'ยกเลิก',
     cancelButtonText: 'ออกจากระบบ',
     showCancelButton: true,
@@ -214,6 +220,7 @@ function showMemberModal() {
       popup: '!p-7 !md:p-10',
       confirmButton: 'bg-primary text-white rounded-full px-10 py-3 cursor-pointer',
     },
+    // add logic to remove token from local storage if user click cancel button
   });
 }
 

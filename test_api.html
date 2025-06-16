@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test</title>
+</head>
+<body>
+    <h1>API Test</h1>
+    <button onclick="testAPI()">Test API Connection</button>
+    <button onclick="testGetUnits()">Test Get Units</button>
+    <button onclick="testSendOTP()">Test Send OTP</button>
+    <div id="results"></div>
+
+    <script>
+        // Function to make AJAX requests (same as your main script)
+        function ajaxRequest(url, callback, method = 'GET', data = null) {
+          const xhr = new XMLHttpRequest();
+          xhr.open(method, url, true);
+
+          // Set appropriate headers based on data type
+          if (method === 'POST') {
+            if (data instanceof FormData) {
+              // Don't set Content-Type for FormData, browser will handle it
+            } else {
+              xhr.setRequestHeader('Content-Type', 'application/json');
+            }
+          }
+
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+              console.log('Response status:', xhr.status);
+              console.log('Response text:', xhr.responseText);
+              
+              if (xhr.status === 200) {
+                try {
+                  const response = JSON.parse(xhr.responseText);
+                  callback(response);
+                } catch (e) {
+                  console.error('Error parsing JSON response:', e);
+                  callback({ error: true, message: 'Invalid JSON response', raw: xhr.responseText });
+                }
+              } else {
+                console.error('Request failed with status:', xhr.status, 'URL:', url);
+                callback({ error: true, message: `Request failed: ${xhr.status}`, raw: xhr.responseText });
+              }
+            }
+          };
+
+          xhr.onerror = function() {
+            console.error('Request failed');
+            callback({ error: true, message: 'Network error occurred' });
+          };
+
+          // Send the request with appropriate data
+          if (data instanceof FormData) {
+            console.log('Sending FormData:', data);
+            xhr.send(data);
+          } else if (data) {
+            console.log('Sending JSON:', JSON.stringify(data));
+            xhr.send(JSON.stringify(data));
+          } else {
+            xhr.send();
+          }
+        }
+
+        function testAPI() {
+            console.log('Testing API connection...');
+            ajaxRequest('/hotdeal/utils/api.php?action=test', function(response) {
+                document.getElementById('results').innerHTML = 
+                    '<h3>API Test Result:</h3><pre>' + JSON.stringify(response, null, 2) + '</pre>';
+            });
+        }
+
+        function testGetUnits() {
+            console.log('Testing get units...');
+            ajaxRequest('/hotdeal/utils/api.php?action=get_units', function(response) {
+                document.getElementById('results').innerHTML = 
+                    '<h3>Get Units Result:</h3><pre>' + JSON.stringify(response, null, 2) + '</pre>';
+            });
+        }
+
+        function testSendOTP() {
+            console.log('Testing send OTP...');
+            var data = new FormData();
+            data.append('email', 'test@example.com');
+            data.append('action', 'send_otp');
+            
+            ajaxRequest('/hotdeal/utils/api.php', function(response) {
+                document.getElementById('results').innerHTML = 
+                    '<h3>Send OTP Result:</h3><pre>' + JSON.stringify(response, null, 2) + '</pre>';
+            }, 'POST', data);
+        }
+    </script>
+</body>
+</html> 
