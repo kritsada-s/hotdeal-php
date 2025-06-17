@@ -138,8 +138,10 @@ function verifyOTP(email, otp) {
         }
       }
     }, 'POST', data);
+    return true;
   } catch (error) {
     console.log(error);
+    return false;
   }
 }
 
@@ -203,24 +205,40 @@ function showSummaryModal() {
 function showMemberModal() {
   const member = decodeToken(localStorage.getItem('hotdeal_token'));
   Swal.fire({
-    title: 'ข้อมูลส่วนตัว',
+    width: '700px',
     html: `
-    <p class="text-sm text-gray-500">Email: ${member.Email}</p>
-    <p class="text-sm text-gray-500">ชื่อ: ${member.Firstname} ${member.Lastname}</p>
-    <p class="text-sm text-gray-500">เบอร์โทรศัพท์: ${member.Tel}</p>
-    <p class="text-sm text-gray-500">Line ID: ${member.LineID}</p>
+    <h4 class="text-2xl font-medium">ข้อมูลส่วนตัว</h4>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-7 mt-4">
+      <div class="input-group text-left">
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email" class="w-full border-b border-gray-500 px-3 py-1 h-[45px]" value="${member.Email}" readonly>
+      </div>
+      <div class="input-group text-left">
+        <label for="name">ชื่อ</label>
+        <input type="text" id="name" name="name" class="w-full border-b border-gray-500 px-3 py-1 h-[45px]" value="${member.Firstname} ${member.Lastname}" readonly>
+      </div>
+      <div class="input-group text-left">
+        <label for="tel">เบอร์โทรศัพท์</label>
+        <input type="text" id="tel" name="tel" class="w-full border-b border-gray-500 px-3 py-1 h-[45px]" value="${member.Tel}" readonly>
+      </div>
+      <div class="input-group text-left">
+        <label for="lineId">Line ID</label>
+        <input type="text" id="lineId" name="lineId" class="w-full border-b border-gray-500 px-3 py-1 h-[45px]" value="${member.LineID}" readonly>
+      </div>
+    </div>
     `,
-    confirmButtonText: 'ยกเลิก',
-    cancelButtonText: 'ออกจากระบบ',
-    showCancelButton: true,
-    showConfirmButton: false,
+    confirmButtonText: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg> ออกจากระบบ',
+    showConfirmButton: true,
+    showCancelButton: false,
     showCloseButton: true,
     customClass: {
       title: '!text-2xl font-medium !pt-0',
-      popup: '!p-7 !md:p-10',
-      confirmButton: 'bg-primary text-white rounded-full px-10 py-3 cursor-pointer',
+      confirmButton: 'logout-btn',
     },
-    // add logic to remove token from local storage if user click cancel button
+    preConfirm: async (data) => {
+      localStorage.removeItem('hotdeal_token');
+      window.location.reload();
+    }
   });
 }
 
@@ -277,37 +295,30 @@ function showLoginModal() {
           }
         },
       }).then(function(result) {
-        if (result.isConfirmed) {
-          const isAuth = checkAuthToken();
-          if (isAuth) {
-            showMemberModal();
-          } else {
-            showLoginModal();
-          }
-        }
+        window.location.reload();
       });
     }
   });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  const memberBtn = document.getElementById('memberBtn');
+  //const memberBtn = document.getElementById('memberBtn');
   const unitBtn = document.querySelectorAll('.unitBtn');
 
-  memberBtn.addEventListener('click', function() {
-    const isAuth = checkAuthToken();
+  // memberBtn.addEventListener('click', function() {
+  //   const isAuth = checkAuthToken();
 
-    if (isAuth) {
-      let user = decodeToken(localStorage.getItem('hotdeal_token'));
-      if (!user.ID) {
-        showRegisterModal();
-      } else {
-        showMemberModal();
-      }
-    } else {
-      showLoginModal();
-    }
-  });
+  //   if (isAuth) {
+  //     let user = decodeToken(localStorage.getItem('hotdeal_token'));
+  //     if (!user.ID) {
+  //       showRegisterModal();
+  //     } else {
+  //       showMemberModal();
+  //     }
+  //   } else {
+  //     showLoginModal();
+  //   }
+  // });
 
   unitBtn.forEach(btn => {
     btn.addEventListener('click', function() {
