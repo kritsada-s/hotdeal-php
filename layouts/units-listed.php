@@ -26,7 +26,7 @@ $units = get_units()['data']['units'];
             </p>
             <div class="btn-group flex justify-between items-center">
               <a href="<?php echo BASE_URL; ?>unit/?id=<?= $unit['id'] ?>" class="text-neutral-500 hover:text-neutral-800 font-light">ดูรายละเอียด</a>
-              <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2">สนใจยูนิตนี้</button>
+              <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2" data-unit="<?= $unit['unitCode'] ?>" data-project="<?= getProjectName($unit['projectID']) ?>" data-cisid="<?= getProjectCISId($unit['projectID']) ?>">สนใจยูนิตนี้</button>
             </div>
           </div>
         </div>

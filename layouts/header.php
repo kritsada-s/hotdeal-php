@@ -10,13 +10,12 @@
   <link rel="icon" href="<?php echo BASE_URL; ?>/favicon.ico">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
   <script>
     // Make BASE_URL available to JavaScript
     window.BASE_URL = '<?php echo BASE_URL; ?>';
   </script>
-  <script type="module" src="<?php echo BASE_URL; ?>js/script.js?v=<?php echo time(); ?>" defer></script>
+  
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>css/output.css?v=<?php echo time(); ?>">
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>fonts/style.css">
 </head>

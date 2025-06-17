@@ -194,10 +194,24 @@ function getProjectName($projectCode) {
     });
 
     if (!empty($filtered_projects)) {
-        $project = array_shift($filtered_projects); // Get the first matching project
-        return isset($project['ProjectName']) ? $project['ProjectName'] : null; // Check if ProjectName exists
+        $project = array_shift($filtered_projects); 
+        return isset($project['ProjectName']) ? $project['ProjectName'] : null; 
     } else {
-        return null; // No project found with that code
+        return null;
+    }
+}
+
+function getProjectCISId($projectCode) {
+    $projects_json = file_get_contents(__DIR__ . '/projects.json');
+    $projects = json_decode($projects_json, true);
+    $filtered_projects = array_filter($projects, function($p) use ($projectCode) {
+        return isset($p['ProjectCode']) && $p['ProjectCode'] === $projectCode;
+    });
+    if (!empty($filtered_projects)) {
+        $project = array_shift($filtered_projects); 
+        return isset($project['ProjectID']) ? $project['ProjectID'] : null; 
+    } else {
+        return null; 
     }
 }
 

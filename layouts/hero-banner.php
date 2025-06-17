@@ -8,7 +8,7 @@
   // echo "</pre>";
 ?>
 
-<section id="heroBanner">
+<section id="heroBanner" class="max-h-[600px]">
   <div id="desktopBanner" class="swiper w-full before:content-[''] before:absolute before:top-0 before:left-0 before:w-1/4 before:h-full before:bg-gradient-to-r before:from-black/60 before:via-black/20 before:to-transparent before:z-10 after:content-[''] after:absolute after:top-0 after:right-0 after:w-1/4 after:h-full after:bg-gradient-to-l after:from-black/60 after:via-black/20 after:to-transparent after:z-9">
     <div class="swiper-wrapper h-full">
       <?php foreach($bannerDataDesktop['data'] as $banner): ?>
@@ -44,44 +44,3 @@
     </div>
   </div>
 </section>
-
-<script>
-  const desktopBanner = document.getElementById('desktopBanner');
-  const mobileBanner = document.getElementById('mobileBanner');
-
-  const args = {
-    loop: true,
-    autoplay: {
-      delay: 6000,
-      disableOnInteraction: false,
-    },
-    pagination: {
-      el: ".swiper-pagination",
-    },
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-  }
-
-  if (window.innerWidth > 768) {
-    mobileBanner.style.display = 'none';
-    new Swiper(desktopBanner, args);
-  } else {
-    desktopBanner.style.display = 'none';
-    new Swiper(mobileBanner, args);
-  }
-
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) {
-      mobileBanner.style.display = 'none';
-      desktopBanner.style.display = 'block';
-      new Swiper(desktopBanner, args);
-    } else {
-      desktopBanner.style.display = 'none';
-      mobileBanner.style.display = 'block';
-      new Swiper(mobileBanner, args);
-    }
-  });
-
-</script>

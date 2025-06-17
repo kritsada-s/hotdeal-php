@@ -89,7 +89,7 @@ function checkAuthToken() {
   const decodedData = decodeToken(token);
 
   if (decodedData.ID) {
-    console.log(decodedData);
+    //console.log(decodedData);
     return true;
   } else {
     return false;
@@ -301,33 +301,141 @@ function showLoginModal() {
   });
 }
 
+function updateMemberModal(member) {
+  if (!member) {
+    return;
+  }
+
+  const modalFirstName = document.getElementById('firstName');
+  const modalLastName = document.getElementById('lastName');
+  const modalPhone = document.getElementById('phone');
+  const modalEmail = document.getElementById('email');
+  const modalLineId = document.getElementById('lineId');
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  modalFirstName.value = member.Firstname;
+  modalLastName.value = member.Lastname;
+  modalPhone.value = member.Tel;
+  modalEmail.value = member.Email;
+  modalLineId.value = member.LineID;
+}
+
+function updateSummaryModal(member, unit) {
+  console.log(unit.project);
+  const summaryFirstName = document.getElementById('summaryFirstName');
+  const summaryLastName = document.getElementById('summaryLastName');
+  const summaryEmail = document.getElementById('summaryEmail');
+  const summaryPhone = document.getElementById('summaryPhone');
+  const summaryLineId = document.getElementById('summaryLineId');
+  const summaryProject = document.getElementById('summaryProject');
+  const summaryUnit = document.getElementById('summaryUnit');
+  //const summaryCISId = document.getElementById('summaryCISId');
+
+  summaryFirstName.value = member.Firstname;
+  summaryLastName.value = member.Lastname;
+  summaryEmail.value = member.Email;
+  summaryPhone.value = member.Tel;
+  summaryLineId.value = member.LineID;
+
+  summaryProject.innerHTML = unit.project;
+  summaryUnit.innerHTML = unit.unit;
+  //summaryCISId.innerHTML = unit.cisid;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-  //const memberBtn = document.getElementById('memberBtn');
+  const memberBtn = document.getElementById('memberBtn');
   const unitBtn = document.querySelectorAll('.unitBtn');
+  const memberModal = document.getElementById('memberModal');
+  const loginModal = document.getElementById('loginModal');
+  const otpModal = document.getElementById('otpModal');
+  const summaryModal = document.getElementById('summaryModal');
+  const requestOTPBtn = document.getElementById('requestOTPBtn');
 
-  // memberBtn.addEventListener('click', function() {
-  //   const isAuth = checkAuthToken();
+  const modals = document.querySelectorAll('.modal');
 
-  //   if (isAuth) {
-  //     let user = decodeToken(localStorage.getItem('hotdeal_token'));
-  //     if (!user.ID) {
-  //       showRegisterModal();
-  //     } else {
-  //       showMemberModal();
-  //     }
-  //   } else {
-  //     showLoginModal();
-  //   }
-  // });
+  const desktopBanner = document.getElementById('desktopBanner');
+  const mobileBanner = document.getElementById('mobileBanner');
+
+  const args = {
+    loop: true,
+    autoplay: {
+      delay: 6000,
+      disableOnInteraction: false,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+  }
+
+  if (window.innerWidth > 768) {
+    mobileBanner.style.display = 'none';
+    new Swiper(desktopBanner, args);
+  } else {
+    desktopBanner.style.display = 'none';
+    new Swiper(mobileBanner, args);
+  }
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+      mobileBanner.style.display = 'none';
+      desktopBanner.style.display = 'block';
+      new Swiper(desktopBanner, args);
+    } else {
+      desktopBanner.style.display = 'none';
+      mobileBanner.style.display = 'block';
+      new Swiper(mobileBanner, args);
+    }
+  });
+
+  memberBtn.addEventListener('click', function() {
+    const isAuth = checkAuthToken();
+
+    if (isAuth) {
+      let user = decodeToken(localStorage.getItem('hotdeal_token'));
+      if (!user.ID) {
+        console.log('user not found');
+      } else {
+        updateMemberModal(user);
+        memberModal.showModal();
+      }
+    } else {
+      loginModal.showModal();
+    }
+  });
+
+  logoutBtn.addEventListener('click', function() {
+    localStorage.removeItem('hotdeal_token');
+    window.location.reload();
+  });
 
   unitBtn.forEach(btn => {
     btn.addEventListener('click', function() {
     const isAuth = checkAuthToken();
+    let project = {
+      cisid: btn.dataset.cisid,
+      project: btn.dataset.project,
+      unit: btn.dataset.unit,
+    }
     if (isAuth) {
-      showSummaryModal();
+      let user = decodeToken(localStorage.getItem('hotdeal_token'));
+      updateSummaryModal(user, project);
+      summaryModal.showModal();
     } else {
-      showLoginModal();
+      loginModal.showModal();
     }
     });
+  });
+
+  requestOTPBtn.addEventListener('click', function() {
+    const email = document.getElementById('otp_email').value;
+    try {
+      requestOTP(email);
+    } catch (error) {
+      console.log(error);
+    }
   });
 });

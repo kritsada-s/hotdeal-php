@@ -1,6 +1,13 @@
 @import "tailwindcss";
+@source "./**/*.{php,html,js,css}";
+@plugin "daisyui";
 
 :root {
+  --color-primary: #123F6D;
+  --color-secondary: #1B93FA;
+  --color-accent: #F1683B;
+  --color-navy: #0C3F6C;
+  --color-error: #e7000b;
   --swiper-navigation-size: 100px;
   --swiper-navigation-color: #fff;
   --swiper-navigation-sides-offset: 40px;
@@ -11,13 +18,6 @@
   --swiper-pagination-color: #fff;
 
   --swal2-confirm-button-background-color: var(--color-green-600);
-}
-
-@theme {
-  --color-primary: #123F6D;
-  --color-secondary: #1B93FA;
-  --color-accent: #F1683B;
-  --color-navy: #0C3F6C;
 }
 
 @media (max-width: 768px) {
@@ -74,4 +74,8 @@ p {
 
 .animate__animated {
   animation-duration: 0.3s;
+}
+
+.logout-btn {
+  @apply !flex items-center gap-2 !bg-red-500 text-white rounded-full px-7 py-3 cursor-pointer;
 }
