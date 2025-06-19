@@ -8,7 +8,7 @@
   // echo "</pre>";
 ?>
 
-<section id="heroBanner" class="max-h-[600px]">
+<section id="heroBanner" class="">
   <div id="desktopBanner" class="swiper w-full before:content-[''] before:absolute before:top-0 before:left-0 before:w-1/4 before:h-full before:bg-gradient-to-r before:from-black/60 before:via-black/20 before:to-transparent before:z-10 after:content-[''] after:absolute after:top-0 after:right-0 after:w-1/4 after:h-full after:bg-gradient-to-l after:from-black/60 after:via-black/20 after:to-transparent after:z-9">
     <div class="swiper-wrapper h-full">
       <?php foreach($bannerDataDesktop['data'] as $banner): ?>

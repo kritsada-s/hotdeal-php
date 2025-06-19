@@ -79,7 +79,7 @@
       </div>
     </div>
     <div class="flex justify-between gap-4 w-full mt-5">
-      <button class="btn btn-primary">
+      <button id="verifyOTPBtn" class="btn btn-primary">
         <i data-lucide="check"></i>
         ยืนยัน
       </button>

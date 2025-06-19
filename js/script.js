@@ -105,13 +105,9 @@ function requestOTP(email) {
 
   try {
     const response = ajaxRequest(`${window.BASE_URL}utils/api.php`, function(response) {
-      if (typeof response.data === 'string') {
-        const decodedData = decodeToken(response.data);
-        if (decodedData.ID) {
-          localStorage.setItem('hotdeal_token', response.data);
-        } else {
-          showRegisterModal();
-        }
+      if (response.data) {
+        loginModal.close();
+        otpModal.showModal();
       }
     }, 'POST', data);
   } catch (error) {
@@ -127,14 +123,21 @@ function verifyOTP(email, otp) {
   data.append('otp', otp);
   data.append('action', 'verify_otp');
 
+  const otpModal = document.getElementById('otpModal');
+  const summaryModal = document.getElementById('summaryModal');
+
   try {
     const response = ajaxRequest(`${window.BASE_URL}utils/api.php`, function(response) {
       if (response.data) {
         const decodedData = decodeToken(response.data);        
         if (decodedData.ID) {
           localStorage.setItem('hotdeal_token', response.data);
+          otpModal.close();
+          showToast('เข้าสู่ระบบสำเร็จ', 'success');
         } else {
-          showRegisterModal();
+          otpModal.close();
+          showToast('ลงทะเบียนสำเร็จ', 'success');
+          //registerModal.showModal();
         }
       }
     }, 'POST', data);
@@ -342,6 +345,19 @@ function updateSummaryModal(member, unit) {
   //summaryCISId.innerHTML = unit.cisid;
 }
 
+function showToast(text, type) {
+  if (text === "") {
+    return;
+  }
+
+  Toastify({
+    text: text,
+    duration: 3000,
+    newWindow: true,
+    close: true,
+  }).showToast();
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   const memberBtn = document.getElementById('memberBtn');
   const unitBtn = document.querySelectorAll('.unitBtn');
@@ -350,6 +366,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const otpModal = document.getElementById('otpModal');
   const summaryModal = document.getElementById('summaryModal');
   const requestOTPBtn = document.getElementById('requestOTPBtn');
+  const verifyOTPBtn = document.getElementById('verifyOTPBtn');
 
   const modals = document.querySelectorAll('.modal');
 
@@ -409,7 +426,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   logoutBtn.addEventListener('click', function() {
     localStorage.removeItem('hotdeal_token');
-    window.location.reload();
+    memberModal.close();
+    showToast('ออกจากระบบสำเร็จ', 'success');
   });
 
   unitBtn.forEach(btn => {
@@ -434,6 +452,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const email = document.getElementById('otp_email').value;
     try {
       requestOTP(email);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  verifyOTPBtn.addEventListener('click', function() {
+    const otp = document.getElementById('otp').value;
+    const memberEmail = document.getElementById('otp_email').value;
+    try {
+      verifyOTP(memberEmail, otp);
     } catch (error) {
       console.log(error);
     }
