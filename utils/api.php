@@ -148,6 +148,13 @@ if (!empty($_REQUEST['action'])) {
                     $response = add_member($_REQUEST['data']);
                 }
                 break;
+            case 'get_member':
+                if (empty($_REQUEST['memberID']) || empty($_REQUEST['token'])) {
+                    $response = ['error' => true, 'message' => 'Member ID and token are required'];
+                } else {
+                    $response = get_member($_REQUEST['memberID'], $_REQUEST['token']);
+                }
+                break;
             case 'get_units':
                 // You might want to sanitize or validate parameters from $_REQUEST
                 $params = isset($_REQUEST['params']) && is_array($_REQUEST['params']) ? $_REQUEST['params'] : array();
@@ -250,17 +257,49 @@ function verify_otp($email, $otp) {
     return fetch_from_api('POST', $endpoint, $data);
 }
 
+function get_member($memberId, $token) {
+    log_api_request('GET', API_BASE_URL . '/Member/GetMember', ['memberID' => $memberId, 'token' => $token]);
+    $endpoint = API_BASE_URL . '/Member/GetMember';
+    $data = ['memberID' => $memberId, 'token' => $token];
+    return fetch_from_api('GET', $endpoint, $data);
+}
+
 function add_member($userData) {
     $endpoint = API_BASE_URL . '/Member/AddMember';
+
+    // Decode JSON string to array if it's a string
+    if (is_string($userData)) {
+        $userData = json_decode($userData, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return ['error' => true, 'message' => 'Invalid JSON in userData: ' . json_last_error_msg()];
+        }
+    }
+
+    // Check if token exists
+    if (!isset($userData['token'])) {
+        return ['error' => true, 'message' => 'Token is required'];
+    }
+
+    log_api_request('POST', $endpoint, $userData);
     
-    // Parse the JSON string to array
-    $parsedData = json_decode($userData, true);
+    $token = $userData['token'];
+    unset($userData['token']);
+
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $endpoint);
+    curl_setopt($curl, CURLOPT_POST, true);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($userData));
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/json', 'Authorization: Bearer ' . $token]);
+    $result = curl_exec($curl);
+    curl_close($curl);
+
+    $decoded_result = json_decode($result, true);
     if (json_last_error() !== JSON_ERROR_NONE) {
-        return ['error' => true, 'message' => 'Invalid JSON data: ' . json_last_error_msg()];
+        return ['error' => true, 'message' => 'JSON Decode Error: ' . json_last_error_msg(), 'raw_response' => $result];
     }
     
-    //log_api_request('POST', $endpoint, $parsedData);
-    return fetch_from_api('POST', $endpoint, $parsedData);
+    return $decoded_result;
 }
 
 ?>

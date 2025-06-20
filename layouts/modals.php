@@ -19,7 +19,7 @@
       </div>
       <div class="form-group flex flex-col gap-2">
         <label for="email">อีเมล</label>
-        <input type="text" id="email" name="email" class="input input-bordered w-full">
+        <input type="text" id="email" name="email" autocomplete disabled readonly class="input input-bordered w-full">
       </div>
       <div class="form-group flex flex-col gap-2">
         <label for="lineId">Line ID</label>
@@ -27,7 +27,7 @@
       </div>
     </div>
     <div class="flex justify-between gap-4 w-full mt-5">
-      <button class="btn btn-primary">
+      <button id="submitMemberBtn" class="btn btn-primary">
         <i data-lucide="save"></i>
         บันทึก
       </button>
@@ -47,14 +47,13 @@
     <form method="dialog">
       <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
     </form>
-    <h3 class="text-lg font-bold mb-5">กรุณากรอกอีเมลเพื่อรับรหัส OTP</h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="form-group flex flex-col gap-2">
-        <label for="otp_email">อีเมล</label>
-        <input type="email" id="otp_email" name="otp_email" class="input input-bordered w-full">
-      </div>
+    <h3 class="text-lg text-center font-bold mb-5">กรุณากรอกอีเมลเพื่อรับรหัส OTP</h3>
+    <div class="form-group">
+      <label for="otp_email" class="block mb-2">อีเมล</label>
+      <input type="email" id="otp_email" name="otp_email" class="input validator input-lg input-bordered w-full" required>
+      <div class="validator-hint">กรุณากรอกอีเมลให้ถูกต้อง</div>
     </div>
-    <div class="flex justify-between gap-4 w-full mt-5">
+    <div class="flex justify-end gap-4 w-full mt-5">
       <button class="btn btn-primary" id="requestOTPBtn">
         <i data-lucide="send"></i>
         ส่งรหัส OTP
@@ -71,14 +70,14 @@
     <form method="dialog">
       <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
     </form>
-    <h3 class="text-lg font-bold mb-5">กรุณากรอกรหัส OTP ที่ส่งไปยังอีเมล</h3>
+    <h3 class="text-lg font-bold mb-5 text-center">กรุณากรอกรหัส OTP ที่ส่งไปยังอีเมล</h3>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="form-group flex flex-col gap-2">
-        <label for="otp">รหัส OTP</label>
-        <input type="text" id="otp" name="otp" class="input input-bordered w-full">
+        <label for="otp" class="hidden">รหัส OTP</label>
+        <input type="text" id="otp" name="otp" class="input input-xl input-bordered w-full text-center">
       </div>
     </div>
-    <div class="flex justify-between gap-4 w-full mt-5">
+    <div class="flex justify-end gap-4 w-full mt-5">
       <button id="verifyOTPBtn" class="btn btn-primary">
         <i data-lucide="check"></i>
         ยืนยัน
