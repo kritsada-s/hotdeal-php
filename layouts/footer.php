@@ -156,10 +156,6 @@ $menus = [
     <p class="text-neutral-400 font-thin text-sm text-center pt-4 mt-10 border-t border-t-neutral-400">© สงวนลิขสิทธิ์ พ.ศ. 2568 บริษัท แอสเซทไวส์ จำกัด (มหาชน)</p>
   </div>
 </footer>
-<script src="https://unpkg.com/lucide@latest"></script>
-<script>
-  lucide.createIcons();
-</script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="module" src="<?php echo BASE_URL; ?>js/script.js?v=<?php echo time(); ?>" defer></script>

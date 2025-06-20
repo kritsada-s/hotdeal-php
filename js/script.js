@@ -154,6 +154,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const registerModal = document.getElementById('registerModal');
   const logoutBtn = document.getElementById('logoutBtn');
   const submitMemberBtn = document.getElementById('submitMemberBtn');
+  const summarySubmitBtn = document.getElementById('summarySubmitBtn');
+  const summaryCancelBtn = document.getElementById('summaryCancelBtn');
 
   const modalFirstName = document.getElementById('firstName');
   const modalLastName = document.getElementById('lastName');
@@ -323,6 +325,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const summaryLineId = document.getElementById('summaryLineId');
     const summaryProject = document.getElementById('summaryProject');
     const summaryUnit = document.getElementById('summaryUnit');
+    const summaryProjectID = document.getElementById('projectID');
     //const summaryCISId = document.getElementById('summaryCISId');
 
     summaryFirstName.value = member.Firstname;
@@ -333,6 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     summaryProject.innerHTML = unit.project;
     summaryUnit.innerHTML = unit.unit;
+    summaryProjectID.value = unit.cisid;
     //summaryCISId.innerHTML = unit.cisid;
   }
 
@@ -452,5 +456,77 @@ document.addEventListener('DOMContentLoaded', function() {
     } catch (error) {
       console.log(error);
     }
+  });
+
+  summarySubmitBtn.addEventListener('click', function() {
+    const summaryFirstName = document.getElementById('summaryFirstName');
+    const summaryLastName = document.getElementById('summaryLastName');
+    const summaryEmail = document.getElementById('summaryEmail');
+    const summaryPhone = document.getElementById('summaryPhone');
+    const summaryLineId = document.getElementById('summaryLineId');
+    const summaryUnit = document.getElementById('summaryUnit').innerHTML;
+    const summaryProjectID = document.getElementById('projectID').value;
+
+    // Create FormData to send as form data, not JSON
+    const data = new FormData();
+    data.append('Fname', summaryFirstName.value);
+    data.append('Lname', summaryLastName.value);
+    data.append('Tel', summaryPhone.value);
+    data.append('Email', summaryEmail.value);
+    data.append('ProjectID', summaryProjectID);
+    data.append('LineID', summaryLineId.value);
+    data.append('unitID', summaryUnit); // Fixed field name
+    data.append('RefID', new Date().getTime()); // Using unit as RefID
+    data.append('Ref', "Register from AssetWise Hot Deal Website : interested in unit " + summaryUnit);
+
+    // console.log('Sending CIS data:', {
+    //   Fname: summaryFirstName.value,
+    //   Lname: summaryLastName.value,
+    //   Tel: summaryPhone.value,
+    //   Email: summaryEmail.value,
+    //   ProjectID: summaryProjectID,
+    //   unitID: summaryUnit,
+    //   RefID: new Date().getTime(),
+    //   Ref: "Register from AssetWise Hot Deal Website : interested in unit " + summaryUnit
+    // });
+
+    try {
+      const response = ajaxRequest(`${window.BASE_URL}utils/cis.php`, function(response) {
+        //console.log('CIS Response:', response);
+        if (response.error) {
+          Swal.fire({
+            title: 'เกิดข้อผิดพลาด',
+            text: response.message,
+            icon: 'error',
+            confirmButtonColor: '#123f6d',
+            confirmButtonText: 'ตกลง'
+          });
+        } else {
+          summaryModal.close();
+          Swal.fire({
+            title: 'ลงทะเบียนสำเร็จ',
+            html: 'ขอบคุณสำหรับการลงทะเบียน<br/>กรุณารอการติดต่อกลับจากโครงการ',
+            icon: 'success',
+            confirmButtonColor: '#123f6d',
+            confirmButtonText: 'ตกลง'
+          }).then(() => {
+            summaryModal.close();
+          });
+        }
+      }, 'POST', data);
+    } catch (error) {
+      console.log('CIS Error:', error);
+      Swal.fire({
+        title: 'เกิดข้อผิดพลาด',
+        text: 'ไม่สามารถส่งข้อมูลได้',
+        icon: 'error',
+        confirmButtonColor: '#123f6d',
+        confirmButtonText: 'ตกลง'
+      });
+    }
+  });
+
+  summaryCancelBtn.addEventListener('click', function() {
+    summaryModal.close();
   });
 });

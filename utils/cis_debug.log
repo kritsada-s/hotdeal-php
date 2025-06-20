@@ -1,0 +1,716 @@
+Array
+(
+    [timestamp] => 2025-06-20 09:15:19
+    [request_data] => Array
+        (
+        )
+
+    [response] => 
+    [error] => Missing required fields: ProjectID, RefID, Fname, Lname, Tel, Email, Ref, unitID
+    [post_data] => Array
+        (
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-20 09:18:49
+    [request_data] => Array
+        (
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [ProjectID] => 97
+            [unitID] => A0403
+            [RefID] => A0403
+            [Ref] => 
+        )
+
+    [response] => 
+    [error] => Missing required fields: Ref
+    [post_data] => Array
+        (
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [ProjectID] => 97
+            [unitID] => A0403
+            [RefID] => A0403
+            [Ref] => 
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-20 09:21:54
+    [request_data] => Array
+        (
+            [ProjectID] => 97
+            [ContactChannelID] => 21
+            [ContactTypeID] => 35
+            [RefID] => 1750411314018
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0401
+            [RefDate] => 2025-06-20 09:21:54
+            [FollowUpID] => 42
+            [utm_source] => ASW_HotDeal_New_Website_A0401
+            [FlagPersonalAccept] => 1
+            [FlagContactAccept] => 1
+        )
+
+    [response] => 
+    [error] => 
+    [post_data] => Array
+        (
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [ProjectID] => 97
+            [unitID] => A0401
+            [RefID] => 1750411314018
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0401
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-20 09:21:54
+    [request_data] => Array
+        (
+            [ProjectID] => 97
+            [ContactChannelID] => 21
+            [ContactTypeID] => 35
+            [RefID] => 1750411314018
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0401
+            [RefDate] => 2025-06-20 09:21:54
+            [FollowUpID] => 42
+            [utm_source] => ASW_HotDeal_New_Website_A0401
+            [FlagPersonalAccept] => 1
+            [FlagContactAccept] => 1
+        )
+
+    [response] => {"Success":true,"Message":"Save success.","Data":{"CustomerID":0}}
+    [error] => 
+    [post_data] => Array
+        (
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [ProjectID] => 97
+            [unitID] => A0401
+            [RefID] => 1750411314018
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0401
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-20 09:22:40
+    [request_data] => Array
+        (
+            [ProjectID] => 97
+            [ContactChannelID] => 21
+            [ContactTypeID] => 35
+            [RefID] => 1750411360135
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0401
+            [RefDate] => 2025-06-20 09:22:40
+            [FollowUpID] => 42
+            [utm_source] => ASW_HotDeal_New_Website_A0401
+            [FlagPersonalAccept] => 1
+            [FlagContactAccept] => 1
+        )
+
+    [response] => 
+    [error] => 
+    [post_data] => Array
+        (
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [ProjectID] => 97
+            [unitID] => A0401
+            [RefID] => 1750411360135
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0401
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-20 09:22:40
+    [request_data] => Array
+        (
+            [ProjectID] => 97
+            [ContactChannelID] => 21
+            [ContactTypeID] => 35
+            [RefID] => 1750411360135
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0401
+            [RefDate] => 2025-06-20 09:22:40
+            [FollowUpID] => 42
+            [utm_source] => ASW_HotDeal_New_Website_A0401
+            [FlagPersonalAccept] => 1
+            [FlagContactAccept] => 1
+        )
+
+    [response] => {"Success":true,"Message":"Save success.","Data":{"CustomerID":0}}
+    [error] => 
+    [post_data] => Array
+        (
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [ProjectID] => 97
+            [unitID] => A0401
+            [RefID] => 1750411360135
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0401
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-20 09:23:59
+    [request_data] => Array
+        (
+            [ProjectID] => 97
+            [ContactChannelID] => 21
+            [ContactTypeID] => 35
+            [RefID] => 1750411439613
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0403
+            [RefDate] => 2025-06-20 09:23:59
+            [FollowUpID] => 42
+            [utm_source] => ASW_HotDeal_New_Website_A0403
+            [FlagPersonalAccept] => 1
+            [FlagContactAccept] => 1
+        )
+
+    [response] => 
+    [error] => 
+    [post_data] => Array
+        (
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [ProjectID] => 97
+            [unitID] => A0403
+            [RefID] => 1750411439613
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0403
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-20 09:23:59
+    [request_data] => Array
+        (
+            [ProjectID] => 97
+            [ContactChannelID] => 21
+            [ContactTypeID] => 35
+            [RefID] => 1750411439613
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0403
+            [RefDate] => 2025-06-20 09:23:59
+            [FollowUpID] => 42
+            [utm_source] => ASW_HotDeal_New_Website_A0403
+            [FlagPersonalAccept] => 1
+            [FlagContactAccept] => 1
+        )
+
+    [response] => {"Success":true,"Message":"Save success.","Data":{"CustomerID":0}}
+    [error] => 
+    [post_data] => Array
+        (
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [ProjectID] => 97
+            [unitID] => A0403
+            [RefID] => 1750411439613
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0403
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-20 09:24:11
+    [request_data] => Array
+        (
+            [ProjectID] => 97
+            [ContactChannelID] => 21
+            [ContactTypeID] => 35
+            [RefID] => 1750411451586
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0403
+            [RefDate] => 2025-06-20 09:24:11
+            [FollowUpID] => 42
+            [utm_source] => ASW_HotDeal_New_Website_A0403
+            [FlagPersonalAccept] => 1
+            [FlagContactAccept] => 1
+        )
+
+    [response] => 
+    [error] => 
+    [post_data] => Array
+        (
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [ProjectID] => 97
+            [unitID] => A0403
+            [RefID] => 1750411451586
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0403
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-20 09:24:11
+    [request_data] => Array
+        (
+            [ProjectID] => 97
+            [ContactChannelID] => 21
+            [ContactTypeID] => 35
+            [RefID] => 1750411451586
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0403
+            [RefDate] => 2025-06-20 09:24:11
+            [FollowUpID] => 42
+            [utm_source] => ASW_HotDeal_New_Website_A0403
+            [FlagPersonalAccept] => 1
+            [FlagContactAccept] => 1
+        )
+
+    [response] => {"Success":true,"Message":"Save success.","Data":{"CustomerID":0}}
+    [error] => 
+    [post_data] => Array
+        (
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [ProjectID] => 97
+            [unitID] => A0403
+            [RefID] => 1750411451586
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0403
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-20 09:24:29
+    [request_data] => Array
+        (
+            [ProjectID] => 97
+            [ContactChannelID] => 21
+            [ContactTypeID] => 35
+            [RefID] => 1750411469748
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0401
+            [RefDate] => 2025-06-20 09:24:29
+            [FollowUpID] => 42
+            [utm_source] => ASW_HotDeal_New_Website_A0401
+            [FlagPersonalAccept] => 1
+            [FlagContactAccept] => 1
+        )
+
+    [response] => 
+    [error] => 
+    [post_data] => Array
+        (
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [ProjectID] => 97
+            [unitID] => A0401
+            [RefID] => 1750411469748
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0401
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-20 09:24:30
+    [request_data] => Array
+        (
+            [ProjectID] => 97
+            [ContactChannelID] => 21
+            [ContactTypeID] => 35
+            [RefID] => 1750411469748
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0401
+            [RefDate] => 2025-06-20 09:24:29
+            [FollowUpID] => 42
+            [utm_source] => ASW_HotDeal_New_Website_A0401
+            [FlagPersonalAccept] => 1
+            [FlagContactAccept] => 1
+        )
+
+    [response] => {"Success":true,"Message":"Save success.","Data":{"CustomerID":0}}
+    [error] => 
+    [post_data] => Array
+        (
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [ProjectID] => 97
+            [unitID] => A0401
+            [RefID] => 1750411469748
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0401
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-20 09:24:56
+    [request_data] => Array
+        (
+            [ProjectID] => 97
+            [ContactChannelID] => 21
+            [ContactTypeID] => 35
+            [RefID] => 1750411496371
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0401
+            [RefDate] => 2025-06-20 09:24:56
+            [FollowUpID] => 42
+            [utm_source] => ASW_HotDeal_New_Website_A0401
+            [FlagPersonalAccept] => 1
+            [FlagContactAccept] => 1
+        )
+
+    [response] => 
+    [error] => 
+    [post_data] => Array
+        (
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [ProjectID] => 97
+            [unitID] => A0401
+            [RefID] => 1750411496371
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0401
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-20 09:24:56
+    [request_data] => Array
+        (
+            [ProjectID] => 97
+            [ContactChannelID] => 21
+            [ContactTypeID] => 35
+            [RefID] => 1750411496371
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0401
+            [RefDate] => 2025-06-20 09:24:56
+            [FollowUpID] => 42
+            [utm_source] => ASW_HotDeal_New_Website_A0401
+            [FlagPersonalAccept] => 1
+            [FlagContactAccept] => 1
+        )
+
+    [response] => {"Success":true,"Message":"Save success.","Data":{"CustomerID":0}}
+    [error] => 
+    [post_data] => Array
+        (
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [ProjectID] => 97
+            [unitID] => A0401
+            [RefID] => 1750411496371
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0401
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-20 09:25:24
+    [request_data] => Array
+        (
+            [ProjectID] => 97
+            [ContactChannelID] => 21
+            [ContactTypeID] => 35
+            [RefID] => 1750411524970
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0403
+            [RefDate] => 2025-06-20 09:25:24
+            [FollowUpID] => 42
+            [utm_source] => ASW_HotDeal_New_Website_A0403
+            [FlagPersonalAccept] => 1
+            [FlagContactAccept] => 1
+        )
+
+    [response] => 
+    [error] => 
+    [post_data] => Array
+        (
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [ProjectID] => 97
+            [unitID] => A0403
+            [RefID] => 1750411524970
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0403
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-20 09:25:25
+    [request_data] => Array
+        (
+            [ProjectID] => 97
+            [ContactChannelID] => 21
+            [ContactTypeID] => 35
+            [RefID] => 1750411524970
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0403
+            [RefDate] => 2025-06-20 09:25:24
+            [FollowUpID] => 42
+            [utm_source] => ASW_HotDeal_New_Website_A0403
+            [FlagPersonalAccept] => 1
+            [FlagContactAccept] => 1
+        )
+
+    [response] => {"Success":true,"Message":"Save success.","Data":{"CustomerID":0}}
+    [error] => 
+    [post_data] => Array
+        (
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [ProjectID] => 97
+            [unitID] => A0403
+            [RefID] => 1750411524970
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0403
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-20 09:26:47
+    [request_data] => Array
+        (
+            [ProjectID] => 97
+            [ContactChannelID] => 21
+            [ContactTypeID] => 35
+            [RefID] => 1750411607797
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0405
+            [RefDate] => 2025-06-20 09:26:47
+            [FollowUpID] => 42
+            [utm_source] => ASW_HotDeal_New_Website_A0405
+            [FlagPersonalAccept] => 1
+            [FlagContactAccept] => 1
+        )
+
+    [response] => 
+    [error] => 
+    [post_data] => Array
+        (
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [ProjectID] => 97
+            [LineID] => 
+            [unitID] => A0405
+            [RefID] => 1750411607797
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0405
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-20 09:26:48
+    [request_data] => Array
+        (
+            [ProjectID] => 97
+            [ContactChannelID] => 21
+            [ContactTypeID] => 35
+            [RefID] => 1750411607797
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0405
+            [RefDate] => 2025-06-20 09:26:47
+            [FollowUpID] => 42
+            [utm_source] => ASW_HotDeal_New_Website_A0405
+            [FlagPersonalAccept] => 1
+            [FlagContactAccept] => 1
+        )
+
+    [response] => {"Success":true,"Message":"Save success.","Data":{"CustomerID":0}}
+    [error] => 
+    [post_data] => Array
+        (
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [ProjectID] => 97
+            [LineID] => 
+            [unitID] => A0405
+            [RefID] => 1750411607797
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0405
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-20 09:26:54
+    [request_data] => Array
+        (
+            [ProjectID] => 97
+            [ContactChannelID] => 21
+            [ContactTypeID] => 35
+            [RefID] => 1750411614605
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0405
+            [RefDate] => 2025-06-20 09:26:54
+            [FollowUpID] => 42
+            [utm_source] => ASW_HotDeal_New_Website_A0405
+            [FlagPersonalAccept] => 1
+            [FlagContactAccept] => 1
+        )
+
+    [response] => 
+    [error] => 
+    [post_data] => Array
+        (
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [ProjectID] => 97
+            [LineID] => ddsasc
+            [unitID] => A0405
+            [RefID] => 1750411614605
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0405
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-06-20 09:26:54
+    [request_data] => Array
+        (
+            [ProjectID] => 97
+            [ContactChannelID] => 21
+            [ContactTypeID] => 35
+            [RefID] => 1750411614605
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0405
+            [RefDate] => 2025-06-20 09:26:54
+            [FollowUpID] => 42
+            [utm_source] => ASW_HotDeal_New_Website_A0405
+            [FlagPersonalAccept] => 1
+            [FlagContactAccept] => 1
+        )
+
+    [response] => {"Success":true,"Message":"Save success.","Data":{"CustomerID":0}}
+    [error] => 
+    [post_data] => Array
+        (
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [ProjectID] => 97
+            [LineID] => ddsasc
+            [unitID] => A0405
+            [RefID] => 1750411614605
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0405
+        )
+
+)
+
