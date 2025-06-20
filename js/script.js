@@ -99,7 +99,6 @@ function verifyMember(memberId, token) {
 }
 
 // Handle case user are deleted
-
 function addMember(userData) {
   //console.log(userData);
   if (!userData.token) {
@@ -112,8 +111,15 @@ function addMember(userData) {
   
   try {
     const response = ajaxRequest(`${window.BASE_URL}utils/api.php`, function(response) {
-      console.log(response);
-      localStorage.setItem('hotdeal_token', response.data);
+      //console.log(response);
+      localStorage.setItem('hotdeal_token', response.token);
+      memberModal.close();
+      Swal.fire({
+        title: 'ลงทะเบียนสำเร็จ',
+        icon: 'success',
+        confirmButtonColor: '#123f6d',
+        confirmButtonText: 'ตกลง'
+      });
     }, 'POST', data);
   } catch (error) {
     console.log(error);
@@ -141,6 +147,22 @@ function checkAuthToken() {
   }
 }
 
+function showSwal(title, text, icon, confirmButtonColor, confirmButtonText) {
+  if (confirmButtonColor == null) {
+    confirmButtonColor = '#123f6d';
+  }
+  if (confirmButtonText == null) {
+    confirmButtonText = 'ตกลง';
+  }
+  Swal.fire({
+    title: title,
+    text: text,
+    icon: icon,
+    confirmButtonColor: confirmButtonColor,
+    confirmButtonText: confirmButtonText
+  });
+}
+
 
 document.addEventListener('DOMContentLoaded', function() {
   const memberBtn = document.getElementById('memberBtn');
@@ -153,7 +175,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const verifyOTPBtn = document.getElementById('verifyOTPBtn');
   const registerModal = document.getElementById('registerModal');
   const logoutBtn = document.getElementById('logoutBtn');
-  const submitMemberBtn = document.getElementById('submitMemberBtn');
+  const registerSubmitBtn = document.getElementById('registerSubmitBtn');
+  const updateMemberBtn = document.getElementById('updateMemberBtn');
   const summarySubmitBtn = document.getElementById('summarySubmitBtn');
   const summaryCancelBtn = document.getElementById('summaryCancelBtn');
 
@@ -276,14 +299,7 @@ document.addEventListener('DOMContentLoaded', function() {
               confirmButtonText: 'ตกลง'
             }).then(() => {
               clearAllModalInput();
-              //sessionStorage.setItem('tmp_email', email);
-              if (localStorage.getItem('hotdeal_token') == null) {
-                modalEmail.value = email;
-                logoutBtn.style.display = 'none';
-              } else {
-                logoutBtn.style.display = 'block';
-              }
-              memberModal.showModal();
+              registerModal.showModal();
             });
           }
         }
@@ -441,18 +457,42 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  submitMemberBtn.addEventListener('click', function() {
+  registerSubmitBtn.addEventListener('click', function() {
+    const registerFirstName = document.getElementById('registerFirstName');
+    const registerLastName = document.getElementById('registerLastName');
+    const registerPhone = document.getElementById('registerPhone');
+    const registerLineId = document.getElementById('registerLineId');
+    const registerEmail = document.getElementById('registerEmail');
+    
+    const data = {
+      firstName: registerFirstName.value,
+      lastName: registerLastName.value,
+      tel: registerPhone.value,
+      lineId: registerLineId.value,
+      email: registerEmail.value,
+      token: sessionStorage.getItem('tmp_hotdeal_token')
+    }
+
+    try {
+      addMember(data);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  updateMemberBtn.addEventListener('click', function() {
     const data = {
       firstName: modalFirstName.value,
       lastName: modalLastName.value,
       tel: modalPhone.value,
       lineId: modalLineId.value,
       email: modalEmail.value,
-      token: sessionStorage.getItem('tmp_hotdeal_token')
+      //token: sessionStorage.getItem('tmp_hotdeal_token')
     }
 
     try {
-      addMember(data);
+      console.log('updateMember');
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -503,15 +543,7 @@ document.addEventListener('DOMContentLoaded', function() {
           });
         } else {
           summaryModal.close();
-          Swal.fire({
-            title: 'ลงทะเบียนสำเร็จ',
-            html: 'ขอบคุณสำหรับการลงทะเบียน<br/>กรุณารอการติดต่อกลับจากโครงการ',
-            icon: 'success',
-            confirmButtonColor: '#123f6d',
-            confirmButtonText: 'ตกลง'
-          }).then(() => {
-            summaryModal.close();
-          });
+          showSwal('ลงทะเบียนสำเร็จ', 'ขอบคุณสำหรับการลงทะเบียน<br/>กรุณารอการติดต่อกลับจากโครงการ', 'success', '#123f6d', 'ตกลง');
         }
       }, 'POST', data);
     } catch (error) {

@@ -27,13 +27,53 @@
       </div>
     </div>
     <div class="flex justify-between gap-4 w-full mt-5">
-      <button id="submitMemberBtn" class="btn btn-primary">
+      <button id="updateMemberBtn" class="btn btn-primary">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/><path d="M7 3v4a1 1 0 0 0 1 1h7"/></svg>
         บันทึก
       </button>
       <button id="logoutBtn" class="btn btn-outline btn-error hover:text-white">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
         ออกจากระบบ
+      </button>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>
+
+<dialog id="registerModal" class="modal">
+<div class="modal-box px-4 md:px-8 py-10">
+    <form method="dialog">
+      <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+    </form>
+    <h3 class="text-2xl text-center font-bold mb-5">ลงทะเบียน</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="form-group flex flex-col gap-2">
+        <label for="registerFirstName">ชื่อ</label>
+        <input type="text" id="registerFirstName" name="registerFirstName" class="input input-bordered w-full">
+      </div>
+      <div class="form-group flex flex-col gap-2">
+        <label for="registerLastName">นามสกุล</label>
+        <input type="text" id="registerLastName" name="registerLastName" class="input input-bordered w-full">
+      </div>
+      <div class="form-group flex flex-col gap-2">
+        <label for="registerPhone">เบอร์โทรศัพท์</label>
+        <input type="text" id="registerPhone" name="registerPhone" autocomplete="off" class="input input-bordered w-full">
+      </div>
+      <div class="form-group flex flex-col gap-2">
+        <label for="registerEmail">อีเมล</label>
+        <input type="text" id="registerEmail" name="registerEmail" autocomplete="off" disabled readonly class="input input-bordered w-full">
+      </div>
+      <div class="form-group flex flex-col gap-2">
+        <label for="registerLineId">Line ID</label>
+        <input type="text" id="registerLineId" name="registerLineId" class="input input-bordered w-full">
+      </div>
+    </div>
+    <div class="flex justify-between gap-4 w-full mt-5">
+      <button id="registerSubmitBtn" class="btn btn-primary">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/><path d="M7 3v4a1 1 0 0 0 1 1h7"/></svg>
+        บันทึก
       </button>
     </div>
   </div>
