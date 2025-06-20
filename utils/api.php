@@ -12,7 +12,8 @@ function log_api_request($method, $url, $data) {
 }
 
 // Generic function to fetch data from an API
-function fetch_from_api($method, $url, $data = false) {
+function fetch_from_api($method, $url, $data = false, $token = null) {
+    //log_api_request($method, $url, $token);
     $curl = curl_init();
 
     // Enable logging for debugging
@@ -45,7 +46,7 @@ function fetch_from_api($method, $url, $data = false) {
 
     // Options
     curl_setopt($curl, CURLOPT_URL, $url);
-    
+
     // Set headers based on data type
     if ($isFormData) {
         // Let cURL set Content-Type automatically for multipart/form-data
@@ -57,6 +58,11 @@ function fetch_from_api($method, $url, $data = false) {
     }
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+
+    if ($token) {
+        log_api_request($method, $url, $token);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, ['Authorization: Bearer ' . $token]);
+    }
 
     // Execution
     $result = curl_exec($curl);
@@ -258,10 +264,9 @@ function verify_otp($email, $otp) {
 }
 
 function get_member($memberId, $token) {
-    log_api_request('GET', API_BASE_URL . '/Member/GetMember', ['memberID' => $memberId, 'token' => $token]);
     $endpoint = API_BASE_URL . '/Member/GetMember';
-    $data = ['memberID' => $memberId, 'token' => $token];
-    return fetch_from_api('GET', $endpoint, $data);
+    $data = ['memberID' => $memberId];
+    return fetch_from_api('GET', $endpoint, $data, $token);
 }
 
 function add_member($userData) {
@@ -280,8 +285,6 @@ function add_member($userData) {
         return ['error' => true, 'message' => 'Token is required'];
     }
 
-    log_api_request('POST', $endpoint, $userData);
-    
     $token = $userData['token'];
     unset($userData['token']);
 

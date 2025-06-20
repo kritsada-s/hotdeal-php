@@ -1,5 +1,5 @@
 // Function to make AJAX requests
-function ajaxRequest(url, callback, method = 'GET', data = null) {
+function ajaxRequest(url, callback, method = 'GET', data = null, token = null) {
   const xhr = new XMLHttpRequest();
   xhr.open(method, url, true);
 
@@ -66,8 +66,6 @@ function decodeToken(token) {
 }
 
 function verifyMember(memberId, token) {
-  //console.log(memberId, token);
-  //return
   const params = {
     memberID: memberId,
     token: token,
@@ -79,14 +77,20 @@ function verifyMember(memberId, token) {
     .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
     .join('&');
   try {
-    const response = ajaxRequest(`${window.BASE_URL}utils/api.php?${queryString}`, function(response) {
-      if (response.error) {
-        localStorage.removeItem('hotdeal_token');
-        return false;
-      } else {
-        return true;
-      }
-    }, 'GET');
+    const response = ajaxRequest(
+      `${window.BASE_URL}utils/api.php?${queryString}`, 
+      function(response) {
+        if (response.error) {
+          localStorage.removeItem('hotdeal_token');
+          return false;
+        } else {
+          return true;
+        }
+      }, 
+      'GET',
+      null,
+      token
+    );
     return true;  
   } catch (error) {
     console.log('error', error);
@@ -109,6 +113,7 @@ function addMember(userData) {
   try {
     const response = ajaxRequest(`${window.BASE_URL}utils/api.php`, function(response) {
       console.log(response);
+      localStorage.setItem('hotdeal_token', response.data);
     }, 'POST', data);
   } catch (error) {
     console.log(error);
@@ -310,7 +315,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function updateSummaryModal(member, unit) {
-    console.log(unit.project);
+    //console.log(unit.project);
     const summaryFirstName = document.getElementById('summaryFirstName');
     const summaryLastName = document.getElementById('summaryLastName');
     const summaryEmail = document.getElementById('summaryEmail');
