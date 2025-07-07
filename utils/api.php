@@ -1,5 +1,8 @@
 <?php
 
+define('SUPABASE_URL', 'https://orrfrdhhcoqtweftfdcl.supabase.co/rest/v1/');
+define('SUPABASE_KEY', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ycmZyZGhoY29xdHdlZnRmZGNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEzNTA5OTksImV4cCI6MjA2NjkyNjk5OX0.UIiBxoiZBK0KQst4Umwm2pjriUUzSc6Yasw4Igioc-o');
+
 function log_api_request($method, $url, $data) {
     $log_file = __DIR__ . '/api_debug.log';
     $log_data = [
@@ -240,6 +243,39 @@ function getProjectLogo($projectCode) {
     } else {
         return null; // No project found with that code
     }
+}
+
+function getProjectDataByCode($projectCode) {
+    // Get project data from supabase database
+    $endpoint = SUPABASE_URL . 'asw_projects_data';
+    $headers = [
+        'apikey: ' . SUPABASE_KEY,
+        'Authorization: Bearer ' . SUPABASE_KEY,
+        'Content-Type: application/json'
+    ];
+
+    // Build query params to filter by ProjectCode
+    $query = http_build_query([
+        'ProjectCode' => 'eq.' . $projectCode,
+        'select' => '*'
+    ]);
+
+    $curl = curl_init($endpoint . '?' . $query);
+    curl_setopt_array($curl, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_HTTPHEADER => $headers
+    ]);
+
+    $response = curl_exec($curl);
+    $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    curl_close($curl);
+
+    if ($status === 200) {
+        $data = json_decode($response, true);
+        return !empty($data) ? $data[0] : null;
+    }
+
+    return null;
 }
 
 function getImagePath($path) {
