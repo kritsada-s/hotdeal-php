@@ -7,9 +7,10 @@
   $project = getProjectDetail($unit_detail['projectID'])['data'];
   $planImage = $unit_detail['planImages'];
   $unitGallery = $unit_detail['galleries'];
+
+  $projectData = getProjectDataByCode($unit_detail['projectID']);
 ?>
 <section id="unitDetail" class="pt-10 bg-neutral-50">
-  
   <div class="top-panel mb-5">
     <div class="container">
       <a href="/hotdeal" class="unit-detail-header-back flex items-center gap-2 text-sky-900">
@@ -22,14 +23,14 @@
   <div class="unit-detail-header">
     <div class="container no-padding">
       <div class="project-logo-wrapper w-full hidden md:block">
-        <img src="<?= getProjectLogo($unit_detail['projectID']) ?>" alt="<?= $projectName ?>" class="w-[160px]">
+        <img src="<?= $projectData['ProjectLogo']; ?>" alt="<?= $projectData['ProjectNameTH'] ?>" class="w-[160px]">
       </div>
       <div class="show-unit-wrapper flex flex-col md:flex-row">
         <div class="show-unit-left w-full md:w-3/5 md:py-5">
           <h1 class="text-4xl mx-4 md:mx-0 mb-5 font-medium">
             <span class="text-accent"><?= $unit_detail['unitCode'] ?></span>
             <br class="block md:hidden">
-            <span class="text-[20px] md:text-base text-neutral-700"><span class="hidden md:inline"> - </span><?= $projectName ?></span>
+            <span class="text-[20px] md:text-base text-neutral-700"><span class="hidden md:inline"> - </span><?= $projectData['ProjectNameTH'] ?></span>
           </h1>
           <div class="unit-thumb w-full h-auto aspect-[4/3] bg-cover bg-center" 
           style="background-image: url(<?= getImagePath($unitThumb['resource']['filePath']) ?>);"></div>
@@ -70,7 +71,7 @@
             </div>
             <div class="reserved-price"></div>
             <div class="h-4"></div>
-            <button class="bg-accent rounded cursor-pointer w-full h-fit text-2xl text-white font-medium px-10 py-5 hover:scale-105 transition-all duration-300 hover:shadow-lg">
+            <button class="unitBtn bg-accent rounded cursor-pointer w-full h-fit text-2xl text-white font-medium px-10 py-5 hover:scale-105 transition-all duration-300 hover:shadow-lg" data-unit="<?= $unit_detail['unitCode'] ?>" data-project="<?= $projectData['ProjectNameTH'] ?>" data-cisid="<?= getProjectCISId($unit_detail['projectID']) ?>">
               สนใจยูนิตนี้
             </button>
           </div>
@@ -101,7 +102,7 @@
           </div>
         </div>
         <div class="h-7"></div>
-        <a href="#" class="btn btn-outline btn-white hover:text-primary hover:bg-white font-normal">ดูเพิ่มเติม</a>
+        <a href="<?= $project['projectURL'] ?>" class="btn btn-outline btn-white hover:text-primary hover:bg-white font-normal" target="_blank">ดูเพิ่มเติม</a>
       </div>
     </div>
   </div>
