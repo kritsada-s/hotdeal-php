@@ -82,6 +82,7 @@ function verifyMember(memberId, token) {
       function(response) {
         if (response.error) {
           localStorage.removeItem('hotdeal_token');
+          console.log(response);
           return false;
         } else {
           return true;
@@ -113,7 +114,7 @@ function addMember(userData) {
     const response = ajaxRequest(`${window.BASE_URL}utils/api.php`, function(response) {
       //console.log(response);
       localStorage.setItem('hotdeal_token', response.token);
-      memberModal.close();
+      registerModal.close();
       Swal.fire({
         title: 'ลงทะเบียนสำเร็จ',
         icon: 'success',
@@ -188,6 +189,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const desktopBanner = document.getElementById('desktopBanner');
   const mobileBanner = document.getElementById('mobileBanner');
+
+  const memberName = document.getElementById('memberName');
+
+  if (checkAuthToken()) {
+    let user = decodeToken(localStorage.getItem('hotdeal_token'));
+    memberName.innerHTML = user.Firstname;
+  } else {
+    memberName.innerHTML = 'เข้าสู่ระบบ';
+  }
 
   function clearAllModalInput() {
     clearEmailModalInputs();
@@ -287,6 +297,7 @@ document.addEventListener('DOMContentLoaded', function() {
               confirmButtonText: 'ตกลง'
             }).then(() => {
               clearAllModalInput();
+              memberName.innerHTML = decodedData.Firstname;
             });
           } else {
             // Register New Member
@@ -298,7 +309,7 @@ document.addEventListener('DOMContentLoaded', function() {
               confirmButtonColor: '#123f6d',
               confirmButtonText: 'ตกลง'
             }).then(() => {
-              clearAllModalInput();
+              document.getElementById('registerEmail').value = email;
               registerModal.showModal();
             });
           }
@@ -418,6 +429,7 @@ document.addEventListener('DOMContentLoaded', function() {
       confirmButtonColor: '#123f6d',
       confirmButtonText: 'ตกลง'
     });
+    memberName.innerHTML = 'เข้าสู่ระบบ';
   });
 
   unitBtn.forEach(btn => {
@@ -487,7 +499,7 @@ document.addEventListener('DOMContentLoaded', function() {
       tel: modalPhone.value,
       lineId: modalLineId.value,
       email: modalEmail.value,
-      //token: sessionStorage.getItem('tmp_hotdeal_token')
+      memberID: decodeToken(localStorage.getItem('hotdeal_token')).ID
     }
 
     try {
