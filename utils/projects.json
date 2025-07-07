@@ -81,6 +81,7 @@
     "ProjectID": 17,
     "ProjectCode": "CMD005",
     "ProjectName": "โมดิซ สุขุมวิท 50",
+    "ProjectLogo": "https://assetwise.co.th/wp-content/uploads/2023/03/logo_modiz-sukumvit50-rev.png",
     "BUID": 1,
     "BU": "BUG1"
   },
@@ -291,6 +292,7 @@
     "ProjectID": 49,
     "ProjectCode": "109C001",
     "ProjectName": "โมดิซ โวยาจ ศรีนครินทร์",
+    "ProjectLogo": "https://assetwise.co.th/wp-content/uploads/2023/08/modiz-voyage_logo-2.png",
     "BUID": 4,
     "BU": "BUG4"
   },
@@ -403,6 +405,7 @@
     "ProjectID": 75,
     "ProjectCode": "102C027",
     "ProjectName": "มารูน รัชดา",
+    "ProjectLogo": "https://assetwise.co.th/wp-content/uploads/2023/11/maroon32_logo_2.png",
     "BUID": 1,
     "BU": "BUG1"
   },
@@ -424,6 +427,7 @@
     "ProjectID": 79,
     "ProjectCode": "103C008",
     "ProjectName": "แอทโมซ  แคนวาส  ระยอง",
+    "ProjectLogo": "https://assetwise.co.th/wp-content/uploads/2023/08/atmoz-canvas_logo-2.png",
     "BUID": 3,
     "BU": "BUG3"
   },
@@ -431,6 +435,7 @@
     "ProjectID": 81,
     "ProjectCode": "124C001",
     "ProjectName": "เคฟ โคโค่ บางแสน",
+    "ProjectLogo": "https://assetwise.co.th/wp-content/uploads/2023/05/Kave-coco-logo.png",
     "BUID": 3,
     "BU": "BUG3"
   },
@@ -480,6 +485,7 @@
     "ProjectID": 93,
     "ProjectCode": "102C032",
     "ProjectName": "เคฟ วันเดอร์แลนด์",
+    "ProjectLogo": "https://assetwise.co.th/wp-content/uploads/2023/10/kave-wonderland-logo-1.png",
     "BUID": 1,
     "BU": "BUG1"
   },
@@ -509,6 +515,7 @@
     "ProjectID": 98,
     "ProjectCode": "125C001",
     "ProjectName": "เคฟ เพลย์กราวด์ ลาดพร้าว-บดินทรเดชา",
+    "ProjectLogo": "https://assetwise.co.th/wp-content/uploads/2023/12/LOGO-PNG.png",
     "BUID": 4,
     "BU": "BUG4"
   },
@@ -516,6 +523,7 @@
     "ProjectID": 99,
     "ProjectCode": "127C001",
     "ProjectName": "เคฟ เจเนซิส นครปฐม",
+    "ProjectLogo": "https://assetwise.co.th/wp-content/uploads/2024/02/Kave-Genesis-Logo.png",
     "BUID": 2,
     "BU": "BUG2"
   },
@@ -523,6 +531,7 @@
     "ProjectID": 101,
     "ProjectCode": "102C035",
     "ProjectName": "เคฟ ลูมินัส บางมด",
+    "ProjectLogo": "https://assetwise.co.th/wp-content/uploads/2024/01/kave-luminous_logo-color-2.png",
     "BUID": 3,
     "BU": "BUG3"
   },
