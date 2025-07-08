@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AssetWise Hot Deal - ยูนิตสวย ราคาโดน คอนโดใกล้มหาลัย</title>
   <link rel="icon" href="<?php echo BASE_URL; ?>/favicon.ico">
@@ -22,13 +22,13 @@
   <header class="px-2 md:px-0 py-3 md:py-4 shadow-md fixed top-0 left-0 right-0 z-50 bg-white">
     <div class="container">
       <div class="flex justify-between items-center">
-        <div class="w-1/5 md:w-1/3"></div>
-        <div class="logo w-3/5 md:w-1/3 flex justify-center">
+        <div class="hidden md:block md:w-1/3"></div>
+        <div class="logo w-1/2 md:w-1/3 flex  md:justify-center">
           <a href="<?php echo BASE_URL; ?>">
             <img src="<?php echo BASE_URL; ?>images/logo-hr.svg" class="w-[165px]" alt="logo">
           </a>
         </div>
-        <div class="w-1/5 md:w-1/3 flex justify-end">
+        <div class="w-1/2 md:w-1/3 flex justify-end">
           <button id="memberBtn" class="cursor-pointer hover:bg-neutral-200 rounded-full px-3 py-2 flex gap-2">
             <span id="memberName" class="text-neutral-700 text-[15px]">เข้าสู่ระบบ</span>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -33,14 +33,14 @@ function fetch_from_api($method, $url, $data = false, $token = null) {
                     curl_setopt($curl, CURLOPT_POSTFIELDS, $data); // Form data
                 } else {
                     //log_api_request($method, $url, json_encode($data));
-                    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data)); // JSON
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data, JSON_UNESCAPED_UNICODE)); // JSON
                 }
             }
             break;
         case "PUT":
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
             if ($data)
-                curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+                curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data, JSON_UNESCAPED_UNICODE));
             break;
         default:
             if (is_array($data) && !empty($data))
@@ -63,7 +63,7 @@ function fetch_from_api($method, $url, $data = false, $token = null) {
     curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
 
     if ($token) {
-        log_api_request($method, $url, $token);
+        //log_api_request($method, $url, $token);
         curl_setopt($curl, CURLOPT_HTTPHEADER, ['Authorization: Bearer ' . $token]);
     }
 
@@ -157,6 +157,13 @@ if (!empty($_REQUEST['action'])) {
                     $response = add_member($_REQUEST['data']);
                 }
                 break;
+            case 'update_member':
+                if (empty($_REQUEST['data'])) {
+                    $response = ['error' => true, 'message' => 'Member data and token are required'];
+                } else {
+                    $response = update_member($_REQUEST['data']);
+                }
+                break;
             case 'get_member':
                 if (empty($_REQUEST['memberID']) || empty($_REQUEST['token'])) {
                     $response = ['error' => true, 'message' => 'Member ID and token are required'];
@@ -185,7 +192,7 @@ if (!empty($_REQUEST['action'])) {
     }
 
     if ($response !== null) {
-        echo json_encode($response);
+        echo json_encode($response, JSON_UNESCAPED_UNICODE);
     }
     exit; // Important to prevent further script execution
 }
@@ -327,7 +334,43 @@ function add_member($userData) {
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, $endpoint);
     curl_setopt($curl, CURLOPT_POST, true);
-    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($userData));
+    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($userData, JSON_UNESCAPED_UNICODE));
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/json', 'Authorization: Bearer ' . $token]);
+    $result = curl_exec($curl);
+    curl_close($curl);
+
+    $decoded_result = json_decode($result, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        return ['error' => true, 'message' => 'JSON Decode Error: ' . json_last_error_msg(), 'raw_response' => $result];
+    }
+    
+    return $decoded_result;
+}
+
+function update_member($userData) {
+    $endpoint = API_BASE_URL . '/Member/UpdateMember';
+
+    // Decode JSON string to array if it's a string
+    if (is_string($userData)) {
+        $userData = json_decode($userData, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return ['error' => true, 'message' => 'Invalid JSON in userData: ' . json_last_error_msg()];
+        }
+    }
+
+    // Check if token exists
+    if (!isset($userData['token'])) {
+        return ['error' => true, 'message' => 'Token is required'];
+    }
+
+    $token = $userData['token'];
+    unset($userData['token']);
+
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $endpoint);
+    curl_setopt($curl, CURLOPT_POST, true);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($userData, JSON_UNESCAPED_UNICODE));
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/json', 'Authorization: Bearer ' . $token]);
     $result = curl_exec($curl);

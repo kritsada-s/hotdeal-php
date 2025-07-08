@@ -35,8 +35,11 @@
           <div class="unit-thumb w-full h-auto aspect-[4/3] bg-cover bg-center" 
           style="background-image: url(<?= getImagePath($unitThumb['resource']['filePath']) ?>);"></div>
         </div>
-        <div class="show-unit-right w-11/12 md:w-2/5 bg-white shadow-lg md:shadow rounded-t-xl rounded-b-md md:rounded p-5 md:p-10 flex flex-col justify-between mx-auto md:mx-0 -mt-10 md:mt-0 z-10">
+        <div class="show-unit-right w-11/12 md:w-2/5 bg-white shadow-lg md:shadow rounded-t-xl rounded-b-md md:rounded pt-7 px-5 pb-5 md:p-10 flex flex-col gap-7 md:gap-0 justify-between mx-auto md:mx-0 -mt-10 md:mt-0 z-10">
           <div class="detail-box">
+            <div class="project-logo-wrapper w-full md:hidden mb-5">
+              <img src="<?= $projectData['ProjectLogo']; ?>" alt="<?= $projectData['ProjectNameTH'] ?>" class="w-[140px]">
+            </div>
             <h4 class="text-2xl font-medium mb-4">ข้อมูลยูนิต</h4>
             <ul class="unit-info list-none text-neutral-700 text-lg grid gap-2">
               <li>

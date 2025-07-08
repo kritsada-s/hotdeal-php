@@ -55,13 +55,22 @@ function fetchUnits(params = {}, callback) {
 
 function checkLogin() {
   const token = localStorage.getItem('token');
-  console.log(token);
+  //console.log(token);
 }
 
 function decodeToken(token) {
   const base64Url = token.split('.')[1];
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-  const decodedData = JSON.parse(window.atob(base64));
+  
+  // Handle UTF-8 decoding properly
+  const binaryString = window.atob(base64);
+  const bytes = new Uint8Array(binaryString.length);
+  for (let i = 0; i < binaryString.length; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+  
+  const decodedString = new TextDecoder('utf-8').decode(bytes);
+  const decodedData = JSON.parse(decodedString);
   return decodedData;
 }
 
@@ -82,7 +91,7 @@ function verifyMember(memberId, token) {
       function(response) {
         if (response.error) {
           localStorage.removeItem('hotdeal_token');
-          console.log(response);
+          //console.log(response);
           return false;
         } else {
           return true;
@@ -127,6 +136,32 @@ function addMember(userData) {
   }
 }
 
+function updateMember(userData) {
+  if (!userData.token) {
+    return;
+  }
+
+  var data = new FormData();
+  data.append('data', JSON.stringify(userData));
+  data.append('action', 'update_member');
+  
+  try {
+    const response = ajaxRequest(`${window.BASE_URL}utils/api.php`, function(response) {
+      //console.log(response.token);
+      localStorage.setItem('hotdeal_token', response.token);
+      memberModal.close();
+      Swal.fire({
+        title: 'อัพเดตข้อมูลสำเร็จ',
+        icon: 'success',
+        confirmButtonColor: '#123f6d',
+        confirmButtonText: 'ตกลง'
+      });
+    }, 'POST', data);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 function checkAuthToken() {
   const token = localStorage.getItem('hotdeal_token');
 
@@ -137,7 +172,7 @@ function checkAuthToken() {
   const decodedData = decodeToken(token);
 
   if (decodedData.ID) {
-    console.log('verifyMember');
+    //console.log('verifyMember');
     if (verifyMember(decodedData.ID, token)) {
       return true;
     } else {
@@ -194,6 +229,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   if (checkAuthToken()) {
     let user = decodeToken(localStorage.getItem('hotdeal_token'));
+    //console.log(user.Firstname);
     memberName.innerHTML = user.Firstname;
   } else {
     memberName.innerHTML = 'เข้าสู่ระบบ';
@@ -223,7 +259,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   function requestOTP(email) {
-    console.log('--- requestOTP ---');
+    //console.log('--- requestOTP ---');
     
     var data = new FormData();
     data.append('email', email);
@@ -254,7 +290,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function verifyOTP(email, otp) {
-    console.log('--- verifyOTP ---');
+    //console.log('--- verifyOTP ---');
     
     var data = new FormData();
     data.append('email', email);
@@ -329,6 +365,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  // check is this function is used?
   function updateMemberModal(member) {
     if (!member) {
       return;
@@ -474,8 +511,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const registerLastName = document.getElementById('registerLastName');
     const registerPhone = document.getElementById('registerPhone');
     const registerLineId = document.getElementById('registerLineId');
-    const registerEmail = document.getElementById('registerEmail');
-    
+    const registerEmail = document.getElementById('registerEmail');    
     const data = {
       firstName: registerFirstName.value,
       lastName: registerLastName.value,
@@ -493,22 +529,34 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   updateMemberBtn.addEventListener('click', function() {
-    const data = {
-      firstName: modalFirstName.value,
-      lastName: modalLastName.value,
+    const userData = {
+      firstname: modalFirstName.value,
+      lastname: modalLastName.value,
       tel: modalPhone.value,
       lineId: modalLineId.value,
       email: modalEmail.value,
-      memberID: decodeToken(localStorage.getItem('hotdeal_token')).ID
+      id: decodeToken(localStorage.getItem('hotdeal_token')).ID,
+      token: localStorage.getItem('hotdeal_token')
     }
 
     try {
-      console.log('updateMember');
-      console.log(data);
+      updateMember(userData);
     } catch (error) {
       console.log(error);
     }
   });
+
+  function setSummarySubmitBtn(el, mode = 'sending') {
+    if (mode == 'sending') {
+      el.disabled = true;
+      el.querySelector('.loading').classList.remove('hidden');
+      el.querySelector('svg').classList.add('hidden');
+    } else {
+      el.disabled = false;
+      el.querySelector('.loading').classList.add('hidden');
+      el.querySelector('svg').classList.remove('hidden');
+    }
+  }
 
   summarySubmitBtn.addEventListener('click', function() {
     const summaryFirstName = document.getElementById('summaryFirstName');
@@ -519,6 +567,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const summaryUnit = document.getElementById('summaryUnit').innerHTML;
     const summaryProjectID = document.getElementById('projectID').value;
 
+    setSummarySubmitBtn(summarySubmitBtn, 'sending');
+    
     // Create FormData to send as form data, not JSON
     const data = new FormData();
     data.append('Fname', summaryFirstName.value);
@@ -555,7 +605,8 @@ document.addEventListener('DOMContentLoaded', function() {
           });
         } else {
           summaryModal.close();
-          showSwal('ลงทะเบียนสำเร็จ', 'ขอบคุณสำหรับการลงทะเบียน<br/>กรุณารอการติดต่อกลับจากโครงการ', 'success', '#123f6d', 'ตกลง');
+          showSwal('ลงทะเบียนสำเร็จ', 'ขอบคุณสำหรับการลงทะเบียน\nกรุณารอการติดต่อกลับจากโครงการ', 'success', '#123f6d', 'ตกลง');
+          setSummarySubmitBtn(summarySubmitBtn, 'success');
         }
       }, 'POST', data);
     } catch (error) {
@@ -567,6 +618,7 @@ document.addEventListener('DOMContentLoaded', function() {
         confirmButtonColor: '#123f6d',
         confirmButtonText: 'ตกลง'
       });
+      setSummarySubmitBtn(summarySubmitBtn, 'failed');
     }
   });
 
