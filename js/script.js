@@ -91,7 +91,7 @@ function verifyMember(memberId, token) {
       function(response) {
         if (response.error) {
           localStorage.removeItem('hotdeal_token');
-          //console.log(response);
+          document.getElementById('memberName').innerHTML = 'เข้าสู่ระบบ';
           return false;
         } else {
           return true;
@@ -122,14 +122,24 @@ function addMember(userData) {
   try {
     const response = ajaxRequest(`${window.BASE_URL}utils/api.php`, function(response) {
       //console.log(response);
-      localStorage.setItem('hotdeal_token', response.token);
-      registerModal.close();
-      Swal.fire({
-        title: 'ลงทะเบียนสำเร็จ',
-        icon: 'success',
-        confirmButtonColor: '#123f6d',
-        confirmButtonText: 'ตกลง'
-      });
+      if (response.token != null) {
+        localStorage.setItem('hotdeal_token', response.token);
+        let user = decodeToken(response.token);
+        memberName.innerHTML = user.Firstname;
+        registerModal.close();
+        Swal.fire({
+          title: 'ลงทะเบียนสำเร็จ',
+          icon: 'success',
+          confirmButtonColor: '#123f6d',
+          confirmButtonText: 'ตกลง'
+        });
+      } else {
+        Swal.fire({
+          title: 'เกิดข้อผิดพลาด',
+          text: response.message,
+          icon: 'error',
+        });
+      }
     }, 'POST', data);
   } catch (error) {
     console.log(error);
