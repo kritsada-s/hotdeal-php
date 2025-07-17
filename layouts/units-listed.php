@@ -10,6 +10,7 @@ $units = get_units()['data']['units'];
 
 <section id="unitsListed" class="py-8 md:py-10">
   <div class="container">
+  <?php if (count($units) > 0) : ?>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-7">
       <?php foreach ($units as $unit) : ?>
         <div class="unit rounded-lg overflow-hidden shadow-lg">
@@ -32,5 +33,12 @@ $units = get_units()['data']['units'];
         </div>
       <?php endforeach; ?>
     </div>
+  <?php else : ?>
+    <div class="flex flex-col items-center justify-center gap-5 min-h-[500px]">
+      <img src="<?php echo BASE_URL; ?>/images/warning-o.webp" alt="no data" class="w-[140px]">
+      <h3 class="text-center text-neutral-900 text-2xl font-medium">ไม่พบข้อมูล</h3>
+      <p class="text-center text-neutral-500">กรุณาลองใหม่อีกครั้งภายหลัง</p>
+    </div>
+  <?php endif; ?>
   </div>
 </section>

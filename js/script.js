@@ -390,6 +390,10 @@ document.addEventListener('DOMContentLoaded', function() {
     modalLineId.value = member.LineID;
   }
 
+  function setMemberName(member) {
+    memberName.innerHTML = member.firstname;
+  }
+
   function updateSummaryModal(member, unit) {
     //console.log(unit.project);
     const summaryFirstName = document.getElementById('summaryFirstName');
@@ -551,6 +555,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     try {
       updateMember(userData);
+      setMemberName(userData);
     } catch (error) {
       console.log(error);
     }

@@ -2,6 +2,10 @@
 <?php
   $unit_id = isset($_GET['id']) ? $_GET['id'] : '';
   $unit_detail = get_unit_detail($unit_id)['data'];
+  if (empty($unit_detail)) {
+    header('Location: /hotdeal/404');
+    exit;
+  }
   $unitThumb = $unit_detail['headerImage'];
   $projectName = getProjectName($unit_detail['projectID']);
   $project = getProjectDetail($unit_detail['projectID'])['data'];
