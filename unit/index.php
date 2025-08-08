@@ -11,10 +11,64 @@
   $project = getProjectDetail($unit_detail['projectID'])['data'];
   $planImage = $unit_detail['planImages'];
   $unitGallery = $unit_detail['galleries'];
+  $projectURL = $project['projectURL'];
 
   $projectData = getProjectDataByCode($unit_detail['projectID']);
+  $facility = get_project_facility($projectURL);
+
+  $gallery[] = $unitThumb;
+  foreach ($unitGallery as $image) {
+    $gallery[] = $image;
+  }
+  foreach ($planImage as $image) {
+    $gallery[] = $image;
+  }
 ?>
-<section id="unitDetail" class="pt-10 bg-neutral-50">
+
+<style>
+  :root {
+    --swiper-pagination-progressbar-size: 8px;
+    --swiper-pagination-color: #F1683B;
+  }
+  
+  /* Facility Swiper Styles */
+  .facility-main-wrapper {
+    height: 400px;
+  }
+  
+  .facility-thumb-wrapper {
+    height: 80px;
+    margin-top: 10px;
+  }
+  
+  .facility-thumb-wrapper .swiper-slide {
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+  }
+  
+  .facility-thumb-wrapper .swiper-slide-thumb-active {
+    border-color: #F1683B;
+    opacity: 1 !important;
+  }
+  
+  .facility-thumb-wrapper .swiper-slide img {
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+  }
+  
+  .facility-thumb-wrapper .swiper-slide-thumb-active img {
+    opacity: 1;
+  }
+  
+  .facility-thumb-wrapper .swiper-slide:hover img {
+    opacity: 1;
+  }
+</style>
+
+<section id="unitDetail" class="pt-10 bg-[#edf2f6]">
   <div class="top-panel mb-5">
     <div class="container">
       <a href="/hotdeal" class="unit-detail-header-back flex items-center gap-2 text-sky-900">
@@ -36,8 +90,27 @@
             <br class="block md:hidden">
             <span class="text-[20px] md:text-base text-neutral-700"><span class="hidden md:inline"> - </span><?= $projectData['ProjectNameTH'] ?></span>
           </h1>
-          <div class="unit-thumb w-full h-auto aspect-[4/3] bg-cover bg-center" 
-          style="background-image: url(<?= getImagePath($unitThumb['resource']['filePath']) ?>);"></div>
+          <div class="gallery-wrapper w-full h-auto aspect-[4/3]">
+            <div class="swiper" id="mainGallerySwiper">
+              <div class="swiper-wrapper">
+                <?php foreach ($gallery as $image) { ?>
+                  <div class="gallery-item swiper-slide aspect-[4/3] bg-cover bg-center" style="background-image: url(<?= getImagePath($image['resource']['filePath']) ?>);">
+                  </div>
+                <?php } ?>
+              </div>
+              <div class="swiper-pagination"></div>
+              <div class="main-gallery-next swiper-button-next z-11 after:hidden opacity-90 hover:opacity-100 transition-all duration-300">
+                <div class="h-18 aspect-square p-5 bg-gray-200/60 rounded-full flex items-center justify-center">
+                <svg height="200px" width="200px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 185.343 185.343" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M51.707,185.343c-2.741,0-5.493-1.044-7.593-3.149c-4.194-4.194-4.194-10.981,0-15.175 l74.352-74.347L44.114,18.32c-4.194-4.194-4.194-10.987,0-15.175c4.194-4.194,10.987-4.194,15.18,0l81.934,81.934 c4.194,4.194,4.194,10.987,0,15.175l-81.934,81.939C57.201,184.293,54.454,185.343,51.707,185.343z"></path> </g> </g> </g></svg>
+                </div>
+              </div>
+              <div class="main-gallery-prev swiper-button-prev after:hidden opacity-90 hover:opacity-100 transition-all duration-300">
+                <div class="h-18 aspect-square p-5 bg-gray-200/60 rounded-full flex items-center justify-center">
+                  <svg height="200px" width="200px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 185.343 185.343" xml:space="preserve" fill="#000000" transform="rotate(180)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M51.707,185.343c-2.741,0-5.493-1.044-7.593-3.149c-4.194-4.194-4.194-10.981,0-15.175 l74.352-74.347L44.114,18.32c-4.194-4.194-4.194-10.987,0-15.175c4.194-4.194,10.987-4.194,15.18,0l81.934,81.934 c4.194,4.194,4.194,10.987,0,15.175l-81.934,81.939C57.201,184.293,54.454,185.343,51.707,185.343z"></path> </g> </g> </g></svg>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="show-unit-right w-11/12 md:w-2/5 bg-white shadow-lg md:shadow rounded-t-xl rounded-b-md md:rounded pt-7 px-5 pb-5 md:p-10 flex flex-col gap-7 md:gap-0 justify-between mx-auto md:mx-0 -mt-10 md:mt-0 z-10">
           <div class="detail-box">
@@ -69,7 +142,7 @@
           <div class="price-box text-xl flex flex-col gap-2">
             <div class="origin-price w-full flex justify-between items-baseline">
               <span>ปกติ</span>
-              <span class="text-neutral-500 line-through"><?= number_format($unit_detail['sellingPrice'], 0, '.', ',') ?> ล้าน</span>
+              <span class="text-neutral-500 line-through"><?= number_format($unit_detail['sellingPrice'], 0, '.', ',') ?> บาท</span>
             </div>
             <hr class="border-neutral-300 mt-4 mb-5">
             <div class="final-price w-full flex justify-between items-baseline">
@@ -114,47 +187,44 @@
     </div>
   </div>
 
-  <div id="unitPlan" class="py-10 md:py-20">
+  <div id="facility" class="py-10 md:py-20">
     <div class="container">
-      <h3 class="text-3xl font-medium mb-5 text-center text-primary">แบบแปลนห้อง</h3>
+      <h3 class="text-3xl font-medium mb-5 text-center text-primary">สิ่งอำนวยความสะดวก</h3>
       <div class="w-10 h-[4px] bg-primary mx-auto my-10"></div>
       <div class="w-full md:w-3/4 mx-auto">
-      <?php foreach ($planImage as $image) { ?>
-        <a href="<?= getImagePath($image['resource']['filePath']) ?>" data-fslightbox="gallery">
-          <img src="<?= getImagePath($image['resource']['filePath']) ?>" alt="Unit Plan" class="w-full h-auto border border-neutral-300">
-        </a>
-      <?php } ?>
+        <!-- Main Facility Swiper -->
+        <div id="facilityMainSwiper" class="facility-main-wrapper swiper mb-4">
+          <div class="swiper-wrapper">
+            <?php foreach ($facility as $item) { ?>
+            <div class="facility-item swiper-slide">
+              <img src="<?= $item['image'] ?>" alt="<?= $item['title'] ?>" class="w-full h-full object-cover rounded-lg">
+            </div>
+            <?php } ?>
+          </div>
+          <div class="swiper-button-prev facility-main-prev"></div>
+          <div class="swiper-button-next facility-main-next"></div>
+        </div>
+        
+        <!-- Thumbnail Swiper -->
+        <div id="facilityThumbSwiper" class="facility-thumb-wrapper swiper">
+          <div class="swiper-wrapper">
+            <?php foreach ($facility as $item) { ?>
+            <div class="facility-thumb-item swiper-slide cursor-pointer">
+              <img src="<?= $item['image'] ?>" alt="<?= $item['title'] ?>" class="w-full h-full object-cover rounded opacity-60 hover:opacity-100 transition-opacity duration-300">
+            </div>
+            <?php } ?>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div id="unitGallery" class="py-10 md:py-20 bg-gradient-to-b from-neutral-50 to-white">
-    <div class="container">
-      <h3 class="text-3xl font-medium mb-5 text-center text-primary">บรรยากาศภายในห้อง</h3>
-      <div class="w-10 h-[4px] bg-primary mx-auto my-10"></div>
-      <div class="w-full md:w-3/4 mx-auto relative">
-        <div id="unitGallerySwiper" class="swiper">
-          <div class="swiper-wrapper">
-            <?php foreach ($unitGallery as $image) { ?>
-              <a href="<?= getImagePath($image['resource']['filePath']) ?>" data-fslightbox="gallery" class="swiper-slide aspect-video bg-cover bg-center" style="background-image: url(<?= getImagePath($image['resource']['filePath']) ?>);"></a>
-            <?php } ?>
-          </div>
-          <div class="swiper-pagination"></div>
-        </div>
-        <div class="unit-gallery-next swiper-button-next z-11 after:hidden opacity-90 hover:opacity-100 transition-all duration-300">
-          <img src="<?= BASE_URL ?>images/slide-arrow-r.png" alt="next">
-        </div>
-        <div class="unit-gallery-prev swiper-button-prev after:hidden opacity-90 hover:opacity-100 transition-all duration-300">
-          <img src="<?= BASE_URL ?>images/slide-arrow-l.png" alt="prev">
-        </div>
-      </div>
-    </div>
-  </div>
 </section>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const unitGallerySwiper = document.getElementById('unitGallerySwiper');
-    new Swiper(unitGallerySwiper, {
+    const mainGallerySwiper = document.getElementById('mainGallerySwiper');
+    const facilitySwiper = document.getElementById('facilitySwiper');
+    new Swiper(mainGallerySwiper, {
       loop: true,
       slidesPerView: 1,
       spaceBetween: 10,
@@ -163,8 +233,44 @@
         clickable: true,
       },
       navigation: {
-        nextEl: '.unit-gallery-next',
-        prevEl: '.unit-gallery-prev',
+        nextEl: '.main-gallery-next',
+        prevEl: '.main-gallery-prev',
+      },
+    });
+
+    // Initialize facility thumbnail swiper first
+    const facilityThumbSwiper = new Swiper('#facilityThumbSwiper', {
+      spaceBetween: 10,
+      slidesPerView: 'auto',
+      freeMode: true,
+      loop: true,
+      watchSlidesProgress: true,
+      breakpoints: {
+        320: {
+          slidesPerView: 3,
+          spaceBetween: 10
+        },
+        640: {
+          slidesPerView: 4,
+          spaceBetween: 15
+        },
+        768: {
+          slidesPerView: 5,
+          spaceBetween: 15
+        }
+      }
+    });
+
+    // Initialize main facility swiper with thumbnail sync
+    const facilityMainSwiper = new Swiper('#facilityMainSwiper', {
+      loop: true,
+      spaceBetween: 10,
+      thumbs: {
+        swiper: facilityThumbSwiper,
+      },
+      navigation: {
+        nextEl: '.facility-main-next',
+        prevEl: '.facility-main-prev',
       },
     });
   });

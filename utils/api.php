@@ -384,4 +384,10 @@ function update_member($userData) {
     return $decoded_result;
 }
 
+function get_project_facility($url) {
+    $endpoint = 'https://assetwise.co.th/wp-json/asw-api/v1/getProjectFacility';
+    $data = ['url' => $url];
+    return fetch_from_api('GET', $endpoint, $data);
+}
+
 ?>
