@@ -32,21 +32,34 @@
   }
   
   /* Facility Swiper Styles */
-  .facility-main-wrapper {
-    height: 400px;
+  /* .facility-main-wrapper {
+    height: 550px;
+  } */
+
+  @media screen and (max-width: 480px) {
+    .facility-main-wrapper {
+      height: auto;
+      min-height: 220px;
+    }
   }
   
   .facility-thumb-wrapper {
-    height: 80px;
+    /* height: 120px; */
     margin-top: 10px;
   }
   
   .facility-thumb-wrapper .swiper-slide {
-    height: 80px;
+    height: 120px;
     border-radius: 8px;
     overflow: hidden;
     border: 2px solid transparent;
     transition: all 0.3s ease;
+  }
+
+  @media screen and (max-width: 480px) {
+    .facility-thumb-wrapper .swiper-slide {
+      height: 75px;
+    }
   }
   
   .facility-thumb-wrapper .swiper-slide-thumb-active {
@@ -55,7 +68,8 @@
   }
   
   .facility-thumb-wrapper .swiper-slide img {
-    opacity: 0.6;
+    opacity: 0.5;
+    background-color: #fff;
     transition: opacity 0.3s ease;
   }
   
@@ -81,14 +95,14 @@
   <div class="unit-detail-header">
     <div class="container no-padding">
       <div class="project-logo-wrapper w-full hidden md:block">
-        <img src="<?= $projectData['ProjectLogo']; ?>" alt="<?= $projectData['ProjectNameTH'] ?>" class="w-[160px]">
+        <img src="https://assetwise.co.th/wp-content/uploads/<?= $projectData['logo']; ?>" alt="<?= $projectData['nameTH'] ?>" class="w-[160px]">
       </div>
       <div class="show-unit-wrapper flex flex-col md:flex-row">
         <div class="show-unit-left w-full md:w-3/5 md:py-5">
           <h1 class="text-4xl mx-4 md:mx-0 mb-5 font-medium">
             <span class="text-accent"><?= $unit_detail['unitCode'] ?></span>
             <br class="block md:hidden">
-            <span class="text-[20px] md:text-base text-neutral-700"><span class="hidden md:inline"> - </span><?= $projectData['ProjectNameTH'] ?></span>
+            <span class="text-[20px] md:text-base text-neutral-700"><span class="hidden md:inline"></span><?= $projectData['nameTH'] ?></span>
           </h1>
           <div class="gallery-wrapper w-full h-auto aspect-[4/3]">
             <div class="swiper" id="mainGallerySwiper">
@@ -100,12 +114,12 @@
               </div>
               <div class="swiper-pagination"></div>
               <div class="main-gallery-next swiper-button-next z-11 after:hidden opacity-90 hover:opacity-100 transition-all duration-300">
-                <div class="h-18 aspect-square p-5 bg-gray-200/60 rounded-full flex items-center justify-center">
+                <div class="h-18 aspect-square p-5 bg-gray-200/60 rounded-full flex items-center justify-center scale-75 md:scale-100">
                 <svg height="200px" width="200px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 185.343 185.343" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M51.707,185.343c-2.741,0-5.493-1.044-7.593-3.149c-4.194-4.194-4.194-10.981,0-15.175 l74.352-74.347L44.114,18.32c-4.194-4.194-4.194-10.987,0-15.175c4.194-4.194,10.987-4.194,15.18,0l81.934,81.934 c4.194,4.194,4.194,10.987,0,15.175l-81.934,81.939C57.201,184.293,54.454,185.343,51.707,185.343z"></path> </g> </g> </g></svg>
                 </div>
               </div>
               <div class="main-gallery-prev swiper-button-prev after:hidden opacity-90 hover:opacity-100 transition-all duration-300">
-                <div class="h-18 aspect-square p-5 bg-gray-200/60 rounded-full flex items-center justify-center">
+                <div class="h-18 aspect-square p-5 bg-gray-200/60 rounded-full flex items-center justify-center scale-75 md:scale-100">
                   <svg height="200px" width="200px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 185.343 185.343" xml:space="preserve" fill="#000000" transform="rotate(180)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M51.707,185.343c-2.741,0-5.493-1.044-7.593-3.149c-4.194-4.194-4.194-10.981,0-15.175 l74.352-74.347L44.114,18.32c-4.194-4.194-4.194-10.987,0-15.175c4.194-4.194,10.987-4.194,15.18,0l81.934,81.934 c4.194,4.194,4.194,10.987,0,15.175l-81.934,81.939C57.201,184.293,54.454,185.343,51.707,185.343z"></path> </g> </g> </g></svg>
                 </div>
               </div>
@@ -115,7 +129,7 @@
         <div class="show-unit-right w-11/12 md:w-2/5 bg-white shadow-lg md:shadow rounded-t-xl rounded-b-md md:rounded pt-7 px-5 pb-5 md:p-10 flex flex-col gap-7 md:gap-0 justify-between mx-auto md:mx-0 -mt-10 md:mt-0 z-10">
           <div class="detail-box">
             <div class="project-logo-wrapper w-full md:hidden mb-5">
-              <img src="<?= $projectData['ProjectLogo']; ?>" alt="<?= $projectData['ProjectNameTH'] ?>" class="w-[140px]">
+              <img src="https://assetwise.co.th/wp-content/uploads/<?= $projectData['logo']; ?>" alt="<?= $projectData['nameTH'] ?>" class="w-[140px]">
             </div>
             <h4 class="text-2xl font-medium mb-4">ข้อมูลยูนิต</h4>
             <ul class="unit-info list-none text-neutral-700 text-lg grid gap-2">
@@ -147,11 +161,11 @@
             <hr class="border-neutral-300 mt-4 mb-5">
             <div class="final-price w-full flex justify-between items-baseline">
               <span>พิเศษ</span>
-              <span class="text-red-600 font-bold text-5xl shadow-1"><?= number_format($unit_detail['discountPrice']/1000000, 2, '.', ',') ?> ล้าน*</span>
+              <span class="text-red-600 font-bold text-5xl shadow-1"><?= number_format($unit_detail['discountPrice'], 0, '.', ',') ?></span>
             </div>
             <div class="reserved-price"></div>
             <div class="h-4"></div>
-            <button class="unitBtn bg-accent rounded cursor-pointer w-full h-fit text-2xl text-white font-medium px-10 py-5 hover:scale-105 transition-all duration-300 hover:shadow-lg" data-unit="<?= $unit_detail['unitCode'] ?>" data-project="<?= $projectData['ProjectNameTH'] ?>" data-cisid="<?= getProjectCISId($unit_detail['projectID']) ?>">
+            <button class="unitBtn bg-accent rounded cursor-pointer w-full h-fit text-2xl text-white font-medium px-10 py-5 hover:scale-105 transition-all duration-300 hover:shadow-lg" data-unit="<?= $unit_detail['unitCode'] ?>" data-project="<?= $projectData['nameTH'] ?>" data-cisid="<?= $projectData['ProjectID'] ?>">
               สนใจยูนิตนี้
             </button>
           </div>
@@ -164,7 +178,7 @@
     <div class="w-full md:w-1/2 aspect-[4/3] bg-cover bg-center" style="background-image: url(<?= getImagePath($project['headerImage']['resource']['filePath']) ?>);"></div>
     <div class="w-full md:w-1/2 px-5 py-10 md:p-12 text-white flex flex-col justify-center">
       <p class="text-lg font-thin mb-1">ข้อมูลโครงการ</p>
-      <h3 class="text-3xl font-medium"><?= $project['projectNameTH'] ?></h3>
+      <h3 class="text-3xl font-medium"><?= $projectData['nameTH'] ?></h3>
       <div class="h-[4px] bg-white w-10 my-7"></div>
       <div class="project-info">
         <div class="project-info-item flex flex-col gap-4">
@@ -197,12 +211,20 @@
           <div class="swiper-wrapper">
             <?php foreach ($facility as $item) { ?>
             <div class="facility-item swiper-slide">
-              <img src="<?= $item['image'] ?>" alt="<?= $item['title'] ?>" class="w-full h-full object-cover rounded-lg">
+              <img src="<?= $item['image'] ?>" alt="<?= $item['title'] ?>" class="w-full h-full rounded-lg">
             </div>
             <?php } ?>
           </div>
-          <div class="swiper-button-prev facility-main-prev"></div>
-          <div class="swiper-button-next facility-main-next"></div>
+          <div class="swiper-button-prev facility-main-prev after:hidden opacity-90 hover:opacity-100 transition-all duration-300 rotate-180 scale-75 md:scale-100">
+            <div class="h-18 aspect-square p-5 bg-gray-200/80 rounded-full flex items-center justify-center">
+            <svg height="200px" width="200px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 185.343 185.343" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M51.707,185.343c-2.741,0-5.493-1.044-7.593-3.149c-4.194-4.194-4.194-10.981,0-15.175 l74.352-74.347L44.114,18.32c-4.194-4.194-4.194-10.987,0-15.175c4.194-4.194,10.987-4.194,15.18,0l81.934,81.934 c4.194,4.194,4.194,10.987,0,15.175l-81.934,81.939C57.201,184.293,54.454,185.343,51.707,185.343z"></path> </g> </g> </g></svg>
+            </div>
+          </div>
+          <div class="swiper-button-next facility-main-next after:hidden opacity-90 hover:opacity-100 transition-all duration-300 scale-75 md:scale-100">
+            <div class="h-18 aspect-square p-5 bg-gray-200/80 rounded-full flex items-center justify-center">
+            <svg height="200px" width="200px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 185.343 185.343" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M51.707,185.343c-2.741,0-5.493-1.044-7.593-3.149c-4.194-4.194-4.194-10.981,0-15.175 l74.352-74.347L44.114,18.32c-4.194-4.194-4.194-10.987,0-15.175c4.194-4.194,10.987-4.194,15.18,0l81.934,81.934 c4.194,4.194,4.194,10.987,0,15.175l-81.934,81.939C57.201,184.293,54.454,185.343,51.707,185.343z"></path> </g> </g> </g></svg>
+            </div>
+          </div>
         </div>
         
         <!-- Thumbnail Swiper -->

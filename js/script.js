@@ -344,6 +344,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }).then(() => {
               clearAllModalInput();
               memberName.innerHTML = decodedData.Firstname;
+              if (localStorage.getItem('tmp_p')) {
+                const project = JSON.parse(localStorage.getItem('tmp_p'));
+                updateSummaryModal(decodedData, project);
+                summaryModal.showModal();
+              }
             });
           } else {
             // Register New Member
@@ -496,6 +501,7 @@ document.addEventListener('DOMContentLoaded', function() {
       updateSummaryModal(user, project);
       summaryModal.showModal();
     } else {
+      localStorage.setItem('tmp_p', JSON.stringify(project));
       loginModal.showModal();
     }
     });
@@ -537,6 +543,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     try {
       addMember(data);
+      if (localStorage.getItem('tmp_p')) {
+        const project = JSON.parse(localStorage.getItem('tmp_p'));
+        updateSummaryModal(data, project);
+        summaryModal.showModal();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -618,6 +629,9 @@ document.addEventListener('DOMContentLoaded', function() {
             confirmButtonColor: '#123f6d',
             confirmButtonText: 'ตกลง'
           });
+          if (localStorage.getItem('tmp_p')) {
+            localStorage.removeItem('tmp_p');
+          }
         } else {
           summaryModal.close();
           showSwal('ลงทะเบียนสำเร็จ', 'ขอบคุณสำหรับการลงทะเบียน\nกรุณารอการติดต่อกลับจากโครงการ', 'success', '#123f6d', 'ตกลง');

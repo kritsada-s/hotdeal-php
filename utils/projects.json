@@ -1,569 +1,571 @@
-[
-  {
-    "ProjectID": 6,
-    "ProjectCode": "CAM002",
-    "ProjectName": "แอทโมซ ลาดพร้าว 71",
-    "ProjectLogo": "",
-    "BUID": 2,
-    "BU": "BUG2"
-  },
-  {
-    "ProjectID": 7,
-    "ProjectCode": "CMD004",
-    "ProjectName": "โมดิซ รัชดา 32",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 8,
-    "ProjectCode": "CBR003",
-    "ProjectName": "บราวน์ รัชดา-ห้วยขวาง",
-    "BUID": 1,
-    "BU": "BUG1"
-  },
-  {
-    "ProjectID": 9,
-    "ProjectCode": "CAM003",
-    "ProjectName": "แอทโมซ ลาดพร้าว 15",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 10,
-    "ProjectCode": "CWN001",
-    "ProjectName": "วินน์ คอนโด",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 11,
-    "ProjectCode": "CKV001",
-    "ProjectName": "เคฟ",
-    "BUID": 1,
-    "BU": "BUG1"
-  },
-  {
-    "ProjectID": 12,
-    "ProjectCode": "CMD002",
-    "ProjectName": "โมดิซ สเตชั่น",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 13,
-    "ProjectCode": "CMD003",
-    "ProjectName": "โมดิซ อินเตอร์เชนจ์",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 14,
-    "ProjectCode": "CBR002",
-    "ProjectName": "บราวน์ พหลฯ67",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 15,
-    "ProjectCode": "CEP001",
-    "ProjectName": "เอพพิโซด",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 16,
-    "ProjectCode": "CHH007",
-    "ProjectName": "เอชทู โกลว์",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 17,
-    "ProjectCode": "CMD005",
-    "ProjectName": "โมดิซ สุขุมวิท 50",
-    "ProjectLogo": "https://assetwise.co.th/wp-content/uploads/2023/03/logo_modiz-sukumvit50-rev.png",
-    "BUID": 1,
-    "BU": "BUG1"
-  },
-  {
-    "ProjectID": 18,
-    "ProjectCode": "EQC021",
-    "ProjectName": "เคฟ ทาวน์ สเปซ",
-    "BUID": 1,
-    "BU": "BUG1"
-  },
-  {
-    "ProjectID": 19,
-    "ProjectCode": "EQC018",
-    "ProjectName": "แอทโมซ รัชดา-ห้วยขวาง",
-    "BUID": 2,
-    "BU": "BUG2"
-  },
-  {
-    "ProjectID": 20,
-    "ProjectCode": "HGM001",
-    "ProjectName": "แกลม",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 21,
-    "ProjectCode": "CBC001",
-    "ProjectName": "บี แคมปัส",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 22,
-    "ProjectCode": "CBR001",
-    "ProjectName": "บราวน์ คอนโด",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 24,
-    "ProjectCode": "CMD001",
-    "ProjectName": "โมดิซ ลาดพร้าว18",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 25,
-    "ProjectCode": "CWN002",
-    "ProjectName": "วินน์ โชคชัย4",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 26,
-    "ProjectCode": "EQC022",
-    "ProjectName": "เคฟ ทาวน์ ชิฟท์",
-    "BUID": 1,
-    "BU": "BUG1"
-  },
-  {
-    "ProjectID": 27,
-    "ProjectCode": "EQC020",
-    "ProjectName": "ไอเวอรี่ รัชดา 32",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 28,
-    "ProjectCode": "EQC019",
-    "ProjectName": "แอทโมซ แจ้งวัฒนะ",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 29,
-    "ProjectCode": "EQC025",
-    "ProjectName": "โมดิซ คอลเลคชั่น บางโพ",
-    "BUID": 4,
-    "BU": "BUG4"
-  },
-  {
-    "ProjectID": 30,
-    "ProjectCode": "TUC001",
-    "ProjectName": "เคฟ ทียู",
-    "BUID": 1,
-    "BU": "BUG1"
-  },
-  {
-    "ProjectID": 31,
-    "ProjectCode": "W1C002",
-    "ProjectName": "โมดิซ ไรห์ม ฮิล",
-    "BUID": 4,
-    "BU": "BUG4"
-  },
-  {
-    "ProjectID": 32,
-    "ProjectCode": "CES002",
-    "ProjectName": "เอสต้า บลิซ",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 33,
-    "ProjectCode": "HHN001",
-    "ProjectName": "ดิ ออเนอร์",
-    "BUID": 5,
-    "BU": "SE"
-  },
-  {
-    "ProjectID": 34,
-    "ProjectCode": "ABH001",
-    "ProjectName": "บ้านภูริปุรี ลาดพร้าว 41",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 35,
-    "ProjectCode": "CHH001",
-    "ProjectName": "เอชทู วูด",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 36,
-    "ProjectCode": "CHH002",
-    "ProjectName": "เอชทู เมทัล",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 37,
-    "ProjectCode": "CHH003",
-    "ProjectName": "เอชทู สโตน",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 38,
-    "ProjectCode": "CHH004",
-    "ProjectName": "เอชทู สตีล",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 39,
-    "ProjectCode": "CHH005",
-    "ProjectName": "เอชทู โครมร์",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 40,
-    "ProjectCode": "CHH006",
-    "ProjectName": "เอชทู กลาส",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 41,
-    "ProjectCode": "ABH003",
-    "ProjectName": "บ้านภูริปุรี พัฒนาการ",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 42,
-    "ProjectCode": "ABH002",
-    "ProjectName": "บ้านภูริปุรี โฮมออฟฟิศ ลาดพร้าว 41",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 43,
-    "ProjectCode": "W1C003",
-    "ProjectName": "โมดิซ ไรห์ม คลาวด์",
-    "BUID": 4,
-    "BU": "BUG4"
-  },
-  {
-    "ProjectID": 45,
-    "ProjectCode": "CBC002",
-    "ProjectName": "โมดิซ ลอนช์",
-    "BUID": 1,
-    "BU": "BUG1"
-  },
-  {
-    "ProjectID": 46,
-    "ProjectCode": "PPC001",
-    "ProjectName": "เคฟ ศาลายา",
-    "BUID": 2,
-    "BU": "BUG2"
-  },
-  {
-    "ProjectID": 47,
-    "ProjectCode": "BUC003",
-    "ProjectName": "เคฟ ทาวน์ โคโลนี่",
-    "BUID": 1,
-    "BU": "BUG1"
-  },
-  {
-    "ProjectID": 48,
-    "ProjectCode": "106C001",
-    "ProjectName": "เคฟ ทาวน์ ไอส์แลนด์",
-    "BUID": 1,
-    "BU": "BUG1"
-  },
-  {
-    "ProjectID": 49,
-    "ProjectCode": "109C001",
-    "ProjectName": "โมดิซ โวยาจ ศรีนครินทร์",
-    "ProjectLogo": "https://assetwise.co.th/wp-content/uploads/2023/08/modiz-voyage_logo-2.png",
-    "BUID": 4,
-    "BU": "BUG4"
-  },
-  {
-    "ProjectID": 50,
-    "ProjectCode": "TUC002",
-    "ProjectName": "เคฟ เอวา",
-    "BUID": 1,
-    "BU": "BUG1"
-  },
-  {
-    "ProjectID": 51,
-    "ProjectCode": "PDC001",
-    "ProjectName": "แอทโมซ ซีรีน ศรีราชา",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 52,
-    "ProjectCode": "W3C001",
-    "ProjectName": "แอทโมซ บางนา",
-    "BUID": 1,
-    "BU": "BUG1"
-  },
-  {
-    "ProjectID": 58,
-    "ProjectCode": "M1C001",
-    "ProjectName": "แม็กซี่ ไพร์ม รัชดา-สุทธิสาร",
-    "BUID": 4,
-    "BU": "BUG4"
-  },
-  {
-    "ProjectID": 59,
-    "ProjectCode": "EQC032",
-    "ProjectName": "แอทโมซ คาแนล รังสิต",
-    "BUID": 1,
-    "BU": "BUG1"
-  },
-  {
-    "ProjectID": 60,
-    "ProjectCode": "W7C001",
-    "ProjectName": "แอทโมซ โอเอซิส อ่อนนุช",
-    "BUID": 2,
-    "BU": "BUG2"
-  },
-  {
-    "ProjectID": 61,
-    "ProjectCode": "10C001",
-    "ProjectName": "เคฟ ซี้ด เกษตร",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 62,
-    "ProjectCode": "EQC034",
-    "ProjectName": "แอทโมซ พอร์เทรต ศรีสมาน",
-    "BUID": 2,
-    "BU": "BUG2"
-  },
-  {
-    "ProjectID": 63,
-    "ProjectCode": "W8C001",
-    "ProjectName": "แอทโมซ โฟลว์ มีนบุรี",
-    "BUID": 4,
-    "BU": "BUG4"
-  },
-  {
-    "ProjectID": 65,
-    "ProjectCode": "SNH003",
-    "ProjectName": "เอสต้า รังสิต คลอง2",
-    "BUID": 5,
-    "BU": "SE"
-  },
-  {
-    "ProjectID": 66,
-    "ProjectCode": "PDC002",
-    "ProjectName": "เคฟ ยูนิ.เวิร์ส บางแสน",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 71,
-    "ProjectCode": "122C001",
-    "ProjectName": "แอทโมซ พาลาซิโอ ลาดพร้าว-วังหิน",
-    "BUID": 2,
-    "BU": "BUG2"
-  },
-  {
-    "ProjectID": 72,
-    "ProjectCode": "119C001",
-    "ProjectName": "แอทโมซ ซีซั่น ลาดกระบัง",
-    "BUID": 1,
-    "BU": "BUG1"
-  },
-  {
-    "ProjectID": 73,
-    "ProjectCode": "401H001",
-    "ProjectName": "ดิ ออเนอร์ โยธินพัฒนา",
-    "BUID": 5,
-    "BU": "SE"
-  },
-  {
-    "ProjectID": 74,
-    "ProjectCode": "103C005",
-    "ProjectName": "เคฟ เอมบริโอ รังสิต",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 75,
-    "ProjectCode": "102C027",
-    "ProjectName": "มารูน รัชดา",
-    "ProjectLogo": "https://assetwise.co.th/wp-content/uploads/2023/11/maroon32_logo_2.png",
-    "BUID": 1,
-    "BU": "BUG1"
-  },
-  {
-    "ProjectID": 76,
-    "ProjectCode": "121C001",
-    "ProjectName": "โมดิซ วอลท์ เกษตร ศรีปทุม",
-    "BUID": 2,
-    "BU": "BUG2"
-  },
-  {
-    "ProjectID": 78,
-    "ProjectCode": "CES001",
-    "ProjectName": "ESTA ",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 79,
-    "ProjectCode": "103C008",
-    "ProjectName": "แอทโมซ  แคนวาส  ระยอง",
-    "ProjectLogo": "https://assetwise.co.th/wp-content/uploads/2023/08/atmoz-canvas_logo-2.png",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 81,
-    "ProjectCode": "124C001",
-    "ProjectName": "เคฟ โคโค่ บางแสน",
-    "ProjectLogo": "https://assetwise.co.th/wp-content/uploads/2023/05/Kave-coco-logo.png",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 82,
-    "ProjectCode": "400H005",
-    "ProjectName": "ดิ อาเบอร์ รามอินทรา-วัชรพล",
-    "BUID": 5,
-    "BU": "SE"
-  },
-  {
-    "ProjectID": 83,
-    "ProjectCode": "402H001",
-    "ProjectName": "ดิ อาเบอร์ ดอนเมือง-แจ้งวัฒนะ",
-    "BUID": 5,
-    "BU": "SE"
-  },
-  {
-    "ProjectID": 84,
-    "ProjectCode": "DUM012",
-    "ProjectName": "โมดิซ บางนา",
-    "BUID": 1,
-    "BU": "BUG1"
-  },
-  {
-    "ProjectID": 89,
-    "ProjectCode": "102C028",
-    "ProjectName": "เคฟ ป๊อป ศาลายา",
-    "BUID": 2,
-    "BU": "BUG2"
-  },
-  {
-    "ProjectID": 90,
-    "ProjectCode": "400H007",
-    "ProjectName": "เอสต้า ซีรีนิตี้ บรมราชชนนี",
-    "BUID": 5,
-    "BU": "SE"
-  },
-  {
-    "ProjectID": 91,
-    "ProjectCode": "400H006",
-    "ProjectName": "ฌาน เดอะ ริเวอร์ไซด์ บรมราชชนนี",
-    "BUID": 5,
-    "BU": "SE"
-  },
-  {
-    "ProjectID": 93,
-    "ProjectCode": "102C032",
-    "ProjectName": "เคฟ วันเดอร์แลนด์",
-    "ProjectLogo": "https://assetwise.co.th/wp-content/uploads/2023/10/kave-wonderland-logo-1.png",
-    "BUID": 1,
-    "BU": "BUG1"
-  },
-  {
-    "ProjectID": 94,
-    "ProjectCode": "123C001",
-    "ProjectName": "โมดิซ อาวองการ์ด",
-    "BUID": 1,
-    "BU": "BUG1"
-  },
-  {
-    "ProjectID": 96,
-    "ProjectCode": "102C024",
-    "ProjectName": "เคฟ คานิวัล",
-    "BUID": 1,
-    "BU": "BUG1"
-  },
-  {
-    "ProjectID": 97,
-    "ProjectCode": "126C001",
-    "ProjectName": "อควารัส จอมเทียน พัทยา",
-    "ProjectLogo": "https://assetwise.co.th/wp-content/uploads/2024/06/AQJT_logo-1.png",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 98,
-    "ProjectCode": "125C001",
-    "ProjectName": "เคฟ เพลย์กราวด์ ลาดพร้าว-บดินทรเดชา",
-    "ProjectLogo": "https://assetwise.co.th/wp-content/uploads/2023/12/LOGO-PNG.png",
-    "BUID": 4,
-    "BU": "BUG4"
-  },
-  {
-    "ProjectID": 99,
-    "ProjectCode": "127C001",
-    "ProjectName": "เคฟ เจเนซิส นครปฐม",
-    "ProjectLogo": "https://assetwise.co.th/wp-content/uploads/2024/02/Kave-Genesis-Logo.png",
-    "BUID": 2,
-    "BU": "BUG2"
-  },
-  {
-    "ProjectID": 101,
-    "ProjectCode": "102C035",
-    "ProjectName": "เคฟ ลูมินัส บางมด",
-    "ProjectLogo": "https://assetwise.co.th/wp-content/uploads/2024/01/kave-luminous_logo-color-2.png",
-    "BUID": 3,
-    "BU": "BUG3"
-  },
-  {
-    "ProjectID": 103,
-    "ProjectCode": "102C037",
-    "ProjectName": "แอทโมซ เดอ โซล ทิพวัล สเตชั่น",
-    "ProjectLogo": "https://assetwise.co.th/wp-content/uploads/2024/08/Logo-Atmoz-De-Sol.png",
-    "BUID": 1,
-    "BU": "BUG1"
-  },
-  {
-    "ProjectID": 104,
-    "ProjectCode": "128C001",
-    "ProjectName": "เควาลอน",
-    "ProjectLogo": "https://assetwise.co.th/wp-content/uploads/2024/08/kavalon-logo_190x100.png",
-    "BUID": 1,
-    "BU": "BUG1"
-  },
-  {
-    "ProjectID": 105,
-    "ProjectCode": "112C001",
-    "ProjectName": "โมดิซ บียอน มีนบุรี",
-    "BUID": 4,
-    "BU": "BUG4"
-  },
-  {
-    "ProjectID": 106,
-    "ProjectCode": "100C006",
-    "ProjectName": "เคฟ แอลลี่ แจ้งวัฒนะ",
-    "ProjectLogo": "https://assetwise.co.th/wp-content/uploads/2024/11/Logo_KAVE-Alley_190x100px-1-6.png",
-    "BUID": 3,
-    "BU": "BUG3"
-  }
-]
+{
+  "projects_data": [
+    {
+      "projectId": 6,
+      "thumb": "/2023/03/atmoz-ladprao71-thumb.jpg",
+      "logo": "/2023/03/LOGO-ATMOZ-LADPRAO-71-1.png",
+      "link": "/atmoz-ladprao71/",
+      "nameTH": "แอทโมซ ลาดพร้าว 71",
+      "nameEN": "Atmoz Ladprao 71",
+      "status": 2,
+      "ProjectID": 6,
+      "ProjectCode": "CAM002",
+      "ProjectName": "แอทโมซ ลาดพร้าว 71",
+      "BUID": 2,
+      "BU": "BUG2"
+    },
+    {
+      "projectId": 17,
+      "thumb": "/2025/07/ModizSKV50_thumb_21072025.jpg",
+      "logo": "/2023/03/logo_modiz-sukumvit50-rev.png",
+      "link": "/modiz-sukhumvit50/",
+      "nameTH": "โมดิซ สุขุมวิท 50",
+      "nameEN": "Modiz Sukhumvit 50",
+      "status": 2,
+      "ProjectID": 17,
+      "ProjectCode": "CMD005",
+      "ProjectName": "โมดิซ สุขุมวิท 50",
+      "BUID": 1,
+      "BU": "BUG1"
+    },
+    {
+      "projectId": 19,
+      "thumb": "/2023/03/ATMOZ-RATCHADA-HUAIKWANG_Thumb.jpg",
+      "logo": "/2023/03/AtmozRH-logo-1.png",
+      "link": "/atmoz-rh/",
+      "nameTH": "แอทโมซ รัชดา-ห้วยขวาง",
+      "nameEN": "Atmoz Rachada-Huai Khwang",
+      "status": 2,
+      "ProjectID": 19,
+      "ProjectCode": "EQC018",
+      "ProjectName": "แอทโมซ รัชดา-ห้วยขวาง",
+      "BUID": 2,
+      "BU": "BUG2"
+    },
+    {
+      "projectId": 27,
+      "thumb": "2022/08/ivory-ratchadaladprao.jpg",
+      "logo": "/2022/08/Ivory_logo.png",
+      "link": "/ivory-ratchada-ladprao/",
+      "nameTH": "ไอเวอรี่ รัชดา ลาดพร้าว",
+      "nameEN": "Ivory Rachada Ladprao",
+      "status": 2,
+      "ProjectID": 27,
+      "ProjectCode": "EQC020",
+      "ProjectName": "ไอเวอรี่ รัชดา 32",
+      "BUID": 3,
+      "BU": "BUG3"
+    },
+    {
+      "projectId": 29,
+      "thumb": "/2023/03/Modiz-Collection-BangPho-Thumb.jpg",
+      "logo": "/2023/03/modiz-bangpho_logo-2.png",
+      "link": "/modiz-bangpho/",
+      "nameTH": "โมดิซ คอลเล็คชั่น บางโพ",
+      "nameEN": "Modiz Collection Bangpho",
+      "status": 2,
+      "ProjectID": 29,
+      "ProjectCode": "EQC025",
+      "ProjectName": "โมดิซ คอลเลคชั่น บางโพ",
+      "BUID": 4,
+      "BU": "BUG4"
+    },
+    {
+      "projectId": 31,
+      "thumb": "/2023/03/Modiz-Rhyme-Ramkhamhaeng-thumb.jpg",
+      "logo": "/2023/03/modiz-rhyme_logo-1.png",
+      "link": "/modiz-rhyme/",
+      "nameTH": "โมดิซ ไรห์ม รามคำแหง",
+      "nameEN": "Modiz Rhyme Ramkhamhaeng",
+      "status": 2,
+      "ProjectID": 31,
+      "ProjectCode": "W1C002",
+      "ProjectName": "โมดิซ ไรห์ม ฮิล",
+      "BUID": 4,
+      "BU": "BUG4"
+    },
+    {
+      "projectId": 33,
+      "thumb": "/2023/05/The-Honor-Yothin-thumbnail.jpg",
+      "link": "/the-honor/",
+      "nameTH": "ดิ ออเนอร์",
+      "nameEN": "The Honor",
+      "status": 2,
+      "ProjectID": 33,
+      "ProjectCode": "HHN001",
+      "ProjectName": "ดิ ออเนอร์",
+      "BUID": 5,
+      "BU": "SEG"
+    },
+    {
+      "projectId": 46,
+      "thumb": "/2023/03/kave-salaya_thumb.jpg",
+      "logo": "/2023/03/kave-salaya_logo_rev.png",
+      "link": "/kave-mutant-salaya/",
+      "nameTH": "เคฟ มิวแทนต์ ศาลายา",
+      "nameEN": "Kave Mutant Salaya",
+      "status": 2,
+      "ProjectID": 46,
+      "ProjectCode": "PPC001",
+      "ProjectName": "เคฟ ศาลายา",
+      "BUID": 2,
+      "BU": "BUG2"
+    },
+    {
+      "projectId": 47,
+      "thumb": "/2023/03/kave-town-thumb.jpg",
+      "logo": "/2023/03/kave-colony_logo-2.png",
+      "link": "/kave-town-colony/",
+      "nameTH": "เคฟ ทาวน์ โคโลนี่",
+      "nameEN": "Kave Town Colony",
+      "status": 2,
+      "ProjectID": 47,
+      "ProjectCode": "BUC003",
+      "ProjectName": "เคฟ ทาวน์ โคโลนี่",
+      "BUID": 1,
+      "BU": "BUG1"
+    },
+    {
+      "projectId": 48,
+      "thumb": "/2023/05/AW-ISLAND-320-x-472.jpg",
+      "logo": "/2023/05/kave-island-logo.png",
+      "link": "/kave-town-island/",
+      "nameTH": "เคฟ ทาวน์ ไอส์แลนด์",
+      "nameEN": "Kave Town Island",
+      "status": 2,
+      "ProjectID": 48,
+      "ProjectCode": "106C001",
+      "ProjectName": "เคฟ ทาวน์ ไอส์แลนด์",
+      "BUID": 1,
+      "BU": "BUG1"
+    },
+    {
+      "projectId": 49,
+      "thumb": "/2023/08/1080x1593-pixel.png",
+      "logo": "/2023/08/modiz-voyage_logo-2.png",
+      "link": "/modiz-voyage-srinakarin/",
+      "nameTH": "โมดิซ โวยาจ ศรีนครินทร์",
+      "nameEN": "Modiz Voyage Srinakarin",
+      "status": 1,
+      "ProjectID": 49,
+      "ProjectCode": "109C001",
+      "ProjectName": "โมดิซ โวยาจ ศรีนครินทร์",
+      "BUID": 4,
+      "BU": "BUG4"
+    },
+    {
+      "projectId": 51,
+      "thumb": "/2023/03/atmoz-sriracha-thumb.jpg",
+      "logo": "/2023/03/new-atmoz-sriracha_logo-2.png",
+      "link": "/atmoz-serene-sriracha/",
+      "nameTH": "แอทโมซ ซีรีน ศรีราชา",
+      "nameEN": "Atmoz Serene Sriracha",
+      "status": 2,
+      "ProjectID": 51,
+      "ProjectCode": "PDC001",
+      "ProjectName": "แอทโมซ ซีรีน ศรีราชา",
+      "BUID": 3,
+      "BU": "BUG3"
+    },
+    {
+      "projectId": 52,
+      "thumb": "/2025/07/Atmoz_TROPICANA_BANGNA.jpg",
+      "logo": "/2023/03/atmoz-tropicana-bangna_new_logo.png",
+      "link": "/atmoz-bangna/",
+      "nameTH": "แอทโมซ ทรอปิคานา บางนา",
+      "nameEN": "Atmoz Tropicana Bangna",
+      "status": 2,
+      "ProjectID": 52,
+      "ProjectCode": "W3C001",
+      "ProjectName": "แอทโมซ บางนา",
+      "BUID": 1,
+      "BU": "BUG1"
+    },
+    {
+      "projectId": 59,
+      "thumb": "/2023/03/atmoz-kanaal-thumb.jpg",
+      "logo": "/2023/03/atmoz-kanaal_logo.png",
+      "link": "/atmoz-kanaal-rangsit/",
+      "nameTH": "แอทโมซ คาแนล",
+      "nameEN": "Atmoz Kanaal Rangsit",
+      "university": "rangsit",
+      "status": 2,
+      "ProjectID": 59,
+      "ProjectCode": "EQC032",
+      "ProjectName": "แอทโมซ คาแนล รังสิต",
+      "BUID": 1,
+      "BU": "BUG1"
+    },
+    {
+      "projectId": 60,
+      "thumb": "/2023/03/atmoz-oasis-onnut-thumb-1.jpg",
+      "logo": "/2023/03/atmoz-onnut_logo.png",
+      "link": "/atmoz-oasis-onnut/",
+      "nameTH": "แอทโมซ โอเอซิส อ่อนนุช",
+      "nameEN": "Atmoz Oasis Onnut",
+      "status": 2,
+      "ProjectID": 60,
+      "ProjectCode": "W7C001",
+      "ProjectName": "แอทโมซ โอเอซิส อ่อนนุช",
+      "BUID": 2,
+      "BU": "BUG2"
+    },
+    {
+      "projectId": 61,
+      "thumb": "/2023/06/kave-seed_thumbnail.webp",
+      "logo": "/2023/06/Logo-Seed-New.png",
+      "link": "/kave-seed-kaset/",
+      "nameTH": "เคฟ ซี๊ด เกษตร",
+      "nameEN": "Kave Seed Kaset",
+      "university": "ku",
+      "status": 2,
+      "ProjectID": 61,
+      "ProjectCode": "10C001",
+      "ProjectName": "เคฟ ซี้ด เกษตร",
+      "BUID": 3,
+      "BU": "BUG3"
+    },
+    {
+      "projectId": 62,
+      "thumb": "/2022/11/thumb-amoz.jpg",
+      "logo": "/2022/08/atmoz-portrait-srisaman-logo.png",
+      "link": "/atmoz-portrait-srisaman/",
+      "nameTH": "แอทโมซ พอร์เทรต ศรีสมาน",
+      "nameEN": "Atmoz Portrait Srisaman",
+      "status": 2,
+      "ProjectID": 62,
+      "ProjectCode": "EQC034",
+      "ProjectName": "แอทโมซ พอร์เทรต ศรีสมาน",
+      "BUID": 2,
+      "BU": "BUG2"
+    },
+    {
+      "projectId": 63,
+      "thumb": "/2023/03/Atmoz-minburi-thumb.jpg",
+      "logo": "/2023/03/atmoz-flow_minburi_logo.png",
+      "link": "/atmoz-flow-minburi/",
+      "nameTH": "แอทโมซ โฟลว์ มีนบุรี",
+      "nameEN": "Atmoz Flow Minburi",
+      "status": 2,
+      "ProjectID": 63,
+      "ProjectCode": "W8C001",
+      "ProjectName": "แอทโมซ โฟลว์ มีนบุรี",
+      "BUID": 4,
+      "BU": "BUG4"
+    },
+    {
+      "projectId": 65,
+      "thumb": "/2023/08/esta-rangsit-klong2-img.jpg",
+      "link": "/esta-rangsit-klong2/",
+      "nameTH": "เอสต้า รังสิต คลอง 2",
+      "nameEN": "Esta Rangsit Khlong 2",
+      "status": 2,
+      "ProjectID": 65,
+      "ProjectCode": "SNH003",
+      "ProjectName": "เอสต้า รังสิต คลอง2",
+      "BUID": 5,
+      "BU": "SEG"
+    },
+    {
+      "projectId": 66,
+      "thumb": "/2023/03/ASW-Kave-Universe_600x900.jpg",
+      "logo": "/2023/06/kave-unicerse-logo_2.png",
+      "link": "/kave-univers-bangsaen/",
+      "nameTH": "เคฟ ยูนิ.เวิร์ส บางแสน",
+      "nameEN": "Kave Universe Bangsaen",
+      "status": 2,
+      "ProjectID": 66,
+      "ProjectCode": "PDC002",
+      "ProjectName": "เคฟ ยูนิ.เวิร์ส บางแสน",
+      "BUID": 3,
+      "BU": "BUG3"
+    },
+    {
+      "projectId": 71,
+      "thumb": "/2023/07/palacio_thumbnail.webp",
+      "logo": "/2023/05/atmoz-palacio_logo_rev.png",
+      "link": "/atmoz-palacio-ladprao-wanghin/",
+      "nameTH": "แอทโมซ พาลาซิโอ ลาดพร้าว-วังหิน",
+      "nameEN": "Atmoz Palacio Ladprao Wanghin",
+      "status": 2,
+      "ProjectID": 71,
+      "ProjectCode": "122C001",
+      "ProjectName": "แอทโมซ พาลาซิโอ ลาดพร้าว-วังหิน",
+      "BUID": 2,
+      "BU": "BUG2"
+    },
+    {
+      "projectId": 72,
+      "thumb": "/2025/07/atmoz-season_thumb_21072025.webp",
+      "logo": "/2023/03/atmoz-ladkrabang_logo.png",
+      "link": "/atmoz-season-ladkrabang/",
+      "nameTH": "แอทโมซ ซีซั่น ลาดกระบัง",
+      "nameEN": "Atmoz Season Ladkrabang",
+      "university": "kmitl",
+      "status": 2,
+      "ProjectID": 72,
+      "ProjectCode": "119C001",
+      "ProjectName": "แอทโมซ ซีซั่น ลาดกระบัง",
+      "BUID": 1,
+      "BU": "BUG1"
+    },
+    {
+      "projectId": 74,
+      "thumb": "/2023/03/kave-embryo_thumb.jpg",
+      "logo": "/2023/03/kave-embryo_logo_rev.png",
+      "link": "/kave-embryo/",
+      "nameTH": "เคฟ เอมบริโอ รังสิต",
+      "nameEN": "Kave Embryo Rangsit",
+      "university": "rangsit",
+      "status": 2,
+      "ProjectID": 74,
+      "ProjectCode": "103C005",
+      "ProjectName": "เคฟ เอมบริโอ รังสิต",
+      "BUID": 3,
+      "BU": "BUG3"
+    },
+    {
+      "projectId": 75,
+      "thumb": "/2024/05/Maroon.jpg",
+      "logo": "/2023/11/maroon32_logo_2.png",
+      "link": "/maroonratchada32/",
+      "nameTH": "มารูน รัชดา32",
+      "nameEN": "Maroon Rachada32",
+      "status": 2,
+      "ProjectID": 75,
+      "ProjectCode": "102C027",
+      "ProjectName": "มารูน รัชดา",
+      "BUID": 1,
+      "BU": "BUG1"
+    },
+    {
+      "projectId": 76,
+      "thumb": "/2023/05/modiz-vault-kaset-thumbnail.png",
+      "logo": "/2023/05/modiz-vault-kaset_logo2-1.png",
+      "link": "/modiz-vault-kaset-sripatum/",
+      "nameTH": "โมดิซ วอลท์ เกษตร ศรีปทุม",
+      "nameEN": "Modiz Vault Kaset Sripatum",
+      "university": "ku",
+      "status": 1,
+      "ProjectID": 76,
+      "ProjectCode": "121C001",
+      "ProjectName": "โมดิซ วอลท์ เกษตร ศรีปทุม",
+      "BUID": 2,
+      "BU": "BUG2"
+    },
+    {
+      "projectId": 79,
+      "thumb": "/2023/08/ASW-Atmoz-Canvas-Rayong-WebBanner_320x472.jpg",
+      "logo": "/2023/08/atmoz-canvas_logo-2.png",
+      "link": "/atmoz-canvas-rayong/",
+      "nameTH": "แอทโมซ แคนวาส ระยอง",
+      "nameEN": "Atmoz Canvas Rayong",
+      "status": 2,
+      "ProjectID": 79,
+      "ProjectCode": "103C008",
+      "ProjectName": "แอทโมซ  แคนวาส  ระยอง",
+      "BUID": 3,
+      "BU": "BUG3"
+    },
+    {
+      "projectId": 81,
+      "thumb": "/2023/05/Kave-Coco-3.jpg",
+      "logo": "/2023/05/Kave-coco-logo.png",
+      "link": "/kave-coco-bangsaen/",
+      "nameTH": "เคฟ โคโค่ บางแสน",
+      "nameEN": "Kave Coco Bangsaen",
+      "status": 2,
+      "ProjectID": 81,
+      "ProjectCode": "124C001",
+      "ProjectName": "เคฟ โคโค่ บางแสน",
+      "BUID": 3,
+      "BU": "BUG3"
+    },
+    {
+      "projectId": 82,
+      "thumb": "/2023/06/Recommended-Project-Image-320x472-1.jpg",
+      "link": "/the-arbor-ramintra/",
+      "nameTH": "ดิ อาเบอร์ รามอินทรา-วัชรพล",
+      "nameEN": "The Arbor Ramintra Watcharapol",
+      "status": 2,
+      "ProjectID": 82,
+      "ProjectCode": "400H005",
+      "ProjectName": "ดิ อาเบอร์ รามอินทรา-วัชรพล",
+      "BUID": 5,
+      "BU": "SEG"
+    },
+    {
+      "projectId": 83,
+      "thumb": "/2023/06/AW_DC_Recommended-Project-Image_W320xH472-01.jpg",
+      "link": "/the-arbor-donmuang/",
+      "nameTH": "ดิ อาเบอร์ ดอนเมือง-แจ้งวัฒนะ",
+      "nameEN": "The Arbor Donmuang",
+      "status": 2,
+      "ProjectID": 83,
+      "ProjectCode": "402H001",
+      "ProjectName": "ดิ อาเบอร์ ดอนเมือง-แจ้งวัฒนะ",
+      "BUID": 5,
+      "BU": "SEG"
+    },
+    {
+      "projectId": 89,
+      "thumb": "/2023/05/thumbnail-kave-pop-salaya-min.jpg",
+      "logo": "/2023/05/kave-pop-salaya_logo.png",
+      "link": "/kave-pop-salaya/",
+      "nameTH": "เคฟ ป๊อป ศาลายา",
+      "nameEN": "Kave Pop Salaya",
+      "university": "salaya",
+      "status": 2,
+      "ProjectID": 89,
+      "ProjectCode": "102C028",
+      "ProjectName": "เคฟ ป๊อป ศาลายา",
+      "BUID": 2,
+      "BU": "BUG2"
+    },
+    {
+      "projectId": 90,
+      "thumb": "2024/02/Esta-Serenity-Boromratchachonnani.png",
+      "link": "/esta-serenity-boromratchachonnani/",
+      "nameTH": "เอสต้า เซรีนิตี้ บรมราชชนนี",
+      "nameEN": "Esta Serenity Boromratchachonnani",
+      "status": 2,
+      "ProjectID": 90,
+      "ProjectCode": "400H007",
+      "ProjectName": "เอสต้า ซีรีนิตี้ บรมราชชนนี",
+      "BUID": 5,
+      "BU": "SEG"
+    },
+    {
+      "projectId": 91,
+      "thumb": "/2024/05/CHANN-The-Riverside-Project-Image_320x472.jpg",
+      "link": "/chann-theriverside/",
+      "nameTH": "ฌาน เดอะ ริเวอร์ไซด์ บรมราชชนนี",
+      "nameEN": "Chann The Riverside Boromratchachonnani",
+      "status": 2,
+      "ProjectID": 91,
+      "ProjectCode": "400H006",
+      "ProjectName": "ฌาน เดอะ ริเวอร์ไซด์ บรมราชชนนี",
+      "BUID": 5,
+      "BU": "SEG"
+    },
+    {
+      "projectId": 93,
+      "thumb": "/2023/10/Kave-wonderland.jpg",
+      "logo": "/2023/10/kave-wonderland-logo-1.png",
+      "link": "/kave-wonderland/",
+      "nameTH": "เคฟ วันเดอร์แลนด์",
+      "nameEN": "Kave Wonderland",
+      "university": "rangsit",
+      "status": 1,
+      "ProjectID": 93,
+      "ProjectCode": "102C032",
+      "ProjectName": "เคฟ วันเดอร์แลนด์",
+      "BUID": 1,
+      "BU": "BUG1"
+    },
+    {
+      "projectId": 94,
+      "thumb": "/2023/06/New-Project-84.jpg",
+      "logo": "/2023/05/Modiz-Avant-Garde-logo.png",
+      "link": "/modiz-avantgard/",
+      "nameTH": "โมดิซ อาวองการ์ด",
+      "nameEN": "Modiz Avantgard",
+      "university": "rangsit",
+      "status": 1,
+      "ProjectID": 94,
+      "ProjectCode": "123C001",
+      "ProjectName": "โมดิซ อาวองการ์ด",
+      "BUID": 1,
+      "BU": "BUG1"
+    },
+    {
+      "projectId": 97,
+      "thumb": "/2024/07/Web-banner_Aquarous-Jomtien-Pattaya_Dec2024-03.jpeg",
+      "logo": "/2024/06/AQJT_logo-1.png",
+      "link": "/aquarous-jomtien-pattaya/",
+      "nameTH": "อควารัส จอมเทียน พัทยา",
+      "nameEN": "Aquarious Jomtien Pattaya",
+      "status": 2,
+      "ProjectID": 97,
+      "ProjectCode": "126C001",
+      "ProjectName": "อควารัส จอมเทียน พัทยา",
+      "BUID": 3,
+      "BU": "BUG3"
+    },
+    {
+      "projectId": 98,
+      "nameTH": "เคฟ เพลย์กราวด์",
+      "nameEN": "Kave Playground",
+      "thumb": "/2025/05/kave-playground_thumbnail_05082025.png",
+      "logo": "/2023/12/LOGO-PNG.png",
+      "link": "/kave-playground/",
+      "university": "bodin",
+      "status": 1,
+      "ProjectID": 98,
+      "ProjectCode": "125C001",
+      "ProjectName": "เคฟ เพลย์กราวด์ ลาดพร้าว-บดินทรเดชา",
+      "BUID": 4,
+      "BU": "BUG4"
+    },
+    {
+      "projectId": 99,
+      "thumb": "/2024/02/Kave-Genesis2.jpg",
+      "logo": "/2024/02/Kave-Genesis-Logo.png",
+      "link": "/kave-genesis/",
+      "nameTH": "เคฟ เจเนซิส นครปฐม",
+      "nameEN": "Kave Genesis Nakhonpathom",
+      "university": "salaya",
+      "status": 1,
+      "ProjectID": 99,
+      "ProjectCode": "127C001",
+      "ProjectName": "เคฟ เจเนซิส นครปฐม",
+      "BUID": 2,
+      "BU": "BUG2"
+    },
+    {
+      "projectId": 101,
+      "thumb": "/2024/01/Untitled-design-1.jpg",
+      "logo": "/2024/01/kave-luminous_logo-color-2.png",
+      "link": "/kave-luminous-bangmod/",
+      "nameTH": "เคฟ ลูมินัส บางมด",
+      "nameEN": "Kave Luminous Bangmod",
+      "university": "kmutt",
+      "status": 2,
+      "ProjectID": 101,
+      "ProjectCode": "102C035",
+      "ProjectName": "เคฟ ลูมินัส บางมด",
+      "BUID": 3,
+      "BU": "BUG3"
+    },
+    {
+      "projectId": 103,
+      "thumb": "/2025/07/de-sol_project-thumbnail.jpg",
+      "logo": "/2024/08/Logo-Atmoz-De-Sol.png",
+      "link": "/atmoz-de-sol-thipphawanstation/",
+      "nameTH": "แอทโมซ เดอ โซล",
+      "nameEN": "Atmoz De Sol Thipphawan Station",
+      "university": "kmitl",
+      "status": 1,
+      "ProjectID": 103,
+      "ProjectCode": "102C037",
+      "ProjectName": "แอทโมซ เดอ โซล ทิพวัล สเตชั่น",
+      "BUID": 1,
+      "BU": "BUG1"
+    },
+    {
+      "projectId": 104,
+      "thumb": "/2024/08/kavalon_thumb_06082025.webp",
+      "logo": "/2024/08/kavalon-logo_190x100.png",
+      "link": "/kavalon/",
+      "nameTH": "เควาลอน",
+      "nameEN": "Kavalon",
+      "university": "rangsit",
+      "status": 1,
+      "ProjectID": 104,
+      "ProjectCode": "128C001",
+      "ProjectName": "เควาลอน",
+      "BUID": 1,
+      "BU": "BUG1"
+    }
+  ]
+}

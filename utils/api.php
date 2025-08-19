@@ -253,36 +253,17 @@ function getProjectLogo($projectCode) {
 }
 
 function getProjectDataByCode($projectCode) {
-    // Get project data from supabase database
-    $endpoint = SUPABASE_URL . 'asw_projects_data';
-    $headers = [
-        'apikey: ' . SUPABASE_KEY,
-        'Authorization: Bearer ' . SUPABASE_KEY,
-        'Content-Type: application/json'
-    ];
-
-    // Build query params to filter by ProjectCode
-    $query = http_build_query([
-        'ProjectCode' => 'eq.' . $projectCode,
-        'select' => '*'
-    ]);
-
-    $curl = curl_init($endpoint . '?' . $query);
-    curl_setopt_array($curl, [
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_HTTPHEADER => $headers
-    ]);
-
-    $response = curl_exec($curl);
-    $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-    curl_close($curl);
-
-    if ($status === 200) {
-        $data = json_decode($response, true);
-        return !empty($data) ? $data[0] : null;
+    $projects_json = file_get_contents(__DIR__ . '/projects.json');
+    $projects = json_decode($projects_json, true)['projects_data'];
+    $filtered_projects = array_filter($projects, function($p) use ($projectCode) {
+        return isset($p['ProjectCode']) && $p['ProjectCode'] === $projectCode;
+    });
+    if (!empty($filtered_projects)) {
+        $project = array_shift($filtered_projects); 
+        return $project; 
+    } else {
+        return null; 
     }
-
-    return null;
 }
 
 function getImagePath($path) {
