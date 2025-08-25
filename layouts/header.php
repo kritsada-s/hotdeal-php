@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AssetWise Hot Deal - ยูนิตสวย ราคาโดน คอนโดใกล้มหาลัย</title>
   <link rel="icon" href="<?php echo BASE_URL; ?>/favicon.ico">
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>css/lity.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
   <script>

@@ -108,8 +108,9 @@
             <div class="swiper" id="mainGallerySwiper">
               <div class="swiper-wrapper">
                 <?php foreach ($gallery as $image) { ?>
-                  <div class="gallery-item swiper-slide aspect-[4/3] bg-cover bg-center" style="background-image: url(<?= getImagePath($image['resource']['filePath']) ?>);">
-                  </div>
+                  <a href="<?= getImagePath($image['resource']['filePath']) ?>" class="gallery-item swiper-slide aspect-[4/3] bg-cover bg-center" data-lity>
+                    <img src="<?= getImagePath($image['resource']['filePath']) ?>" alt="<?= $unit_detail['unitCode'] ?>" class="w-full h-full object-cover">
+                  </a>
                 <?php } ?>
               </div>
               <div class="swiper-pagination"></div>
@@ -211,7 +212,9 @@
           <div class="swiper-wrapper">
             <?php foreach ($facility as $item) { ?>
             <div class="facility-item swiper-slide">
-              <img src="<?= $item['image'] ?>" alt="<?= $item['title'] ?>" class="w-full h-full rounded-lg">
+              <a href="<?= $item['image'] ?>" class="w-full h-full rounded-lg" data-lity>
+                <img src="<?= $item['image'] ?>" alt="<?= $item['title'] ?>" class="w-full h-full rounded-lg">
+              </a>
             </div>
             <?php } ?>
           </div>
