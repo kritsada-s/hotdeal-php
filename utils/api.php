@@ -43,8 +43,10 @@ function fetch_from_api($method, $url, $data = false, $token = null) {
                 curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data, JSON_UNESCAPED_UNICODE));
             break;
         default:
-            if (is_array($data) && !empty($data))
+            if (is_array($data) && !empty($data)) {
                 $url = sprintf("%s?%s", $url, http_build_query($data));
+            }
+            break;
     }
 
     // Options
@@ -172,8 +174,22 @@ if (!empty($_REQUEST['action'])) {
                 }
                 break;
             case 'get_units':
-                // You might want to sanitize or validate parameters from $_REQUEST
-                $params = isset($_REQUEST['params']) && is_array($_REQUEST['params']) ? $_REQUEST['params'] : array();
+                // Accept both nested params[] and top-level query params like searchStr
+                $params = [];
+
+                // If params[] was sent (e.g., params[searchStr]=x), PHP builds an array
+                if (isset($_REQUEST['params']) && is_array($_REQUEST['params'])) {
+                    $params = $_REQUEST['params'];
+                }
+
+                // Also merge in known top-level filters if present
+                $known_filters = ['searchStr'];
+                foreach ($known_filters as $filter_key) {
+                    if (isset($_REQUEST[$filter_key]) && $_REQUEST[$filter_key] !== '') {
+                        $params[$filter_key] = $_REQUEST[$filter_key];
+                    }
+                }
+
                 $response = get_units($params);
                 break;
             case 'test':
