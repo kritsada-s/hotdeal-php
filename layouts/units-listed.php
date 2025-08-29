@@ -30,7 +30,7 @@ $units = get_units()['data']['units'];
         </form>
        <div class="flex items-center gap-2">
           <span class="shrink-0 font-medium">เรียงลำดับตาม : </span>
-          <select name="unit" id="unit" class="select">
+          <select name="unit" id="sortingUnit" class="select">
             <option value="asc">เก่า - ใหม่</option>
             <option value="desc">ใหม่ - เก่า</option>
           </select>

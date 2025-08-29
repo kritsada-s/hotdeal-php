@@ -239,6 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const sortingForm = document.getElementById('sortingForm');
   const unitsListed = document.getElementById('unitsListed');
   const searchForm = document.getElementById('searchForm');
+  const sortingUnit = document.getElementById('sortingUnit');
 
   if (checkAuthToken()) {
     let user = decodeToken(localStorage.getItem('hotdeal_token'));
@@ -706,5 +707,52 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
     }
+  });
+
+  sortingUnit.addEventListener('change', function() {
+    const sort = sortingUnit.value;
+    fetchUnits({
+      sortingUnit: sort
+    }, function(response) {
+      if (response.data && response.data.units && response.data.units.length > 0) {
+        const unitsContainer = document.getElementById('unitsContainer');
+        unitsContainer.innerHTML = '';
+        
+        response.data.units.forEach(unit => {
+          const unitBox = `
+            <div class="unit rounded-lg overflow-hidden shadow-lg border border-neutral-200">
+              <img src="https://aswservice.com/hotdeal/${unit.headerImage.resource.filePath}" class="w-full aspect-square object-cover">
+              <div class="unit-detail px-4 py-6 relative">
+                ${unit.highlightText ? `<div class="bg-accent text-[18px] mb-2 text-white font-medium px-5 py-2 rounded-full absolute -top-5 right-5">${unit.highlightText}</div>` : ''}
+                <p class="text-primary mb-2">${unit.projectID}</p>
+                <h3 class="leading-none font-medium text-3xl">${unit.unitCode}</h3>
+                <p class="text-primary mb-7">
+                  <span class="text-neutral-500 relative line-through">ปกติ ${(unit.sellingPrice/1000000).toFixed(2)} ล้าน</span>
+                  <span class="text-accent text-3xl">พิเศษ</span> <span class="text-accent font-medium text-5xl">${(unit.discountPrice/1000000).toFixed(2)}</span> <span class="text-accent text-3xl">ล้าน</span>
+                </p>
+                <div class="btn-group flex justify-between items-center">
+                  <a href="${window.BASE_URL}unit/?id=${unit.id}" class="text-neutral-500 hover:text-neutral-800 font-light">ดูรายละเอียด</a>
+                  <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2" data-unit="${unit.unitCode}" data-project="${unit.projectID}" data-cisid="${unit.projectID}">สนใจยูนิตนี้</button>
+                </div>
+              </div>
+            </div>
+          `;
+          unitsContainer.innerHTML += unitBox;
+        });
+        
+        // Re-attach event listeners to new unit buttons
+        //attachUnitButtonEvents();
+      } else {
+        // Show no data message
+        const unitsContainer = document.getElementById('unitsContainer');
+        unitsContainer.innerHTML = `
+          <div class="flex flex-col items-center justify-center gap-5 min-h-[500px] col-span-full">
+            <img src="${window.BASE_URL}/images/warning-o.webp" alt="no data" class="w-[140px]">
+            <h3 class="text-center text-neutral-900 text-2xl font-medium">ไม่พบข้อมูล</h3>
+            <p class="text-center text-neutral-500">กรุณาลองใหม่อีกครั้งภายหลัง</p>
+          </div>
+        `;
+      }
+    });
   });
 });
