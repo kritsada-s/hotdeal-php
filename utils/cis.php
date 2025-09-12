@@ -1,5 +1,8 @@
 <?php
 
+include_once __DIR__ . '/mail.php';
+include_once __DIR__ . '/api.php';
+
 // Log function for debugging
 function log_cis_request($data, $response = null, $error = null) {
     $log_file = __DIR__ . '/cis_debug.log';
@@ -109,6 +112,8 @@ if ($http_code >= 400) {
 
 // Log successful response
 log_cis_request($data, $response);
+
+send_thank_you_email($_POST['Email'], 'ขอบคุณสำหรับการลงทะเบียน AssetWise Hot Deals', null, null, $_POST['unitID'], $_POST['projectName']);
 
 // Return the response
 header('Content-Type: application/json');

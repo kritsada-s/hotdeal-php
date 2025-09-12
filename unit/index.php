@@ -14,7 +14,7 @@
   $projectURL = $project['projectURL'];
 
   $projectData = getProjectDataByCode($unit_detail['projectID']);
-  $facility = get_project_facility($projectURL);
+  $projectGallery = get_project_gallery($projectURL);
 
   $gallery[] = $unitThumb;
   foreach ($unitGallery as $image) {
@@ -104,12 +104,12 @@
             <br class="block md:hidden">
             <span class="text-[20px] md:text-base text-neutral-700"><span class="hidden md:inline"></span><?= $projectData['nameTH'] ?></span>
           </h1>
-          <div class="gallery-wrapper w-full h-auto aspect-[4/3]">
+          <div class="gallery-wrapper w-full h-auto aspect-[4/3] bg-neutral-900">
             <div class="swiper" id="mainGallerySwiper">
               <div class="swiper-wrapper">
                 <?php foreach ($gallery as $image) { ?>
-                  <a href="<?= getImagePath($image['resource']['filePath']) ?>" class="gallery-item swiper-slide aspect-[4/3] bg-cover bg-center" data-lity>
-                    <img src="<?= getImagePath($image['resource']['filePath']) ?>" alt="<?= $unit_detail['unitCode'] ?>" class="w-full h-full object-cover">
+                  <a href="<?= getImagePath($image['resource']['filePath']) ?>" class="gallery-item swiper-slide md:aspect-[4/3] aspect-square bg-cover bg-center" data-lity>
+                    <img src="<?= getImagePath($image['resource']['filePath']) ?>" alt="<?= $unit_detail['unitCode'] ?>" class="w-auto h-full mx-auto object-contain">
                   </a>
                 <?php } ?>
               </div>
@@ -202,6 +202,7 @@
     </div>
   </div>
 
+  <?php if (!isset($gallery['error']) || $gallery['error'] != 1) : ?>
   <div id="facility" class="py-10 md:py-20">
     <div class="container">
       <h3 class="text-3xl font-medium mb-5 text-center text-primary">สิ่งอำนวยความสะดวก</h3>
@@ -210,10 +211,10 @@
         <!-- Main Facility Swiper -->
         <div id="facilityMainSwiper" class="facility-main-wrapper swiper mb-4">
           <div class="swiper-wrapper">
-            <?php foreach ($facility as $item) { ?>
+            <?php foreach ($projectGallery as $item) { ?>
             <div class="facility-item swiper-slide">
               <a href="<?= $item['image'] ?>" class="w-full h-full rounded-lg" data-lity>
-                <img src="<?= $item['image'] ?>" alt="<?= $item['title'] ?>" class="w-full h-full rounded-lg">
+                <img src="<?= $item['image'] ?>" alt="<?= $item['title'] ?>" class="w-full h-full rounded-lg aspect-video object-cover">
               </a>
             </div>
             <?php } ?>
@@ -233,7 +234,7 @@
         <!-- Thumbnail Swiper -->
         <div id="facilityThumbSwiper" class="facility-thumb-wrapper swiper">
           <div class="swiper-wrapper">
-            <?php foreach ($facility as $item) { ?>
+            <?php foreach ($projectGallery as $item) { ?>
             <div class="facility-thumb-item swiper-slide cursor-pointer">
               <img src="<?= $item['image'] ?>" alt="<?= $item['title'] ?>" class="w-full h-full object-cover rounded opacity-60 hover:opacity-100 transition-opacity duration-300">
             </div>
@@ -243,62 +244,9 @@
       </div>
     </div>
   </div>
+  <?php endif; ?>  
 
 </section>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const mainGallerySwiper = document.getElementById('mainGallerySwiper');
-    const facilitySwiper = document.getElementById('facilitySwiper');
-    new Swiper(mainGallerySwiper, {
-      loop: true,
-      slidesPerView: 1,
-      spaceBetween: 10,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-      navigation: {
-        nextEl: '.main-gallery-next',
-        prevEl: '.main-gallery-prev',
-      },
-    });
 
-    // Initialize facility thumbnail swiper first
-    const facilityThumbSwiper = new Swiper('#facilityThumbSwiper', {
-      spaceBetween: 10,
-      slidesPerView: 'auto',
-      freeMode: true,
-      loop: true,
-      watchSlidesProgress: true,
-      breakpoints: {
-        320: {
-          slidesPerView: 3,
-          spaceBetween: 10
-        },
-        640: {
-          slidesPerView: 4,
-          spaceBetween: 15
-        },
-        768: {
-          slidesPerView: 5,
-          spaceBetween: 15
-        }
-      }
-    });
-
-    // Initialize main facility swiper with thumbnail sync
-    const facilityMainSwiper = new Swiper('#facilityMainSwiper', {
-      loop: true,
-      spaceBetween: 10,
-      thumbs: {
-        swiper: facilityThumbSwiper,
-      },
-      navigation: {
-        nextEl: '.facility-main-next',
-        prevEl: '.facility-main-prev',
-      },
-    });
-  });
-</script>
-<script type="text/javascript" src="../js/fslightbox.js" defer></script>
 <?php include '../layouts/footer.php'; ?>
+<script type="text/javascript" src="../js/fslightbox.js" defer></script>

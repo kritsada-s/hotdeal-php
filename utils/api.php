@@ -2,6 +2,7 @@
 
 define('SUPABASE_URL', 'https://orrfrdhhcoqtweftfdcl.supabase.co/rest/v1/');
 define('SUPABASE_KEY', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ycmZyZGhoY29xdHdlZnRmZGNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEzNTA5OTksImV4cCI6MjA2NjkyNjk5OX0.UIiBxoiZBK0KQst4Umwm2pjriUUzSc6Yasw4Igioc-o');
+require_once __DIR__ . '/../vendor/autoload.php';
 
 function log_api_request($method, $url, $data) {
     $log_file = __DIR__ . '/api_debug.log';
@@ -16,7 +17,7 @@ function log_api_request($method, $url, $data) {
 
 // Generic function to fetch data from an API
 function fetch_from_api($method, $url, $data = false, $token = null) {
-    //log_api_request($method, $url, $token);
+    //log_api_request($method, $url, $data);
     $curl = curl_init();
 
     // Enable logging for debugging
@@ -45,6 +46,7 @@ function fetch_from_api($method, $url, $data = false, $token = null) {
         default:
             if (is_array($data) && !empty($data)) {
                 $url = sprintf("%s?%s", $url, http_build_query($data));
+                log_api_request($method, $url, var_export($data, true));
             }
             break;
     }
@@ -183,7 +185,7 @@ if (!empty($_REQUEST['action'])) {
                 }
 
                 // Also merge in known top-level filters if present
-                $known_filters = ['searchStr'];
+                $known_filters = ['searchStr', 'projectID', 'sortingUnit'];
                 foreach ($known_filters as $filter_key) {
                     if (isset($_REQUEST[$filter_key]) && $_REQUEST[$filter_key] !== '') {
                         $params[$filter_key] = $_REQUEST[$filter_key];
@@ -194,6 +196,9 @@ if (!empty($_REQUEST['action'])) {
                 break;
             case 'test':
                 $response = ['success' => true, 'message' => 'API is working correctly', 'timestamp' => date('Y-m-d H:i:s')];
+                break;
+            case 'get_project_name':
+                $response = get_project_name($_REQUEST['projectCode']);
                 break;
             // Add more cases for other functions you want to expose via AJAX
             default:
@@ -219,53 +224,74 @@ if (!empty($_REQUEST['action'])) {
 function getProjectName($projectCode) {
     $projects_json = file_get_contents(__DIR__ . '/projects.json');
     if ($projects_json === false) {
-        // Handle error: projects.json not found or not readable
-        return null; // Or throw an exception, or return an error message
+        return 'projects.json not found';
     }
-    $projects = json_decode($projects_json, true);
+    $decoded = json_decode($projects_json, true);
     if (json_last_error() !== JSON_ERROR_NONE) {
-        // Handle JSON decoding error
-        return null; // Or throw an exception, or return an error message
+        return 'JSON decoding error';
     }
+
+    $projects = isset($decoded['projects_data']) && is_array($decoded['projects_data'])
+        ? $decoded['projects_data']
+        : (is_array($decoded) ? $decoded : []);
 
     $filtered_projects = array_filter($projects, function($p) use ($projectCode) {
         return isset($p['ProjectCode']) && $p['ProjectCode'] === $projectCode;
     });
 
     if (!empty($filtered_projects)) {
-        $project = array_shift($filtered_projects); 
-        return isset($project['ProjectName']) ? $project['ProjectName'] : null; 
-    } else {
-        return null;
+        $project = array_shift($filtered_projects);
+        return isset($project['ProjectName']) ? $project['ProjectName'] : null;
     }
+    return 'Project not found';
 }
 
 function getProjectCISId($projectCode) {
     $projects_json = file_get_contents(__DIR__ . '/projects.json');
-    $projects = json_decode($projects_json, true);
+    if ($projects_json === false) {
+        return null;
+    }
+    $decoded = json_decode($projects_json, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        return null;
+    }
+
+    $projects = isset($decoded['projects_data']) && is_array($decoded['projects_data'])
+        ? $decoded['projects_data']
+        : (is_array($decoded) ? $decoded : []);
+
     $filtered_projects = array_filter($projects, function($p) use ($projectCode) {
         return isset($p['ProjectCode']) && $p['ProjectCode'] === $projectCode;
     });
     if (!empty($filtered_projects)) {
-        $project = array_shift($filtered_projects); 
-        return isset($project['ProjectID']) ? $project['ProjectID'] : null; 
-    } else {
-        return null; 
+        $project = array_shift($filtered_projects);
+        return isset($project['ProjectID']) ? $project['ProjectID'] : null;
     }
+    return null;
 }
 
 function getProjectLogo($projectCode) {
     $projects_json = file_get_contents(__DIR__ . '/projects.json');
-    $projects = json_decode($projects_json, true);
+    if ($projects_json === false) {
+        return null;
+    }
+    $decoded = json_decode($projects_json, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        return null;
+    }
+
+    $projects = isset($decoded['projects_data']) && is_array($decoded['projects_data'])
+        ? $decoded['projects_data']
+        : (is_array($decoded) ? $decoded : []);
+
     $filtered_projects = array_filter($projects, function($p) use ($projectCode) {
         return isset($p['ProjectCode']) && $p['ProjectCode'] === $projectCode;
     });
     if (!empty($filtered_projects)) {
-        $project = array_shift($filtered_projects); // Get the first matching project
-        return isset($project['ProjectLogo']) ? $project['ProjectLogo'] : null; // Check if ProjectLogo exists
-    } else {
-        return null; // No project found with that code
+        $project = array_shift($filtered_projects);
+        return isset($project['ProjectLogo']) ? $project['ProjectLogo'] : null;
     }
+    return null;
 }
 
 function getProjectDataByCode($projectCode) {
@@ -384,6 +410,24 @@ function update_member($userData) {
 function get_project_facility($url) {
     $endpoint = 'https://assetwise.co.th/wp-json/asw-api/v1/getProjectFacility';
     $data = ['url' => $url];
+    return fetch_from_api('GET', $endpoint, $data);
+}
+
+function get_project_gallery($url) {
+    $endpoint = 'https://assetwise.co.th/wp-json/asw-api/v1/getProjectGallery';
+    $data = ['url' => $url];
+    return fetch_from_api('GET', $endpoint, $data);
+}
+
+function get_active_projects() {
+    $endpoint = API_BASE_URL . '/Project/GetProjects';
+    return fetch_from_api('GET', $endpoint);
+}
+
+function get_project_name($projectCode) {
+    $endpoint = API_BASE_URL . '/Project/GetProject';
+    $data = ['projectID' => $projectCode];
+    log_api_request('GET', $endpoint, $data);
     return fetch_from_api('GET', $endpoint, $data);
 }
 

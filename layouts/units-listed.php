@@ -1,14 +1,14 @@
 <?php
 include_once 'utils/api.php';
 $units = get_units()['data']['units'];
+$activeProjects = get_active_projects()['data'];
 
 // echo "<pre>";
-// print_r($units);
+// print_r($activeProjects);
 // echo "</pre>";
 
 ?>
-
-<section id="unitsListed" class="py-8 md:py-10">
+<section id="unitsListed" class="pt-10 pb-8">
   <div class="container">
   <div class="flex flex-col justify-between items-center sorting-wrapper gap-4 mb-10">
     <div class="intro flex flex-col gap-2">
@@ -16,25 +16,30 @@ $units = get_units()['data']['units'];
       <p class="text-center text-neutral-700 text-sm md:text-base">รวมยูนิตฮอต ทำเลดีจากแอสเซทไวส์ <br/>ซื้ออยู่เองก็ดี ซื้อไว้ลงทุนก็คุ้ม พร้อมรับสิทธิประโยชน์มากมาย</p>
     </div>
 
+    <div class="h-3"></div>
+
     <div class="sorting-search w-full">
-
-      <div class="search-box items-center gap-2 hidden">
-        <input type="text" placeholder="ค้นหายูนิตที่คุณสนใจ" class="w-full border border-neutral-300 rounded-full px-4 py-2">
-        <button class="btn btn-primary text-white rounded-full w-[80px] text-[16px] font-medium">ค้นหา</button>
-      </div>
-
       <div class="sorting-search w-full bg-neutral-100 p-4 rounded-lg flex flex-col md:flex-row gap-5 justify-between">
-        <form action="" id="searchForm" class="flex items-center gap-2">
+        <div class="flex items-center gap-2">
+          <span class="font-medium text-[14px] flex-shrink-0">เลือกโครงการที่คุณสนใจ</span>
+          <select name="project" id="project_selector" class="select">
+            <option value="">ทั้งหมด</option>
+            <?php foreach ($activeProjects as $project) : ?>
+              <option value="<?= $project['projectID'] ?>"><?= $project['projectNameTH'] ?></option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+        <form action="" id="searchForm" class="hidden items-center gap-2">
           <input type="text" id="searchUnit" name="search" placeholder="ค้นหายูนิตที่คุณสนใจ" class="md:min-w-[250px] w-full border border-neutral-500 rounded-full px-4 py-2 text-neutral-700 focus:bg-white transition">
           <button type="submit" class="btn btn-primary text-white rounded-full w-[80px] text-[16px] font-medium">ค้นหา</button>
         </form>
-       <div class="flex items-center gap-2">
-          <span class="shrink-0 font-medium">เรียงลำดับตาม : </span>
-          <select name="unit" id="sortingUnit" class="select">
-            <option value="asc">เก่า - ใหม่</option>
-            <option value="desc">ใหม่ - เก่า</option>
-          </select>
-       </div>
+        <div class="flex items-center gap-2">
+            <span class="shrink-0 text-[14px] font-medium">เรียงลำดับตาม : </span>
+            <select name="unit" id="sortingUnit" class="select">
+              <option value="asc">เก่า - ใหม่</option>
+              <option value="desc">ใหม่ - เก่า</option>
+            </select>
+        </div>
       </div>
     </div>
   </div>
