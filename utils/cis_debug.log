@@ -1,1 +1,79 @@
 
+Array
+(
+    [timestamp] => 2025-09-15 08:36:50
+    [request_data] => Array
+        (
+            [ProjectID] => 81
+            [ContactChannelID] => 21
+            [ContactTypeID] => 35
+            [RefID] => 1757925410658
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0230
+            [RefDate] => 2025-09-15 15:36:50
+            [FollowUpID] => 42
+            [utm_source] => ASW_HotDeal_New_Website_A0230
+            [FlagPersonalAccept] => 1
+            [FlagContactAccept] => 1
+        )
+
+    [response] => 
+    [error] => 
+    [post_data] => Array
+        (
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [ProjectID] => 81
+            [LineID] => jokerdex
+            [unitID] => A0230
+            [projectName] => เคฟ โคโค่ บางแสน
+            [RefID] => 1757925410658
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0230
+        )
+
+)
+
+Array
+(
+    [timestamp] => 2025-09-15 08:36:51
+    [request_data] => Array
+        (
+            [ProjectID] => 81
+            [ContactChannelID] => 21
+            [ContactTypeID] => 35
+            [RefID] => 1757925410658
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0230
+            [RefDate] => 2025-09-15 15:36:50
+            [FollowUpID] => 42
+            [utm_source] => ASW_HotDeal_New_Website_A0230
+            [FlagPersonalAccept] => 1
+            [FlagContactAccept] => 1
+        )
+
+    [response] => {"Success":true,"Message":"Save success.","Data":{"ContactLogID":0,"CustomerID":0}}
+    [error] => 
+    [post_data] => Array
+        (
+            [Fname] => Kritsada
+            [Lname] => Sangkhatad
+            [Tel] => 0830351302
+            [Email] => kritsada.s@assetwise.co.th
+            [ProjectID] => 81
+            [LineID] => jokerdex
+            [unitID] => A0230
+            [projectName] => เคฟ โคโค่ บางแสน
+            [RefID] => 1757925410658
+            [Ref] => Register from AssetWise Hot Deal Website : interested in unit A0230
+        )
+
+)
+

@@ -36,8 +36,8 @@ $activeProjects = get_active_projects()['data'];
         <div class="flex items-center gap-2">
             <span class="shrink-0 text-[14px] font-medium">เรียงลำดับตาม : </span>
             <select name="unit" id="sortingUnit" class="select">
-              <option value="asc">เก่า - ใหม่</option>
-              <option value="desc">ใหม่ - เก่า</option>
+              <option value="DESC">ใหม่ - เก่า</option>
+              <option value="ASC">เก่า - ใหม่</option>
             </select>
         </div>
       </div>

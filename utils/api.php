@@ -116,6 +116,11 @@ define('ASSETS_PATH', 'https://aswservice.com/hotdeal/');
 function get_units($params = array()) {
     $endpoint = API_BASE_URL . '/Unit/GetUnits';
     // You might want to add authentication or other specific headers here if needed
+    //log_api_request('GET', $endpoint, $params);
+    // Set default sorting if not provided
+    if (!isset($params['sortingUnit'])) {
+        $params['sortingUnit'] = 'DESC';
+    }
     return fetch_from_api('GET', $endpoint, $params);
 }
 
@@ -185,7 +190,7 @@ if (!empty($_REQUEST['action'])) {
                 }
 
                 // Also merge in known top-level filters if present
-                $known_filters = ['searchStr', 'projectID', 'sortingUnit'];
+                $known_filters = ['searchStr', 'projectIDs', 'sortingUnit'];
                 foreach ($known_filters as $filter_key) {
                     if (isset($_REQUEST[$filter_key]) && $_REQUEST[$filter_key] !== '') {
                         $params[$filter_key] = $_REQUEST[$filter_key];
@@ -198,7 +203,7 @@ if (!empty($_REQUEST['action'])) {
                 $response = ['success' => true, 'message' => 'API is working correctly', 'timestamp' => date('Y-m-d H:i:s')];
                 break;
             case 'get_project_name':
-                $response = get_project_name($_REQUEST['projectCode']);
+                $response = get_project_name($_REQUEST['projectID']);
                 break;
             // Add more cases for other functions you want to expose via AJAX
             default:
