@@ -541,6 +541,25 @@ document.addEventListener('DOMContentLoaded', function() {
     memberName.innerHTML = 'เข้าสู่ระบบ';
   });
 
+  unitBtn.forEach(btn => {
+    btn.addEventListener('click', function() {
+    //console.log('clicked', btn);
+    const isAuth = checkAuthToken();
+    let project = {
+      cisid: btn.dataset.cisid,
+      project: btn.dataset.project,
+      unit: btn.dataset.unit,
+    }
+    if (isAuth) {
+      let user = decodeToken(localStorage.getItem('hotdeal_token'));
+      updateSummaryModal(user, project);
+      summaryModal.showModal();
+    } else {
+      localStorage.setItem('tmp_p', JSON.stringify(project));
+      loginModal.showModal();
+    }
+    });
+  });
   requestOTPBtn.addEventListener('click', function() {
     const email = document.getElementById('otp_email').value;
     try {
@@ -778,10 +797,10 @@ document.addEventListener('DOMContentLoaded', function() {
           response.data.units.forEach(unit => {
             const unitBox = `
               <div class="unit relative rounded-lg overflow-hidden shadow-lg border border-neutral-200">
-                ${unit.isSoldOut ? `<div class="absolute top-0 left-0 w-full h-full bg-neutral-900/10 flex items-center justify-center z-[1]">
-                  <span class="text-white text-xl font-medium flex items-center justify-center px-5 py-2 w-full bg-red-500 rotate-45 absolute top-[10%] left-[30%]">SOLD OUT</span>
+                ${unit.isSoldOut ? `<div class="absolute top-0 left-0 w-full h-full bg-neutral-900/40 flex items-center justify-center z-[1]">
+                  <span class="text-white text-2xl font-medium flex items-center justify-center px-5 py-2 w-full h-20 bg-red-500">SOLD OUT</span>
                 </div>` : ''}
-                <div class="unit-wrapper ${unit.isSoldOut ? 'sold-out' : ''}">
+                <div class="unit-wrapper ${unit.isSoldOut ? 'grayscale' : ''}">
                   <a href="${window.BASE_URL}unit/?id=${unit.id}">
                     <img src="https://aswservice.com/hotdeal/${unit.headerImage.resource.filePath}" class="w-full aspect-square object-cover">
                   </a>
@@ -827,83 +846,77 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // if (projectSelector) {
-  //   projectSelector.addEventListener('change', function() {
-  //     const project = projectSelector.value;
+  if (projectSelector) {
+    projectSelector.addEventListener('change', function() {
+      const project = projectSelector.value;
       
-  //     // Smooth fade out animation
-  //     unitsContainer.style.opacity = '0';
-  //     unitsContainer.style.transform = 'translateY(20px)';
-  //     unitsContainer.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+      // Smooth fade out animation
+      unitsContainer.style.opacity = '0';
+      unitsContainer.style.transform = 'translateY(20px)';
+      unitsContainer.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
       
-  //     setTimeout(() => {
-  //       unitsContainer.innerHTML = '';
-  //       loadingAnimation.style.display = 'flex';
+      setTimeout(() => {
+        unitsContainer.innerHTML = '';
+        loadingAnimation.style.display = 'flex';
         
-  //       fetchUnits({
-  //         projectIDs: project
-  //       }, async function(response) {
-  //         loadingAnimation.style.display = 'none';
+        fetchUnits({
+          projectIDs: project
+        }, async function(response) {
+          loadingAnimation.style.display = 'none';
           
-  //         if (response.data && response.data.units && response.data.units.length > 0) {
-  //           unitsContainer.innerHTML = '';
-  //           // Prefetch project names
-  //           const ids = [...new Set(response.data.units.map(u => u.projectID))];
-  //           const nameMap = Object.fromEntries(await Promise.all(ids.map(async id => [id, await getProjectName(id)])));
+          if (response.data && response.data.units && response.data.units.length > 0) {
+            unitsContainer.innerHTML = '';
+            // Prefetch project names
+            const ids = [...new Set(response.data.units.map(u => u.projectID))];
+            const nameMap = Object.fromEntries(await Promise.all(ids.map(async id => [id, await getProjectName(id)])));
 
-  //           console.log(nameMap);
-
-  //           response.data.units.forEach(unit => {
-  //             //console.log(unit);
-  //             const unitBox = `
-  //               <div class="unit relative rounded-lg overflow-hidden shadow-lg border border-neutral-200">
-  //                 ${unit.isSoldOut ? `<div class="absolute top-0 left-0 w-full h-full bg-neutral-900/40 flex items-center justify-center z-[1]">
-  //                   <span class="text-white text-2xl font-medium flex items-center justify-center px-5 py-2 w-full h-20 bg-red-500">SOLD OUT</span>
-  //                 </div>` : ''}
-  //                 <div class="unit-wrapper ${unit.isSoldOut ? 'grayscale' : ''}">
-  //                   <a href="${window.BASE_URL}unit/?id=${unit.id}">
-  //                     <img src="https://aswservice.com/hotdeal/${unit.headerImage.resource.filePath}" class="w-full aspect-square object-cover">
-  //                   </a>
-  //                   <div class="unit-detail px-4 py-6 relative">
-  //                     ${unit.highlightText ? `<div class="bg-accent text-[18px] mb-2 text-white font-medium px-5 py-2 rounded-full absolute -top-5 right-5">${unit.highlightText}</div>` : ''}
-  //                     <p class="text-primary mb-2">${unit.projectName}</p>
-  //                     <h3 class="leading-none font-medium text-3xl">${unit.unitCode}</h3>
-  //                     <p class="text-primary mb-7">
-  //                       <span class="text-neutral-500 relative line-through">ปกติ ${(unit.sellingPrice/1000000).toFixed(2)} ล้าน</span>
-  //                       <span class="text-accent text-3xl">พิเศษ</span> <span class="text-accent font-medium text-5xl">${(unit.discountPrice/1000000).toFixed(2)}</span> <span class="text-accent text-3xl">ล้าน</span>
-  //                     </p>
-  //                     <div class="btn-group flex justify-between items-center">
-  //                       <a href="${window.BASE_URL}unit/?id=${unit.id}" class="text-neutral-500 hover:text-neutral-800 font-light">ดูรายละเอียด</a>
-  //                       <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2" data-unit="${unit.unitCode}" data-project="${nameMap[unit.projectID] ?? unit.projectID}" data-cisid="${unit.projectCode}">สนใจยูนิตนี้</button>
-  //                     </div>
-  //                   </div>
-  //                 </div>
-  //               </div>
-  //             `;
-  //             unitsContainer.innerHTML += unitBox;
-  //           });
-  //         } else {
-  //           unitsContainer.innerHTML = `
-  //             <div class="flex flex-col items-center justify-center gap-5 min-h-[500px] col-span-full">
-  //               <img src="${window.BASE_URL}/images/warning-o.webp" alt="no data" class="w-[140px]">
-  //               <h3 class="text-center text-neutral-900 text-2xl font-medium">ไม่พบข้อมูล</h3>
-  //               <p class="text-center text-neutral-500">กรุณาลองใหม่อีกครั้งภายหลัง</p>
-  //             </div>
-  //           `;
-  //         }
-
-  //         // Re-attach event listeners to new unit buttons
-  //         attachUnitButtonEvents();
-
-  //         // Smooth fade in animation
-  //         setTimeout(() => {
-  //           unitsContainer.style.opacity = '1';
-  //           unitsContainer.style.transform = 'translateY(0)';
-  //         }, 50);
-  //       });
-  //     }, 300);
-  //   });
-  // }
+            response.data.units.forEach(unit => {
+              const unitBox = `
+                <div class="unit relative rounded-lg overflow-hidden shadow-lg border border-neutral-200">
+                  ${unit.isSoldOut ? `<div class="absolute top-0 left-0 w-full h-full bg-neutral-900/40 flex items-center justify-center z-[1]">
+                    <span class="text-white text-2xl font-medium flex items-center justify-center px-5 py-2 w-full h-20 bg-red-500">SOLD OUT</span>
+                  </div>` : ''}
+                  <div class="unit-wrapper ${unit.isSoldOut ? 'grayscale' : ''}">
+                    <a href="${window.BASE_URL}unit/?id=${unit.id}">
+                      <img src="https://aswservice.com/hotdeal/${unit.headerImage.resource.filePath}" class="w-full aspect-square object-cover">
+                    </a>
+                    <div class="unit-detail px-4 py-6 relative">
+                      ${unit.highlightText ? `<div class="bg-accent text-[18px] mb-2 text-white font-medium px-5 py-2 rounded-full absolute -top-5 right-5">${unit.highlightText}</div>` : ''}
+                      <p class="text-primary mb-2">${unit.projectName}</p>
+                      <h3 class="leading-none font-medium text-3xl">${unit.unitCode}</h3>
+                      <p class="text-primary mb-7">
+                        <span class="text-neutral-500 relative line-through">ปกติ ${(unit.sellingPrice/1000000).toFixed(2)} ล้าน</span>
+                        <span class="text-accent text-3xl">พิเศษ</span> <span class="text-accent font-medium text-5xl">${(unit.discountPrice/1000000).toFixed(2)}</span> <span class="text-accent text-3xl">ล้าน</span>
+                      </p>
+                      <div class="btn-group flex justify-between items-center">
+                        <a href="${window.BASE_URL}unit/?id=${unit.id}" class="text-neutral-500 hover:text-neutral-800 font-light">ดูรายละเอียด</a>
+                        <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2" data-unit="${unit.unitCode}" data-project="${nameMap[unit.projectID] ?? unit.projectID}" data-cisid="${unit.projectID}">สนใจยูนิตนี้</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              `;
+              unitsContainer.innerHTML += unitBox;
+            });
+          } else {
+            unitsContainer.innerHTML = `
+              <div class="flex flex-col items-center justify-center gap-5 min-h-[500px] col-span-full">
+                <img src="${window.BASE_URL}/images/warning-o.webp" alt="no data" class="w-[140px]">
+                <h3 class="text-center text-neutral-900 text-2xl font-medium">ไม่พบข้อมูล</h3>
+                <p class="text-center text-neutral-500">กรุณาลองใหม่อีกครั้งภายหลัง</p>
+              </div>
+            `;
+          }
+          
+          // Smooth fade in animation
+          setTimeout(() => {
+            unitsContainer.style.opacity = '1';
+            unitsContainer.style.transform = 'translateY(0)';
+          }, 50);
+        });
+      }, 300);
+    });
+  }
 
   // Initialize Swiper for unit detail page
   if (document.getElementById('mainGallerySwiper')) {
