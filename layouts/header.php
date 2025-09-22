@@ -18,6 +18,7 @@
   
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>css/output.css?v=<?php echo time(); ?>">
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>fonts/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 <body>
   <header class="px-2 md:px-0 py-3 md:py-4 shadow-md fixed top-0 left-0 right-0 z-50 bg-white">

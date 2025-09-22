@@ -1,10 +1,10 @@
 <div class="rounded-lg overflow-hidden shadow-lg border border-neutral-200 relative">
   <?php if ($unit['isSoldOut']) : ?>
-    <div class="absolute top-0 left-0 w-full h-full bg-neutral-900/40 flex items-center justify-center z-[1]">
-    <span class="text-white text-2xl font-medium flex items-center justify-center px-5 py-2 w-full h-20 bg-red-500">SOLD OUT</span>
+    <div class="absolute top-0 left-0 w-full h-full bg-neutral-900/10 flex items-center justify-center z-[1]">
+    <span class="text-white text-xl font-medium flex items-center justify-center px-5 py-2 w-full bg-red-500 rotate-45 absolute top-[10%] left-[30%]">SOLD OUT</span>
     </div>
   <?php endif; ?>
-  <div class="unit-wrapper <?= $unit['isSoldOut'] ? 'grayscale' : '' ?>">
+  <div class="unit-wrapper <?= $unit['isSoldOut'] ? 'sold-out' : '' ?>">
     <a href="<?php echo BASE_URL; ?>unit/?id=<?= $unit['id'] ?>">
       <img src="https://aswservice.com/hotdeal/<?= $unit['headerImage']['resource']['filePath'] ?>" class="w-full aspect-square object-cover">
     </a>

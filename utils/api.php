@@ -190,7 +190,7 @@ if (!empty($_REQUEST['action'])) {
                 }
 
                 // Also merge in known top-level filters if present
-                $known_filters = ['searchStr', 'projectIDs', 'sortingUnit'];
+                $known_filters = ['searchStr', 'projectIDs', 'locationIDs', 'sortingUnit'];
                 foreach ($known_filters as $filter_key) {
                     if (isset($_REQUEST[$filter_key]) && $_REQUEST[$filter_key] !== '') {
                         $params[$filter_key] = $_REQUEST[$filter_key];
@@ -418,6 +418,11 @@ function get_project_name($projectCode) {
     $data = ['projectID' => $projectCode];
     //log_api_request('GET', $endpoint, $data);
     return fetch_from_api('GET', $endpoint, $data);
+}
+
+function get_locations() {
+    $endpoint = API_BASE_URL . '/Project/GetLocations';
+    return fetch_from_api('GET', $endpoint);
 }
 
 ?>
