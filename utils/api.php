@@ -227,28 +227,12 @@ if (!empty($_REQUEST['action'])) {
 // but the AJAX handling block will not output anything unless an 'action' is specified.
 
 function getProjectName($projectCode) {
-    $projects_json = file_get_contents(__DIR__ . '/projects.json');
-    if ($projects_json === false) {
-        return 'projects.json not found';
+    $project = get_project_name($projectCode);
+    //var_dump($project['data']);
+    if (isset($project['data']['projectNameTH'])) {
+        return $project['data']['projectNameTH'];
     }
-    $decoded = json_decode($projects_json, true);
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        return 'JSON decoding error';
-    }
-
-    $projects = isset($decoded['projects_data']) && is_array($decoded['projects_data'])
-        ? $decoded['projects_data']
-        : (is_array($decoded) ? $decoded : []);
-
-    $filtered_projects = array_filter($projects, function($p) use ($projectCode) {
-        return isset($p['ProjectCode']) && $p['ProjectCode'] === $projectCode;
-    });
-
-    if (!empty($filtered_projects)) {
-        $project = array_shift($filtered_projects);
-        return isset($project['ProjectName']) ? $project['ProjectName'] : null;
-    }
-    return 'Project not found';
+    return $projectCode; // Fallback to project code if name not found
 }
 
 function getProjectCISId($projectCode) {
@@ -432,7 +416,7 @@ function get_active_projects() {
 function get_project_name($projectCode) {
     $endpoint = API_BASE_URL . '/Project/GetProject';
     $data = ['projectID' => $projectCode];
-    log_api_request('GET', $endpoint, $data);
+    //log_api_request('GET', $endpoint, $data);
     return fetch_from_api('GET', $endpoint, $data);
 }
 

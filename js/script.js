@@ -79,7 +79,7 @@ function getProjectName(projectCode) {
   return new Promise((resolve) => {
     const qs = `action=get_project_name&projectID=${encodeURIComponent(projectCode)}`;
     ajaxRequest(`${window.BASE_URL}utils/api.php?${qs}`, function(res) {
-      const name = (res && (res.projectName || (res.data && (res.data.projectName || (res.data.project && res.data.project.projectName))) || (res.project && res.project.projectName))) || projectCode;
+      const name = (res && res.data && res.data.projectNameTH) || projectCode;
       resolve(name);
     }, 'GET');
   });
@@ -221,10 +221,11 @@ function showSwal(title, text, icon, confirmButtonColor, confirmButtonText) {
   });
 }
 
-
 document.addEventListener('DOMContentLoaded', function() {
+  const loadingAnimation = document.getElementById('loadingAnimation');
+  const unitsContainer = document.getElementById('unitsContainer');
   const memberBtn = document.getElementById('memberBtn');
-  const unitBtn = document.querySelectorAll('.unitBtn');
+  //const unitBtn = document.querySelectorAll('.unitBtn');
   const memberModal = document.getElementById('memberModal');
   const loginModal = document.getElementById('loginModal');
   const otpModal = document.getElementById('otpModal');
@@ -253,6 +254,31 @@ document.addEventListener('DOMContentLoaded', function() {
   const searchForm = document.getElementById('searchForm');
   const sortingUnit = document.getElementById('sortingUnit');
   const projectSelector = document.getElementById('project_selector');
+
+  function attachUnitButtonEvents() {
+    const unitBtn = document.querySelectorAll('.unitBtn');
+    unitBtn.forEach(btn => {
+      btn.addEventListener('click', function() {
+      //console.log('clicked', btn);
+      const isAuth = checkAuthToken();
+      let project = {
+        cisid: btn.dataset.cisid,
+        project: btn.dataset.project,
+        unit: btn.dataset.unit,
+      }
+      if (isAuth) {
+        let user = decodeToken(localStorage.getItem('hotdeal_token'));
+        updateSummaryModal(user, project);
+        summaryModal.showModal();
+      } else {
+        localStorage.setItem('tmp_p', JSON.stringify(project));
+        loginModal.showModal();
+      }
+      });
+    });
+  }
+
+  attachUnitButtonEvents();
 
   if (checkAuthToken()) {
     let user = decodeToken(localStorage.getItem('hotdeal_token'));
@@ -505,26 +531,6 @@ document.addEventListener('DOMContentLoaded', function() {
     memberName.innerHTML = 'เข้าสู่ระบบ';
   });
 
-  unitBtn.forEach(btn => {
-    btn.addEventListener('click', function() {
-    console.log('clicked', btn);
-    const isAuth = checkAuthToken();
-    let project = {
-      cisid: btn.dataset.cisid,
-      project: btn.dataset.project,
-      unit: btn.dataset.unit,
-    }
-    if (isAuth) {
-      let user = decodeToken(localStorage.getItem('hotdeal_token'));
-      updateSummaryModal(user, project);
-      summaryModal.showModal();
-    } else {
-      localStorage.setItem('tmp_p', JSON.stringify(project));
-      loginModal.showModal();
-    }
-    });
-  });
-
   requestOTPBtn.addEventListener('click', function() {
     const email = document.getElementById('otp_email').value;
     try {
@@ -714,7 +720,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   </div>
                 </div>
               `;
-              unitsContainer.innerHTML += unitBox;
+              unitsContainer.appendChild(unitBox);
             });
             
             // Re-attach event listeners to new unit buttons
@@ -738,11 +744,18 @@ document.addEventListener('DOMContentLoaded', function() {
   if (sortingUnit) {
     sortingUnit.addEventListener('change', async function() {
       const sort = sortingUnit.value;
+
+      unitsContainer.style.opacity = '0';
+      unitsContainer.style.transform = 'translateY(20px)';
+      unitsContainer.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+
+      loadingAnimation.style.display = 'flex';
       fetchUnits({
         sortingUnit: sort
       }, async function(response) {
+        loadingAnimation.style.display = 'none';
+        console.log('response', response);
         if (response.data && response.data.units && response.data.units.length > 0) {
-          const unitsContainer = document.getElementById('unitsContainer');
           unitsContainer.innerHTML = '';
           // Prefetch project names
           const ids = [...new Set(response.data.units.map(u => u.projectID))];
@@ -777,6 +790,11 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             unitsContainer.innerHTML += unitBox;
           });
+
+          setTimeout(() => {
+            unitsContainer.style.opacity = '1';
+            unitsContainer.style.transform = 'translateY(0)';
+          }, 50);
           
           // Re-attach event listeners to new unit buttons
           //attachUnitButtonEvents();
@@ -798,57 +816,78 @@ document.addEventListener('DOMContentLoaded', function() {
   if (projectSelector) {
     projectSelector.addEventListener('change', function() {
       const project = projectSelector.value;
-      fetchUnits({
-        projectIDs: project
-      }, async function(response) {
-        if (response.data && response.data.units && response.data.units.length > 0) {
-          console.log('response', response);
-          const unitsContainer = document.getElementById('unitsContainer');
-          unitsContainer.innerHTML = '';
-          // Prefetch project names
-          const ids = [...new Set(response.data.units.map(u => u.projectID))];
-          const nameMap = Object.fromEntries(await Promise.all(ids.map(async id => [id, await getProjectName(id)])));
+      
+      // Smooth fade out animation
+      unitsContainer.style.opacity = '0';
+      unitsContainer.style.transform = 'translateY(20px)';
+      unitsContainer.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+      
+      setTimeout(() => {
+        unitsContainer.innerHTML = '';
+        loadingAnimation.style.display = 'flex';
+        
+        fetchUnits({
+          projectIDs: project
+        }, async function(response) {
+          loadingAnimation.style.display = 'none';
+          
+          if (response.data && response.data.units && response.data.units.length > 0) {
+            unitsContainer.innerHTML = '';
+            // Prefetch project names
+            const ids = [...new Set(response.data.units.map(u => u.projectID))];
+            const nameMap = Object.fromEntries(await Promise.all(ids.map(async id => [id, await getProjectName(id)])));
 
-          response.data.units.forEach(unit => {
-            const unitBox = `
-              <div class="unit relative rounded-lg overflow-hidden shadow-lg border border-neutral-200">
-                ${unit.isSoldOut ? `<div class="absolute top-0 left-0 w-full h-full bg-neutral-900/40 flex items-center justify-center z-[1]">
-                  <span class="text-white text-2xl font-medium flex items-center justify-center px-5 py-2 w-full h-20 bg-red-500">SOLD OUT</span>
-                </div>` : ''}
-                <div class="unit-wrapper ${unit.isSoldOut ? 'grayscale' : ''}">
-                  <a href="${window.BASE_URL}unit/?id=${unit.id}">
-                    <img src="https://aswservice.com/hotdeal/${unit.headerImage.resource.filePath}" class="w-full aspect-square object-cover">
-                  </a>
-                  <div class="unit-detail px-4 py-6 relative">
-                    ${unit.highlightText ? `<div class="bg-accent text-[18px] mb-2 text-white font-medium px-5 py-2 rounded-full absolute -top-5 right-5">${unit.highlightText}</div>` : ''}
-                    <p class="text-primary mb-2">${unit.projectName}</p>
-                    <h3 class="leading-none font-medium text-3xl">${unit.unitCode}</h3>
-                    <p class="text-primary mb-7">
-                      <span class="text-neutral-500 relative line-through">ปกติ ${(unit.sellingPrice/1000000).toFixed(2)} ล้าน</span>
-                      <span class="text-accent text-3xl">พิเศษ</span> <span class="text-accent font-medium text-5xl">${(unit.discountPrice/1000000).toFixed(2)}</span> <span class="text-accent text-3xl">ล้าน</span>
-                    </p>
-                    <div class="btn-group flex justify-between items-center">
-                      <a href="${window.BASE_URL}unit/?id=${unit.id}" class="text-neutral-500 hover:text-neutral-800 font-light">ดูรายละเอียด</a>
-                      <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2" data-unit="${unit.unitCode}" data-project="${nameMap[unit.projectID] ?? unit.projectID}" data-cisid="${unit.projectID}">สนใจยูนิตนี้</button>
+            console.log(nameMap);
+
+            response.data.units.forEach(unit => {
+              //console.log(unit);
+              const unitBox = `
+                <div class="unit relative rounded-lg overflow-hidden shadow-lg border border-neutral-200">
+                  ${unit.isSoldOut ? `<div class="absolute top-0 left-0 w-full h-full bg-neutral-900/40 flex items-center justify-center z-[1]">
+                    <span class="text-white text-2xl font-medium flex items-center justify-center px-5 py-2 w-full h-20 bg-red-500">SOLD OUT</span>
+                  </div>` : ''}
+                  <div class="unit-wrapper ${unit.isSoldOut ? 'grayscale' : ''}">
+                    <a href="${window.BASE_URL}unit/?id=${unit.id}">
+                      <img src="https://aswservice.com/hotdeal/${unit.headerImage.resource.filePath}" class="w-full aspect-square object-cover">
+                    </a>
+                    <div class="unit-detail px-4 py-6 relative">
+                      ${unit.highlightText ? `<div class="bg-accent text-[18px] mb-2 text-white font-medium px-5 py-2 rounded-full absolute -top-5 right-5">${unit.highlightText}</div>` : ''}
+                      <p class="text-primary mb-2">${unit.projectName}</p>
+                      <h3 class="leading-none font-medium text-3xl">${unit.unitCode}</h3>
+                      <p class="text-primary mb-7">
+                        <span class="text-neutral-500 relative line-through">ปกติ ${(unit.sellingPrice/1000000).toFixed(2)} ล้าน</span>
+                        <span class="text-accent text-3xl">พิเศษ</span> <span class="text-accent font-medium text-5xl">${(unit.discountPrice/1000000).toFixed(2)}</span> <span class="text-accent text-3xl">ล้าน</span>
+                      </p>
+                      <div class="btn-group flex justify-between items-center">
+                        <a href="${window.BASE_URL}unit/?id=${unit.id}" class="text-neutral-500 hover:text-neutral-800 font-light">ดูรายละเอียด</a>
+                        <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2" data-unit="${unit.unitCode}" data-project="${nameMap[unit.projectID] ?? unit.projectID}" data-cisid="${unit.projectCode}">สนใจยูนิตนี้</button>
+                      </div>
                     </div>
                   </div>
                 </div>
+              `;
+              unitsContainer.innerHTML += unitBox;
+            });
+          } else {
+            unitsContainer.innerHTML = `
+              <div class="flex flex-col items-center justify-center gap-5 min-h-[500px] col-span-full">
+                <img src="${window.BASE_URL}/images/warning-o.webp" alt="no data" class="w-[140px]">
+                <h3 class="text-center text-neutral-900 text-2xl font-medium">ไม่พบข้อมูล</h3>
+                <p class="text-center text-neutral-500">กรุณาลองใหม่อีกครั้งภายหลัง</p>
               </div>
             `;
-            unitsContainer.innerHTML += unitBox;
-          });
-        } else {
-          const unitsContainer = document.getElementById('unitsContainer');
-          unitsContainer.innerHTML = `
-            <div class="flex flex-col items-center justify-center gap-5 min-h-[500px] col-span-full">
-              <img src="${window.BASE_URL}/images/warning-o.webp" alt="no data" class="w-[140px]">
-              <h3 class="text-center text-neutral-900 text-2xl font-medium">ไม่พบข้อมูล</h3>
-              <p class="text-center text-neutral-500">กรุณาลองใหม่อีกครั้งภายหลัง</p>
-            </div>
-        }
-          `;
-        }
-      });
+          }
+
+          // Re-attach event listeners to new unit buttons
+          attachUnitButtonEvents();
+
+          // Smooth fade in animation
+          setTimeout(() => {
+            unitsContainer.style.opacity = '1';
+            unitsContainer.style.transform = 'translateY(0)';
+          }, 50);
+        });
+      }, 300);
     });
   }
 

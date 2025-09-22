@@ -1,3 +1,4 @@
 node_modules
 utils/api_debug.log
+utils/cis_debug.log
 vendor/

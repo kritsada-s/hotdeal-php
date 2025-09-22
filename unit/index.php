@@ -132,19 +132,23 @@
             <div class="project-logo-wrapper w-full md:hidden mb-5">
               <img src="https://assetwise.co.th/wp-content/uploads/<?= $projectData['logo']; ?>" alt="<?= $projectData['nameTH'] ?>" class="w-[140px]">
             </div>
-            <h4 class="text-2xl font-medium mb-4">ข้อมูลยูนิต</h4>
-            <ul class="unit-info list-none text-neutral-700 text-lg grid gap-2">
+            <h4 class="text-xl font-medium bg-linear-[10deg,#268b88,#71efeb] text-white rounded-t-md px-5 py-3">ข้อมูลยูนิต</h4>
+            <ul class="unit-info list-none text-neutral-700 text-lg grid gap-2 border border-x-[#2b918e] border-b-[#2b918e] border-t-0 rounded-b-md px-5 py-3">
               <li>
-                <span class="text-neutral-700">อาคาร :</span>
+                <span class="text-neutral-700 font-medium">อาคาร :</span>
                 <span class=""><?= $unit_detail['towerName'] ?></span>
               </li>
               <li>
-                <span class="text-neutral-700">ชั้น :</span>
+                <span class="text-neutral-700 font-medium">ชั้น :</span>
                 <span class=""><?= (Int) $unit_detail['floorName'] ?></span>
               </li>
               <li>
-                <span class="text-neutral-700">แบบห้อง :</span>
+                <span class="text-neutral-700 font-medium">แบบห้อง :</span>
                 <span class=""><?= $unit_detail['modelName'] ?></span>
+              </li>
+              <li>
+                <span class="text-neutral-700 font-medium">พื้นที่ :</span>
+                <span class="lowercase"><?= $unit_detail['unitArea'] ?> <?= $unit_detail['unit_Measure'] ?></span>
               </li>
               <li>
             </ul>
@@ -195,9 +199,16 @@
             <p class="font-thin">จำนวนยูนิต</p>
             <p class="text-xl"><?= $project['unitDetail'] ?></p>
           </div>
+          <?php if (isset($project['moreDetail']) && $project['moreDetail'] !== '') : ?>
+            <div class="h-5"></div>
+            <div class="flex flex-col gap-2">
+              <p class="font-thin">รายละเอียดเพิ่มเติม</p>
+              <?= $project['moreDetail'] ?>
+            </div>
+          <?php endif; ?>
         </div>
         <div class="h-7"></div>
-        <a href="<?= $project['projectURL'] ?>" class="btn btn-outline btn-white hover:text-primary hover:bg-white font-normal" target="_blank">ดูเพิ่มเติม</a>
+        <a href="<?= $project['projectURL'] ?>" class="btn btn-outline btn-white hover:text-primary hover:bg-white font-normal" target="_blank">ดูเพิ่มเติม</i></a>
       </div>
     </div>
   </div>
