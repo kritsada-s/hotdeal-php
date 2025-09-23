@@ -221,12 +221,6 @@ function showSwal(title, text, icon, confirmButtonColor, confirmButtonText) {
   });
 }
 
-// $(document).ready(function() {
-//   $('#location_selector').select2({
-//     placeholder: 'เลือกพื้นที่',
-//   });
-// });
-
 document.addEventListener('DOMContentLoaded', function() {
   const loadingAnimation = document.getElementById('loadingAnimation');
   const unitsContainer = document.getElementById('unitsContainer');
@@ -260,10 +254,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const searchForm = document.getElementById('searchForm');
   const sortingUnit = document.getElementById('sortingUnit');
   const projectSelector = document.getElementById('project_selector');
-
-  const locationDropdownMenu = document.getElementById('locationDropdownMenu');
-  const locationDropdownToggler = document.getElementById('locationDropdownToggler');
-  const locationDropdownTogglerText = document.getElementById('locationDropdownTogglerText');
 
   function attachUnitButtonEvents() {
     const unitBtn = document.querySelectorAll('.unitBtn');
@@ -538,28 +528,9 @@ document.addEventListener('DOMContentLoaded', function() {
       confirmButtonColor: '#123f6d',
       confirmButtonText: 'ตกลง'
     });
-    memberName.innerHTML = 'เข้าสู่ระบบ';
-  });
+  memberName.innerHTML = 'เข้าสู่ระบบ';
+});
 
-  unitBtn.forEach(btn => {
-    btn.addEventListener('click', function() {
-    //console.log('clicked', btn);
-    const isAuth = checkAuthToken();
-    let project = {
-      cisid: btn.dataset.cisid,
-      project: btn.dataset.project,
-      unit: btn.dataset.unit,
-    }
-    if (isAuth) {
-      let user = decodeToken(localStorage.getItem('hotdeal_token'));
-      updateSummaryModal(user, project);
-      summaryModal.showModal();
-    } else {
-      localStorage.setItem('tmp_p', JSON.stringify(project));
-      loginModal.showModal();
-    }
-    });
-  });
   requestOTPBtn.addEventListener('click', function() {
     const email = document.getElementById('otp_email').value;
     try {
@@ -870,7 +841,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const ids = [...new Set(response.data.units.map(u => u.projectID))];
             const nameMap = Object.fromEntries(await Promise.all(ids.map(async id => [id, await getProjectName(id)])));
 
+            console.log(nameMap);
+
             response.data.units.forEach(unit => {
+              //console.log(unit);
               const unitBox = `
                 <div class="unit relative rounded-lg overflow-hidden shadow-lg border border-neutral-200">
                   ${unit.isSoldOut ? `<div class="absolute top-0 left-0 w-full h-full bg-neutral-900/40 flex items-center justify-center z-[1]">
@@ -890,7 +864,7 @@ document.addEventListener('DOMContentLoaded', function() {
                       </p>
                       <div class="btn-group flex justify-between items-center">
                         <a href="${window.BASE_URL}unit/?id=${unit.id}" class="text-neutral-500 hover:text-neutral-800 font-light">ดูรายละเอียด</a>
-                        <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2" data-unit="${unit.unitCode}" data-project="${nameMap[unit.projectID] ?? unit.projectID}" data-cisid="${unit.projectID}">สนใจยูนิตนี้</button>
+                        <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2" data-unit="${unit.unitCode}" data-project="${nameMap[unit.projectID] ?? unit.projectID}" data-cisid="${unit.projectCode}">สนใจยูนิตนี้</button>
                       </div>
                     </div>
                   </div>
@@ -907,7 +881,10 @@ document.addEventListener('DOMContentLoaded', function() {
               </div>
             `;
           }
-          
+
+          // Re-attach event listeners to new unit buttons
+          attachUnitButtonEvents();
+
           // Smooth fade in animation
           setTimeout(() => {
             unitsContainer.style.opacity = '1';
