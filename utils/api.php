@@ -205,6 +205,9 @@ if (!empty($_REQUEST['action'])) {
             case 'get_project_name':
                 $response = get_project_name($_REQUEST['projectID']);
                 break;
+            case 'get_cmp_utm_by_id':
+                $response = getCmpUtmByID($_REQUEST['cmpID']);
+                break;
             // Add more cases for other functions you want to expose via AJAX
             default:
                 $response = ['error' => true, 'message' => 'Invalid action specified.'];
@@ -423,6 +426,13 @@ function get_project_name($projectCode) {
 function get_locations() {
     $endpoint = API_BASE_URL . '/Project/GetLocations';
     return fetch_from_api('GET', $endpoint);
+}
+
+function getCmpUtmByID($cmpID) {
+    $endpoint = API_BASE_URL . '/Campaign/GetCampaignByID';
+    $data = ['campaignID' => $cmpID];
+    $res = fetch_from_api('GET', $endpoint, $data);
+    return $res['data']['utm'];
 }
 
 ?>

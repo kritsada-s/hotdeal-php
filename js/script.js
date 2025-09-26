@@ -85,6 +85,15 @@ function getProjectName(projectCode) {
   });
 }
 
+function getCmpUtmByID(cmpID) {
+  return new Promise((resolve) => {
+    const qs = `action=get_cmp_utm_by_id&cmpID=${encodeURIComponent(cmpID)}`;
+    ajaxRequest(`${window.BASE_URL}utils/api.php?${qs}`, function(res) {
+      resolve(res);
+    }, 'GET');
+  });
+}
+
 
 function verifyMember(memberId, token) {
   const params = {
@@ -265,6 +274,7 @@ document.addEventListener('DOMContentLoaded', function() {
         cisid: btn.dataset.cisid,
         project: btn.dataset.project,
         unit: btn.dataset.unit,
+        utm: btn.dataset.utmCmp,
       }
       if (isAuth) {
         let user = decodeToken(localStorage.getItem('hotdeal_token'));
@@ -715,7 +725,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </p>
                     <div class="btn-group flex justify-between items-center">
                       <a href="${window.BASE_URL}unit/?id=${unit.id}" class="text-neutral-500 hover:text-neutral-800 font-light">ดูรายละเอียด</a>
-                      <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2" data-unit="${unit.unitCode}" data-project="${nameMap[unit.projectID] ?? unit.projectID}" data-cisid="${unit.projectID}">สนใจยูนิตนี้</button>
+                      <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2" data-unit="${unit.unitCode}" data-project="${nameMap[unit.projectID] ?? unit.projectID}" data-cisid="${unit.projectID}" data-utm-cmp="${cmpUtm}">สนใจยูนิตนี้</button>
                     </div>
                   </div>
                 </div>
@@ -785,7 +795,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </p>
                     <div class="btn-group flex justify-between items-center">
                       <a href="${window.BASE_URL}unit/?id=${unit.id}" class="text-neutral-500 hover:text-neutral-800 font-light">ดูรายละเอียด</a>
-                        <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2" data-unit="${unit.unitCode}" data-project="${nameMap[unit.projectID] ?? unit.projectID}" data-cisid="${unit.projectID}">สนใจยูนิตนี้</button>
+                        <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2" data-unit="${unit.unitCode}" data-project="${nameMap[unit.projectID] ?? unit.projectID}" data-cisid="${unit.projectID}" data-utm-cmp="${cmpUtm}">สนใจยูนิตนี้</button>
                       </div>
                     </div>
                   </div>
@@ -840,11 +850,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // Prefetch project names
             const ids = [...new Set(response.data.units.map(u => u.projectID))];
             const nameMap = Object.fromEntries(await Promise.all(ids.map(async id => [id, await getProjectName(id)])));
-
             console.log(nameMap);
 
-            response.data.units.forEach(unit => {
-              //console.log(unit);
+            response.data.units.forEach(async unit => {
+              const cmpUtm = await getCmpUtmByID(unit.campaignID);
               const unitBox = `
                 <div class="unit relative rounded-lg overflow-hidden shadow-lg border border-neutral-200">
                   ${unit.isSoldOut ? `<div class="absolute top-0 left-0 w-full h-full bg-neutral-900/40 flex items-center justify-center z-[1]">
@@ -864,7 +873,7 @@ document.addEventListener('DOMContentLoaded', function() {
                       </p>
                       <div class="btn-group flex justify-between items-center">
                         <a href="${window.BASE_URL}unit/?id=${unit.id}" class="text-neutral-500 hover:text-neutral-800 font-light">ดูรายละเอียด</a>
-                        <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2" data-unit="${unit.unitCode}" data-project="${nameMap[unit.projectID] ?? unit.projectID}" data-cisid="${unit.projectCode}">สนใจยูนิตนี้</button>
+                        <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2" data-unit="${unit.unitCode}" data-project="${nameMap[unit.projectID] ?? unit.projectID}" data-cisid="${unit.projectCode}" data-utm-cmp="${cmpUtm}">สนใจยูนิตนี้</button>
                       </div>
                     </div>
                   </div>
@@ -1077,7 +1086,7 @@ document.addEventListener('DOMContentLoaded', function() {
                       </p>
                       <div class="btn-group flex justify-between items-center">
                         <a href="${window.BASE_URL}unit/?id=${unit.id}" class="text-neutral-500 hover:text-neutral-800 font-light">ดูรายละเอียด</a>
-                        <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2" data-unit="${unit.unitCode}" data-project="${nameMap[unit.projectID] ?? unit.projectID}" data-cisid="${unit.projectCode}">สนใจยูนิตนี้</button>
+                        <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2" data-unit="${unit.unitCode}" data-project="${nameMap[unit.projectID] ?? unit.projectID}" data-cisid="${unit.projectCode}" data-utm-cmp="${cmpUtm}">สนใจยูนิตนี้</button>
                       </div>
                     </div>
                   </div>
