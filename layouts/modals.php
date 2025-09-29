@@ -63,7 +63,7 @@
       </div>
       <div class="form-group flex flex-col gap-2">
         <label for="registerEmail">อีเมล</label>
-        <input type="text" id="registerEmail" name="registerEmail" autocomplete="off" disabled readonly class="input input-bordered w-full">
+        <input type="text" id="registerEmail" name="registerEmail" autocomplete="off" class="input input-bordered w-full">
       </div>
       <div class="form-group flex flex-col gap-2">
         <label for="registerLineId">Line ID</label>
@@ -87,11 +87,34 @@
     <form method="dialog">
       <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
     </form>
-    <h3 class="text-lg text-center font-bold mb-5">กรุณากรอกอีเมลเพื่อรับรหัส OTP</h3>
-    <div class="form-group">
+    <h3 class="text-lg text-center font-bold mb-5">กรุณาเลือกวิธีการรับรหัส OTP</h3>
+    
+    <!-- Radio buttons for OTP method selection -->
+    <div class="form-group mb-4">
+      <div class="flex gap-6 justify-center">
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="radio" name="otp_method" value="phone" class="radio radio-primary" checked>
+          <span class="text-sm">เบอร์โทรศัพท์</span>
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="radio" name="otp_method" value="email" class="radio radio-primary">
+          <span class="text-sm">อีเมล</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Email input (hidden by default) -->
+    <div class="form-group hidden" id="email-input-group">
       <label for="otp_email" class="block mb-2">อีเมล</label>
-      <input type="email" id="otp_email" name="otp_email" class="input validator input-lg input-bordered w-full" required>
+      <input type="email" id="otp_email" name="otp_email" class="input validator input-lg input-bordered w-full">
       <div class="validator-hint">กรุณากรอกอีเมลให้ถูกต้อง</div>
+    </div>
+
+    <!-- Phone input (default visible) -->
+    <div class="form-group" id="phone-input-group">
+      <label for="otp_phone" class="block mb-2">เบอร์โทรศัพท์</label>
+      <input type="tel" id="otp_phone" name="otp_phone" class="input validator input-lg input-bordered w-full" required>
+      <div class="validator-hint">กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง</div>
     </div>
     <div class="flex justify-end gap-4 w-full mt-5">
       <button class="btn btn-primary" id="requestOTPBtn">
@@ -110,7 +133,8 @@
     <form method="dialog">
       <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
     </form>
-    <h3 class="text-lg font-bold mb-5 text-center">กรุณากรอกรหัส OTP ที่ส่งไปยังอีเมล</h3>
+    <h3 class="text-lg font-bold mb-2 text-center" id="otp-modal-title">กรุณากรอกรหัส OTP ที่ส่งไปยังเบอร์โทรศัพท์</h3>
+    <span class="text-sm mx-auto block mb-3 text-center" id="otp-modal-subtitle"></span>
     <div class="form-group flex">
       <label for="otp" class="hidden">รหัส OTP</label>
       <input type="text" id="otp" name="otp" class="input input-xl input-bordered w-2/3 mx-auto text-center">

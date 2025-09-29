@@ -247,7 +247,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const updateMemberBtn = document.getElementById('updateMemberBtn');
   const summarySubmitBtn = document.getElementById('summarySubmitBtn');
   const summaryCancelBtn = document.getElementById('summaryCancelBtn');
-
   const modalFirstName = document.getElementById('firstName');
   const modalLastName = document.getElementById('lastName');
   const modalPhone = document.getElementById('phone');
@@ -288,6 +287,34 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  function unitBox(unit, nameMap, cmpUtm) {
+    return `
+      <div class="rounded-lg overflow-hidden shadow-lg border border-neutral-200 relative">
+        ${unit.isSoldOut ? `<span class="text-white text-[12px] lg:text-xl font-medium flex items-center justify-center px-5 py-2 w-full bg-red-500 rotate-45 absolute top-[20px] lg:top-[10%] left-[40px] lg:left-[30%]">SOLD OUT</span>` : ''}
+        <div class="unit-wrapper ${unit.isSoldOut ? 'sold-out' : ''}">
+          <a href="${window.BASE_URL}unit/?id=${unit.id}">
+            <img src="https://aswservice.com/hotdeal/${unit.headerImage.resource.filePath}" class="w-full aspect-square object-cover">
+          </a>
+          <div class="unit-detail px-2 py-3 lg:px-4 lg:py-6 relative">
+            ${unit.highlightText ? `<div class="bg-accent text-[10px] lg:text-[16px] lg:mb-2 text-white font-medium px-3 py-1 lg:px-5 lg:py-2 rounded-full absolute -top-3 -lg:top-5 right-3 lg:right-5">${unit.highlightText}</div>` : ''}
+            <p class="text-[#00a9a5] mb-2 lg:font-medium text-[11px] lg:text-base">${unit.projectName}</p>
+            <h3 class="leading-none font-medium mb-2 text-[18px] lg:text-3xl">${unit.unitCode}</h3>
+            <p class="text-primary">
+              <span class="text-neutral-500 relative line-through text-[10px] lg:text-xl">ปกติ ${(unit.sellingPrice/1000000).toFixed(2)} ล้าน</span>
+            </p>
+            <p class="text-primary mb-4 lg:mb-7">
+              <span class="text-accent text-[14px] lg:text-xl">พิเศษ</span> <span class="text-accent font-bold text-[18px] lg:text-4xl">${(unit.discountPrice/1000000).toFixed(2)}</span> <span class="text-accent text-[16px] lg:text-xl">ล้าน</span>
+            </p>
+            <div class="btn-group flex flex-col lg:flex-row justify-between lg:items-center gap-4 lg:gap-0">
+              <a href="${window.BASE_URL}unit/?id=${unit.id}" class="text-neutral-500 hover:text-neutral-800 text-[12px] lg:text-base font-light">ดูรายละเอียด</a>
+              <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2 hover:shadow-lg transition-all duration-300 text-[14px] lg:text-base" data-unit="${unit.unitCode}" data-project="${nameMap[unit.projectID] ?? unit.projectID}" data-cisid="${unit.projectCode}" data-utm-cmp="${cmpUtm}">สนใจยูนิตนี้</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
   attachUnitButtonEvents();
 
   if (checkAuthToken()) {
@@ -305,6 +332,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function clearEmailModalInputs() {
     document.getElementById('otp_email').value = '';
+    document.getElementById('otp_phone').value = '';
   } 
 
   function resetRequestOTPBtn() {
@@ -321,29 +349,52 @@ document.addEventListener('DOMContentLoaded', function() {
     verifyOTPBtn.innerHTML = 'ยืนยันรหัส OTP';
   }
   
-  function requestOTP(email) {
+  function requestOTP(contactValue, method = 'phone') {
     //console.log('--- requestOTP ---');
     
     var data = new FormData();
-    data.append('email', email);
-    data.append('action', 'send_otp');
-
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return;
+    
+    // Validate input based on method
+    if (method === 'email') {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(contactValue)) {
+        return;
+      }
+      data.append('email', contactValue);
+    } else if (method === 'phone') {
+      // Basic phone validation (Thai phone numbers)
+      const phoneRegex = /^[0-9]{10}$/;
+      if (!phoneRegex.test(contactValue.replace(/[-\s]/g, ''))) {
+        return;
+      }
+      data.append('phone', contactValue);
     }
+    
+    data.append('action', 'send_otp');
+    data.append('method', method);
 
     requestOTPBtn.disabled = true;
     requestOTPBtn.innerHTML = 'กำลังส่งรหัส OTP...';
   
     try {
       const response = ajaxRequest(`${window.BASE_URL}utils/api.php`, function(response) {
-        if (response.data) {
+        const res = JSON.parse(response);
+        if (res.status == 200) {
+          // Update OTP modal title based on method
+          const otpModalTitle = document.getElementById('otp-modal-title');
+          const otpModalSubtitle = document.getElementById('otp-modal-subtitle');
+          if (method === 'email') {
+            otpModalTitle.textContent = 'กรุณากรอกรหัส OTP ที่ส่งไปยังอีเมล';
+          } else if (method === 'phone') {
+            otpModalTitle.textContent = 'กรุณากรอกรหัส OTP ที่ส่งไปยังเบอร์โทรศัพท์';
+            otpModalSubtitle.textContent = `รหัสอ้างอิง : ${res.data}`;
+          }
+          
           loginModal.close();
           resetRequestOTPBtn();
           resetVerifyOTPBtn();
           otpModal.showModal();
+          verifyOTPBtn.focus();
         }
       }, 'POST', data);
     } catch (error) {
@@ -352,23 +403,33 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  function verifyOTP(email, otp) {
+  function verifyOTP(contactValue, otp, method = 'phone') {
     //console.log('--- verifyOTP ---');
     
     var data = new FormData();
-    data.append('email', email);
+    
+    if (method === 'email') {
+      data.append('email', contactValue);
+    } else if (method === 'phone') {
+      data.append('phone', contactValue);
+    }
+    
     data.append('otp', otp);
     data.append('action', 'verify_otp');
+    data.append('method', method);
 
     verifyOTPBtn.disabled = true;
     verifyOTPBtn.innerHTML = 'กำลังยืนยันรหัส OTP...';
 
     try {
       const response = ajaxRequest(`${window.BASE_URL}utils/api.php`, function(response) {
-        if (response.error) {
+        const res = JSON.parse(response);
+        console.log(res);
+        if (res.status == 400) {
           otpModal.close();
           clearOTPModalInputs();
-          const errorMessage = JSON.parse(response.raw_response);
+          const errorMessage = JSON.parse(res.raw_response);
+          console.log(errorMessage);
           Swal.fire({
             title: 'เกิดข้อผิดพลาด',
             text: errorMessage.message,
@@ -382,11 +443,11 @@ document.addEventListener('DOMContentLoaded', function() {
           return;
         }
 
-        if (response.data) {
-          const decodedData = decodeToken(response.data);        
+        if (res.status == 200) {
+          const decodedData = decodeToken(res.data);        
           if (decodedData.ID) {
             // Login Success
-            localStorage.setItem('hotdeal_token', response.data);
+            localStorage.setItem('hotdeal_token', res.data);
             otpModal.close();
             clearAllModalInput();
             Swal.fire({
@@ -406,14 +467,20 @@ document.addEventListener('DOMContentLoaded', function() {
           } else {
             // Register New Member
             otpModal.close();
-            sessionStorage.setItem('tmp_hotdeal_token', response.data);
+            sessionStorage.setItem('tmp_hotdeal_token', res.data);
             Swal.fire({
               title: 'ยืนยันรหัส OTP สำเร็จ',
               icon: 'success',
               confirmButtonColor: '#123f6d',
               confirmButtonText: 'ตกลง'
             }).then(() => {
-              document.getElementById('registerEmail').value = email;
+              if (method === 'email') {
+                document.getElementById('registerEmail').value = contactValue;
+                document.getElementById('registerEmail').readOnly = true;
+              } else if (method === 'phone') {
+                document.getElementById('registerPhone').value = contactValue;
+                document.getElementById('registerPhone').readOnly = true;
+              }
               registerModal.showModal();
             });
           }
@@ -493,7 +560,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   if (desktopBanner && mobileBanner) {
-    if (window.innerWidth > 768) {
+    if (window.innerWidth >= 768) {
       mobileBanner.style.display = 'none';
       new Swiper(desktopBanner, args);
     } else {
@@ -541,10 +608,44 @@ document.addEventListener('DOMContentLoaded', function() {
   memberName.innerHTML = 'เข้าสู่ระบบ';
 });
 
+  // Handle OTP method radio button changes
+  const otpMethodRadios = document.querySelectorAll('input[name="otp_method"]');
+  const emailInputGroup = document.getElementById('email-input-group');
+  const phoneInputGroup = document.getElementById('phone-input-group');
+  const emailInput = document.getElementById('otp_email');
+  const phoneInput = document.getElementById('otp_phone');
+
+  otpMethodRadios.forEach(radio => {
+    radio.addEventListener('change', function() {
+      if (this.value === 'email') {
+        // Show email input, hide phone input
+        emailInputGroup.classList.remove('hidden');
+        phoneInputGroup.classList.add('hidden');
+        emailInput.required = true;
+        phoneInput.required = false;
+        phoneInput.value = ''; // Clear phone input
+      } else if (this.value === 'phone') {
+        // Show phone input, hide email input
+        phoneInputGroup.classList.remove('hidden');
+        emailInputGroup.classList.add('hidden');
+        phoneInput.required = true;
+        emailInput.required = false;
+        emailInput.value = ''; // Clear email input
+      }
+    });
+  });
+
   requestOTPBtn.addEventListener('click', function() {
-    const email = document.getElementById('otp_email').value;
+    const selectedMethod = document.querySelector('input[name="otp_method"]:checked').value;
+    let contactValue = '';
+    
+    if (selectedMethod === 'email') {
+      contactValue = document.getElementById('otp_email').value;
+    } else if (selectedMethod === 'phone') {
+      contactValue = document.getElementById('otp_phone').value;
+    }
     try {
-      requestOTP(email);
+      requestOTP(contactValue, selectedMethod);
     } catch (error) {
       console.log(error);
     }
@@ -552,9 +653,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
   verifyOTPBtn.addEventListener('click', function() {
     const otp = document.getElementById('otp').value;
-    const memberEmail = document.getElementById('otp_email').value;
+    const selectedMethod = document.querySelector('input[name="otp_method"]:checked').value;
+    let contactValue = '';
+    
+    if (selectedMethod === 'email') {
+      contactValue = document.getElementById('otp_email').value;
+    } else if (selectedMethod === 'phone') {
+      contactValue = document.getElementById('otp_phone').value;
+    }
+    
     try {
-      verifyOTP(memberEmail, otp);
+      verifyOTP(contactValue, otp, selectedMethod);
     } catch (error) {
       console.log(error);
     }
@@ -568,10 +677,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const registerEmail = document.getElementById('registerEmail');    
 
     const data = {
-      firstName: registerFirstName.value,
-      lastName: registerLastName.value,
+      firstname: registerFirstName.value,
+      lastname: registerLastName.value,
       tel: registerPhone.value,
-      lineId: registerLineId.value,
+      lineID: registerLineId.value,
       email: registerEmail.value,
       token: sessionStorage.getItem('tmp_hotdeal_token')
     }
@@ -593,7 +702,7 @@ document.addEventListener('DOMContentLoaded', function() {
       firstname: modalFirstName.value,
       lastname: modalLastName.value,
       tel: modalPhone.value,
-      lineId: modalLineId.value,
+      lineID: modalLineId.value,
       email: modalEmail.value,
       id: decodeToken(localStorage.getItem('hotdeal_token')).ID,
       token: localStorage.getItem('hotdeal_token')
@@ -775,34 +884,10 @@ document.addEventListener('DOMContentLoaded', function() {
           const ids = [...new Set(response.data.units.map(u => u.projectID))];
           const nameMap = Object.fromEntries(await Promise.all(ids.map(async id => [id, await getProjectName(id)])));
 
-          response.data.units.forEach(unit => {
-            const unitBox = `
-              <div class="unit relative rounded-lg overflow-hidden shadow-lg border border-neutral-200">
-                ${unit.isSoldOut ? `<div class="absolute top-0 left-0 w-full h-full bg-neutral-900/40 flex items-center justify-center z-[1]">
-                  <span class="text-white text-2xl font-medium flex items-center justify-center px-5 py-2 w-full h-20 bg-red-500">SOLD OUT</span>
-                </div>` : ''}
-                <div class="unit-wrapper ${unit.isSoldOut ? 'grayscale' : ''}">
-                  <a href="${window.BASE_URL}unit/?id=${unit.id}">
-                    <img src="https://aswservice.com/hotdeal/${unit.headerImage.resource.filePath}" class="w-full aspect-square object-cover">
-                  </a>
-                  <div class="unit-detail px-4 py-6 relative">
-                    ${unit.highlightText ? `<div class="bg-accent text-[18px] mb-2 text-white font-medium px-5 py-2 rounded-full absolute -top-5 right-5">${unit.highlightText}</div>` : ''}
-                    <p class="text-primary mb-2">${unit.projectName}</p>
-                    <h3 class="leading-none font-medium text-3xl">${unit.unitCode}</h3>
-                    <p class="text-primary mb-7">
-                      <span class="text-neutral-500 relative line-through">ปกติ ${(unit.sellingPrice/1000000).toFixed(2)} ล้าน</span>
-                      <span class="text-accent text-3xl">พิเศษ</span> <span class="text-accent font-medium text-5xl">${(unit.discountPrice/1000000).toFixed(2)}</span> <span class="text-accent text-3xl">ล้าน</span>
-                    </p>
-                    <div class="btn-group flex justify-between items-center">
-                      <a href="${window.BASE_URL}unit/?id=${unit.id}" class="text-neutral-500 hover:text-neutral-800 font-light">ดูรายละเอียด</a>
-                        <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2" data-unit="${unit.unitCode}" data-project="${nameMap[unit.projectID] ?? unit.projectID}" data-cisid="${unit.projectID}" data-utm-cmp="${cmpUtm}">สนใจยูนิตนี้</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            `;
-            unitsContainer.innerHTML += unitBox;
+          response.data.units.forEach(async unit => {
+            const cmpUtm = await getCmpUtmByID(unit.campaignID);
+            const unitBoxHtml = unitBox(unit, nameMap, cmpUtm);
+            unitsContainer.innerHTML += unitBoxHtml;
           });
 
           setTimeout(() => {
@@ -854,32 +939,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             response.data.units.forEach(async unit => {
               const cmpUtm = await getCmpUtmByID(unit.campaignID);
-              const unitBox = `
-                <div class="unit relative rounded-lg overflow-hidden shadow-lg border border-neutral-200">
-                  ${unit.isSoldOut ? `<div class="absolute top-0 left-0 w-full h-full bg-neutral-900/40 flex items-center justify-center z-[1]">
-                    <span class="text-white text-2xl font-medium flex items-center justify-center px-5 py-2 w-full h-20 bg-red-500">SOLD OUT</span>
-                  </div>` : ''}
-                  <div class="unit-wrapper ${unit.isSoldOut ? 'grayscale' : ''}">
-                    <a href="${window.BASE_URL}unit/?id=${unit.id}">
-                      <img src="https://aswservice.com/hotdeal/${unit.headerImage.resource.filePath}" class="w-full aspect-square object-cover">
-                    </a>
-                    <div class="unit-detail px-4 py-6 relative">
-                      ${unit.highlightText ? `<div class="bg-accent text-[18px] mb-2 text-white font-medium px-5 py-2 rounded-full absolute -top-5 right-5">${unit.highlightText}</div>` : ''}
-                      <p class="text-primary mb-2">${unit.projectName}</p>
-                      <h3 class="leading-none font-medium text-3xl">${unit.unitCode}</h3>
-                      <p class="text-primary mb-7">
-                        <span class="text-neutral-500 relative line-through">ปกติ ${(unit.sellingPrice/1000000).toFixed(2)} ล้าน</span>
-                        <span class="text-accent text-3xl">พิเศษ</span> <span class="text-accent font-medium text-5xl">${(unit.discountPrice/1000000).toFixed(2)}</span> <span class="text-accent text-3xl">ล้าน</span>
-                      </p>
-                      <div class="btn-group flex justify-between items-center">
-                        <a href="${window.BASE_URL}unit/?id=${unit.id}" class="text-neutral-500 hover:text-neutral-800 font-light">ดูรายละเอียด</a>
-                        <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2" data-unit="${unit.unitCode}" data-project="${nameMap[unit.projectID] ?? unit.projectID}" data-cisid="${unit.projectCode}" data-utm-cmp="${cmpUtm}">สนใจยูนิตนี้</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              `;
-              unitsContainer.innerHTML += unitBox;
+              const unitBoxHtml = unitBox(unit, nameMap, cmpUtm);
+              unitsContainer.innerHTML += unitBoxHtml;
             });
           } else {
             unitsContainer.innerHTML = `
@@ -1065,34 +1126,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
             console.log(nameMap);
 
-            response.data.units.forEach(unit => {
-              //console.log(unit);
-              const unitBox = `
-                <div class="unit relative rounded-lg overflow-hidden shadow-lg border border-neutral-200">
-                  ${unit.isSoldOut ? `<div class="absolute top-0 left-0 w-full h-full bg-neutral-900/10 flex items-center justify-center z-[1]">
-                    <span class="text-white text-xl font-medium flex items-center justify-center px-5 py-2 w-full bg-red-500 rotate-45 absolute top-[10%] left-[30%]">SOLD OUT</span>
-                  </div>` : ''}
-                  <div class="unit-wrapper ${unit.isSoldOut ? 'sold-out' : ''}">
-                    <a href="${window.BASE_URL}unit/?id=${unit.id}">
-                      <img src="https://aswservice.com/hotdeal/${unit.headerImage.resource.filePath}" class="w-full aspect-square object-cover">
-                    </a>
-                    <div class="unit-detail px-4 py-6 relative">
-                      ${unit.highlightText ? `<div class="bg-accent text-[18px] mb-2 text-white font-medium px-5 py-2 rounded-full absolute -top-5 right-5">${unit.highlightText}</div>` : ''}
-                      <p class="text-primary mb-2">${unit.projectName}</p>
-                      <h3 class="leading-none font-medium text-3xl">${unit.unitCode}</h3>
-                      <p class="text-primary mb-7">
-                        <span class="text-neutral-500 relative line-through">ปกติ ${(unit.sellingPrice/1000000).toFixed(2)} ล้าน</span>
-                        <span class="text-accent text-3xl">พิเศษ</span> <span class="text-accent font-medium text-5xl">${(unit.discountPrice/1000000).toFixed(2)}</span> <span class="text-accent text-3xl">ล้าน</span>
-                      </p>
-                      <div class="btn-group flex justify-between items-center">
-                        <a href="${window.BASE_URL}unit/?id=${unit.id}" class="text-neutral-500 hover:text-neutral-800 font-light">ดูรายละเอียด</a>
-                        <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2" data-unit="${unit.unitCode}" data-project="${nameMap[unit.projectID] ?? unit.projectID}" data-cisid="${unit.projectCode}" data-utm-cmp="${cmpUtm}">สนใจยูนิตนี้</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              `;
-              unitsContainer.innerHTML += unitBox;
+            response.data.units.forEach(async unit => {
+              const cmpUtm = await getCmpUtmByID(unit.campaignID);
+              const unitBoxHtml = unitBox(unit, nameMap, cmpUtm);
+              unitsContainer.innerHTML += unitBoxHtml;
             });
           } else {
             unitsContainer.innerHTML = `

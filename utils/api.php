@@ -17,58 +17,45 @@ function log_api_request($method, $url, $data) {
 
 // Generic function to fetch data from an API
 function fetch_from_api($method, $url, $data = false, $token = null) {
-    //log_api_request($method, $url, $data);
     $curl = curl_init();
 
-    // Enable logging for debugging
-    //log_api_request($method, $url, $data);
+    // Build headers once and avoid overwriting later
+    $headers = [];
 
-    // Determine if data is form data or JSON
-    $isFormData = is_array($data) && ($method === "POST");
-    
     switch ($method) {
         case "POST":
             curl_setopt($curl, CURLOPT_POST, true);
             if ($data) {
-                if ($isFormData) {
-                    curl_setopt($curl, CURLOPT_POSTFIELDS, $data); // Form data
-                } else {
-                    //log_api_request($method, $url, json_encode($data));
-                    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data, JSON_UNESCAPED_UNICODE)); // JSON
-                }
+                // Always send JSON to upstream API for POST
+                log_api_request($method, $url, $data);
+                $headers[] = 'Content-Type: application/json';
+                curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data, JSON_UNESCAPED_UNICODE));
             }
             break;
         case "PUT":
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
-            if ($data)
+            if ($data) {
+                $headers[] = 'Content-Type: application/json';
                 curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data, JSON_UNESCAPED_UNICODE));
+            }
             break;
         default:
             if (is_array($data) && !empty($data)) {
                 $url = sprintf("%s?%s", $url, http_build_query($data));
-                log_api_request($method, $url, var_export($data, true));
             }
             break;
     }
 
     // Options
     curl_setopt($curl, CURLOPT_URL, $url);
-
-    // Set headers based on data type
-    if ($isFormData) {
-        // Let cURL set Content-Type automatically for multipart/form-data
-        curl_setopt($curl, CURLOPT_HTTPHEADER, []);
-    } else {
-        curl_setopt($curl, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/json',
-        ]);
-    }
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
 
     if ($token) {
-        //log_api_request($method, $url, $token);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, ['Authorization: Bearer ' . $token]);
+        $headers[] = 'Authorization: Bearer ' . $token;
+    }
+    if (!empty($headers)) {
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
     }
 
     // Execution
@@ -146,17 +133,43 @@ if (!empty($_REQUEST['action'])) {
     try {
         switch ($action) {
             case 'send_otp':
-                if (empty($_REQUEST['email'])) {
-                    $response = ['error' => true, 'message' => 'Email is required'];
+                $method = $_REQUEST['method'] ?? 'phone';
+                
+                if ($method === 'email') {
+                    if (empty($_REQUEST['email'])) {
+                        $response = ['error' => true, 'message' => 'Email is required'];
+                    } else {
+                        $response = send_otp($_REQUEST['email'], '', 'false');
+                    }
+                } else if ($method === 'phone') {
+                    if (empty($_REQUEST['phone'])) {
+                        $response = ['error' => true, 'message' => 'Phone number is required'];
+                    } else {
+                        $response = send_otp('', $_REQUEST['phone'], 'true');
+                    }
                 } else {
-                    $response = send_otp($_REQUEST['email']);
+                    $response = ['error' => true, 'message' => 'Invalid OTP method'];
                 }
+                
+                
+
                 break;
             case 'verify_otp':
-                if (empty($_REQUEST['email']) || empty($_REQUEST['otp'])) {
-                    $response = ['error' => true, 'message' => 'Email and OTP are required'];
+                $method = $_REQUEST['method'] ?? 'phone';
+                if ($method === 'email') {
+                    if (empty($_REQUEST['email']) || empty($_REQUEST['otp'])) {
+                        $response = ['error' => true, 'message' => 'Email and OTP are required'];
+                    } else {
+                        $response = verify_otp($_REQUEST['email'], '', $_REQUEST['otp']);
+                    }
+                } else if ($method === 'phone') {
+                    if (empty($_REQUEST['phone']) || empty($_REQUEST['otp'])) {
+                        $response = ['error' => true, 'message' => 'Phone and OTP are required'];
+                    } else {
+                        $response = verify_otp('', $_REQUEST['phone'], $_REQUEST['otp']);
+                    }
                 } else {
-                    $response = verify_otp($_REQUEST['email'], $_REQUEST['otp']);
+                    $response = ['error' => true, 'message' => 'Invalid OTP method'];
                 }
                 break;
             case 'add_member':
@@ -309,16 +322,55 @@ function getProjectDetail($projectCode) {
     return fetch_from_api('GET', $endpoint);
 }
 
-function send_otp($email) {
+function send_otp($email, $phone, $isSMS) {
     $endpoint = API_BASE_URL . '/Member/RequestOTP';
-    $data = ['email' => $email];
-    return fetch_from_api('POST', $endpoint, $data);
+    $data = ['email' => $email, 'tel' => $phone, 'isSMS' => $isSMS];
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+    CURLOPT_URL => $endpoint,
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => '',
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_POSTFIELDS => array('email' => $email, 'tel' => $phone, 'isSMS' => $isSMS),
+    CURLOPT_HTTPHEADER => array(
+        'Content-Type: multipart/form-data'
+    ),
+    ));
+
+    $response = curl_exec($curl);
+
+    curl_close($curl);
+    return $response;
 }
 
-function verify_otp($email, $otp) {
+function verify_otp($email, $phone, $otp) {
     $endpoint = API_BASE_URL . '/Member/OTPSubmit';
-    $data = ['email' => $email, 'otp' => $otp];
-    return fetch_from_api('POST', $endpoint, $data);
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+    CURLOPT_URL => $endpoint,
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => '',
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_POSTFIELDS => array('Email' => $email, 'Tel' => $phone, 'OTP' => $otp),
+    CURLOPT_HTTPHEADER => array(
+        'Content-Type: multipart/form-data'
+    ),
+    ));
+
+    $response = curl_exec($curl);
+
+    curl_close($curl);
+    return $response;
 }
 
 function get_member($memberId, $token) {
