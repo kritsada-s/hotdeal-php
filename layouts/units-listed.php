@@ -99,30 +99,15 @@ $locations = get_locations()['data'];
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
               </svg>
             </button>
-            <div class="sorting_wrapper_inner flex items-center gap-3">
-              <span class="shrink-0 text-[14px] font-medium">เรียงลำดับตาม : </span>
+            <div class="sorting_wrapper_inner flex items-center gap-3 relative">
+              <div class="flex items-center cursor-pointer" id="sortingOptionDropdownToggler">
+                <span class="shrink-0 text-[14px] font-medium">เรียงลำดับ : ยูนิต</span>
+                <span id="sortingText" class="text-[14px] font-medium">ใหม่ - เก่า</span>
+              </div>
               <input type="hidden" name="sortingUnit" id="sortingUnit" value="">
-              <div class="sorting-unit-dropdown relative">
-                <button type="button" class="sorting-unit-dropdown-toggle flex items-center justify-between w-full bg-white rounded px-4 py-2 border border-neutral-300" id="sortingUnitDropdownToggler">
-                  <span id="sortingUnitDropdownTogglerText" class="selected-text text-[14px]">ใหม่ - เก่า</span>
-                  <svg class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                  </svg>
-                </button>
-                  <div class="sorting-unit-dropdown-menu absolute top-[45px] left-0 right-0 bg-white border border-neutral-300 rounded-md shadow-lg z-10 max-h-60 overflow-y-auto hidden" id="sortingUnitDropdownMenu">
-                  <?php
-                    // Render dropdown items based on the select options for sortingUnit
-                    $sortingOptions = [
-                      'DESC' => 'ใหม่ - เก่า',
-                      'ASC' => 'เก่า - ใหม่'
-                    ];
-                    foreach ($sortingOptions as $value => $label) :
-                  ?>
-                    <button type="button" class="sorting-unit-dropdown-item flex items-center w-full px-4 py-2 text-left hover:bg-neutral-100 transition" data-value="<?= $value ?>">
-                      <?= $label ?>
-                    </button>
-                  <?php endforeach; ?>
-                </div>
+              <div class="sorting-option-dropdown absolute top-[30px] left-0 right-0 bg-white border border-neutral-300 rounded-md shadow-lg z-10 max-h-60 overflow-y-auto hidden" id="sortingOptionDropdownMenu">
+                <div class="sorting-option-dropdown-item text-[14px] font-medium p-2 hover:bg-neutral-100 cursor-pointer" data-value="DESC">ใหม่ - เก่า</div>
+                <div class="sorting-option-dropdown-item text-[14px] font-medium p-2 hover:bg-neutral-100 cursor-pointer" data-value="ASC">เก่า - ใหม่</div>
               </div>
             </div>
           </div>

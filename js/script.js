@@ -1026,8 +1026,9 @@ document.addEventListener('DOMContentLoaded', function() {
   const locationCheckboxAll = document.getElementById('locationCheckboxAll');
   const locationDropdownToggler = document.getElementById('locationDropdownToggler');
   const projectsDropdownToggler = document.getElementById('projectsDropdownToggler');
-  const sortingUnitDropdownToggler = document.getElementById('sortingUnitDropdownToggler');
-  const sortingUnitDropdownMenu = document.getElementById('sortingUnitDropdownMenu');
+  const sortingOptionDropdownToggler = document.getElementById('sortingOptionDropdownToggler');
+  const sortingOptionDropdownMenu = document.getElementById('sortingOptionDropdownMenu');
+  const sortingText = document.getElementById('sortingText');
 
   if (projectsDropdownToggler) {
     projectsDropdownToggler.addEventListener('click', function() {
@@ -1107,9 +1108,17 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  if (sortingUnitDropdownToggler) {
-    sortingUnitDropdownToggler.addEventListener('click', function() {
-      sortingUnitDropdownMenu.classList.toggle('hidden');
+  if (sortingOptionDropdownToggler) {
+    sortingOptionDropdownToggler.addEventListener('click', function() {
+      sortingOptionDropdownMenu.classList.toggle('hidden');
+    });
+    const sortingOptionDropdownItems = document.querySelectorAll('.sorting-option-dropdown-item');
+    sortingOptionDropdownItems.forEach(item => {
+      item.addEventListener('click', function() {
+        sortingOptionDropdownMenu.classList.add('hidden');
+        sortingText.innerHTML = item.textContent;
+        sortingOptionDropdownToggler.dataset.value = item.dataset.value;
+      });
     });
   }
 
