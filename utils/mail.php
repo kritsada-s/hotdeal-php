@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/bootstrap.php';
 
 // Alternative function using PHPMailer (recommended for production)
 function send_thank_you_email($email, $subject = 'ขอบคุณสำหรับการลงทะเบียน - Thank you for registration', $htmlBody = null, $textBody = null, $unitCode = '', $projectName = '') {
@@ -65,18 +65,28 @@ function send_thank_you_email($email, $subject = 'ขอบคุณสำหร
     }
     
     try {
-        // Server settings
+        // Sanitize input to prevent XSS in email
+        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+        $unitCode = htmlspecialchars($unitCode, ENT_QUOTES, 'UTF-8');
+        $projectName = htmlspecialchars($projectName, ENT_QUOTES, 'UTF-8');
+
+        // Validate email
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return ['error' => true, 'message' => 'Invalid email address'];
+        }
+
+        // Server settings from environment variables
         $mail->isSMTP();
-        $mail->Host       = 'smtp.office365.com';
+        $mail->Host       = env('SMTP_HOST');
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'ASW-NoReply@assetwise.co.th';
-        $mail->Password   = 'OctoberFest.2022';
+        $mail->Username   = env('SMTP_USERNAME');
+        $mail->Password   = env('SMTP_PASSWORD');
         $mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port       = 587;
+        $mail->Port       = env('SMTP_PORT');
         $mail->CharSet    = 'UTF-8';
-        
+
         // Recipients
-        $mail->setFrom('ASW-NoReply@assetwise.co.th', 'AssetWise Hot Deals');
+        $mail->setFrom(env('SMTP_FROM_EMAIL'), env('SMTP_FROM_NAME'));
         $mail->addAddress($email, $unitCode);
         
         // Content

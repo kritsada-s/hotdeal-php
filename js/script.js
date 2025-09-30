@@ -1024,6 +1024,16 @@ document.addEventListener('DOMContentLoaded', function() {
   const locationInput = document.getElementById('location_selector');
   const searchBtn = document.getElementById('searchBtn');
   const locationCheckboxAll = document.getElementById('locationCheckboxAll');
+  const locationDropdownToggler = document.getElementById('locationDropdownToggler');
+  const projectsDropdownToggler = document.getElementById('projectsDropdownToggler');
+  const sortingUnitDropdownToggler = document.getElementById('sortingUnitDropdownToggler');
+  const sortingUnitDropdownMenu = document.getElementById('sortingUnitDropdownMenu');
+
+  if (projectsDropdownToggler) {
+    projectsDropdownToggler.addEventListener('click', function() {
+      projectsDropdownMenu.classList.toggle('hidden');
+    });
+  }
 
   if (locationDropdownToggler) {
     locationDropdownToggler.addEventListener('click', function() {
@@ -1094,6 +1104,12 @@ document.addEventListener('DOMContentLoaded', function() {
           locationDropdownMenu.classList.add('hidden');
         }
       }
+    });
+  }
+
+  if (sortingUnitDropdownToggler) {
+    sortingUnitDropdownToggler.addEventListener('click', function() {
+      sortingUnitDropdownMenu.classList.toggle('hidden');
     });
   }
 

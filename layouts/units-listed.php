@@ -26,12 +26,31 @@ $locations = get_locations()['data'];
             <div class="flex items-start gap-5 flex-col">
               <div class="flex flex-col gap-2 w-full">
                 <span class="font-medium text-[14px]">เลือกดูตามโครงการ</span>
-                <select name="project" id="project_selector" class="select w-full">
-                  <option value="">ทั้งหมด</option>
-                  <?php foreach ($activeProjects as $project) : ?>
-                    <option value="<?= $project['projectID'] ?>"><?= $project['projectNameTH'] ?></option>
-                  <?php endforeach; ?>
-                </select>
+                <div class="relative">
+                  <input type="hidden" name="projects" id="project_selector" value="">
+                  <div class="project-dropdown relative">
+                    <button type="button" class="project-dropdown-toggle flex items-center justify-between w-full bg-white rounded px-4 py-2 border border-neutral-300" id="projectsDropdownToggler">
+                      <span id="projectsDropdownTogglerText" class="selected-text text-[14px]">ทั้งหมด</span>
+                      <svg class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                      </svg>
+                    </button>
+                  </div>
+                  <div class="project-dropdown-menu absolute top-[45px] left-0 right-0 bg-white border border-neutral-300 rounded-md shadow-lg z-10 max-h-60 overflow-y-auto hidden" id="projectsDropdownMenu">
+                    <div class="p-2">
+                      <label class="flex items-center gap-2 p-2 hover:bg-neutral-50 cursor-pointer">
+                        <input type="checkbox" id="projectsCheckboxAll" class="projects-checkbox-all" checked>
+                        <span class="text-sm">ทั้งหมด</span>
+                      </label>
+                      <?php foreach ($activeProjects as $project) : ?>
+                        <label class="flex items-center gap-2 p-2 hover:bg-neutral-50 cursor-pointer">
+                          <input type="checkbox" class="project-checkbox" value="<?= $project['projectID'] ?>">
+                          <span class="text-sm"><?= $project['projectNameTH'] ?></span>
+                        </label>
+                      <?php endforeach; ?>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="flex flex-col gap-2 w-full">
                 <span class="font-medium text-[14px]">เลือกดูตามพื้นที่</span>
@@ -82,10 +101,29 @@ $locations = get_locations()['data'];
             </button>
             <div class="sorting_wrapper_inner flex items-center gap-3">
               <span class="shrink-0 text-[14px] font-medium">เรียงลำดับตาม : </span>
-              <select name="unit" id="sortingUnit" class="select max-w-[100px] lg:w-[200px]">
-                <option value="DESC">ใหม่ - เก่า</option>
-                <option value="ASC">เก่า - ใหม่</option>
-              </select>
+              <input type="hidden" name="sortingUnit" id="sortingUnit" value="">
+              <div class="sorting-unit-dropdown relative">
+                <button type="button" class="sorting-unit-dropdown-toggle flex items-center justify-between w-full bg-white rounded px-4 py-2 border border-neutral-300" id="sortingUnitDropdownToggler">
+                  <span id="sortingUnitDropdownTogglerText" class="selected-text text-[14px]">ใหม่ - เก่า</span>
+                  <svg class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                  </svg>
+                </button>
+                  <div class="sorting-unit-dropdown-menu absolute top-[45px] left-0 right-0 bg-white border border-neutral-300 rounded-md shadow-lg z-10 max-h-60 overflow-y-auto hidden" id="sortingUnitDropdownMenu">
+                  <?php
+                    // Render dropdown items based on the select options for sortingUnit
+                    $sortingOptions = [
+                      'DESC' => 'ใหม่ - เก่า',
+                      'ASC' => 'เก่า - ใหม่'
+                    ];
+                    foreach ($sortingOptions as $value => $label) :
+                  ?>
+                    <button type="button" class="sorting-unit-dropdown-item flex items-center w-full px-4 py-2 text-left hover:bg-neutral-100 transition" data-value="<?= $value ?>">
+                      <?= $label ?>
+                    </button>
+                  <?php endforeach; ?>
+                </div>
+              </div>
             </div>
           </div>
 

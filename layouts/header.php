@@ -1,11 +1,31 @@
-<?php define('BASE_URL', '/hotdeal/'); ?>
-<?php include __DIR__ . '/../utils/api.php'; ?>
+<?php
+define('BASE_URL', '/hotdeal/');
+include __DIR__ . '/../utils/api.php';
+
+// Security Headers
+header("X-Frame-Options: DENY");
+header("X-Content-Type-Options: nosniff");
+header("X-XSS-Protection: 1; mode=block");
+header("Referrer-Policy: strict-origin-when-cross-origin");
+header("Permissions-Policy: geolocation=(), microphone=(), camera=()");
+
+// Content Security Policy - Comprehensive configuration
+$csp = "default-src 'self'; ";
+$csp .= "script-src 'self' 'unsafe-inline' https://ajax.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; ";
+$csp .= "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; ";
+$csp .= "img-src 'self' data: https: blob:; ";
+$csp .= "font-src 'self' data: https://cdn.jsdelivr.net; ";
+$csp .= "connect-src 'self' https://aswservice.com https://aswinno.assetwise.co.th https://assetwise.co.th https://cdn.jsdelivr.net https://ajax.googleapis.com https://cdnjs.cloudflare.com; ";
+$csp .= "frame-src 'none'; object-src 'none'; base-uri 'self'";
+header("Content-Security-Policy: " . $csp);
+?>
 
 <!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <?php echo CSRF::tokenMeta(); ?>
   <title>AssetWise Hot Deal - ยูนิตสวย ราคาโดน คอนโดใกล้มหาลัย</title>
   <link rel="icon" href="<?php echo BASE_URL; ?>/favicon.ico">
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>css/lity.min.css">
