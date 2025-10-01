@@ -1,15 +1,18 @@
 <div class="rounded-lg overflow-hidden shadow-lg border border-neutral-200 relative">
   <?php if ($unit['isSoldOut']) : ?>
     <!-- <div class="absolute top-0 left-0 w-full h-full bg-neutral-900/10 flex items-center justify-center z-[1]"> -->
-    <span class="text-white text-[12px] lg:text-xl font-medium flex items-center justify-center px-5 py-2 w-full bg-red-500 rotate-45 absolute top-[20px] lg:top-[10%] left-[40px] lg:left-[30%]">SOLD OUT</span>
+    <span class="text-white text-[12px] lg:text-[16px] font-medium flex items-center justify-center px-5 py-2 w-full bg-red-500 rotate-45 absolute top-[20px] lg:top-[5%] left-[40px] lg:left-[35%] z-[3]">SOLD OUT</span>
   <?php endif; ?>
   <div class="unit-wrapper <?= $unit['isSoldOut'] ? 'sold-out' : '' ?>">
-    <a href="<?php echo BASE_URL; ?>unit/?id=<?= $unit['id'] ?>">
-      <img src="https://aswservice.com/hotdeal/<?= $unit['headerImage']['resource']['filePath'] ?>" class="w-full aspect-square object-cover">
+    <a href="<?php echo BASE_URL; ?>unit/?id=<?= $unit['id'] ?>" class="relative">
+      <?php if ($unit['campaignOverlay']['resource']['filePath']) : ?>
+        <img class="absolute top-0 left-0 w-full h-full object-cover z-[2]" src="<?= env('HOTDEAL_ASSETS_PATH'); ?><?= $unit['campaignOverlay']['resource']['filePath'] ?>">
+      <?php endif; ?>
+      <img src="<?= env('HOTDEAL_ASSETS_PATH'); ?><?= $unit['headerImage']['resource']['filePath'] ?>" class="w-full aspect-square object-cover z-[1]">
     </a>
     <div class="unit-detail px-2 py-3 lg:px-4 lg:py-6 relative">
       <?php if ($unit['highlightText']) : ?>
-        <div class="bg-accent text-[10px] lg:text-[16px] lg:mb-2 text-white font-medium px-3 py-1 lg:px-5 lg:py-2 rounded-full absolute -top-3 -lg:top-5 right-3 lg:right-5 "><?= $unit['highlightText']; ?></div>
+        <div class="bg-accent text-[10px] lg:text-[16px] lg:mb-2 text-white font-medium px-3 py-1 lg:px-5 lg:py-2 rounded-full absolute -top-3 lg:-top-5 right-3 lg:right-5 z-[3]"><?= $unit['highlightText']; ?></div>
       <?php endif; ?>
       <p class="text-[#00a9a5] mb-2 lg:font-medium text-[11px] lg:text-base"><?= $unit['projectName'] ?></p>
       <h3 class="leading-none font-medium mb-2 text-[18px] lg:text-3xl"><?= $unit['unitCode'] ?></h3>

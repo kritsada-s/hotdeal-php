@@ -95,7 +95,7 @@ log_cis_request($data);
 $curl = curl_init();
 
 // Generate Basic Auth header from environment variables
-$cis_auth = base64_encode(env('CIS_API_USERNAME') . ':' . env('CIS_API_PASSWORD'));
+$cis_auth = env('CIS_AUTH_TOKEN');
 
 curl_setopt_array($curl, array(
     CURLOPT_URL => env('CIS_API_URL'),

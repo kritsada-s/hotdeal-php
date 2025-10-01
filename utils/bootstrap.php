@@ -17,8 +17,7 @@ $dotenv->required([
     'SMTP_USERNAME',
     'SMTP_PASSWORD',
     'CIS_API_URL',
-    'CIS_API_USERNAME',
-    'CIS_API_PASSWORD',
+    'CIS_AUTH_TOKEN',
     'HOTDEAL_API_URL',
     'HOTDEAL_ASSETS_PATH'
 ])->notEmpty();

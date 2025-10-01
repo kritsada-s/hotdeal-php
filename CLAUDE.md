@@ -40,7 +40,16 @@ Install PHPMailer and other PHP dependencies
   - `cis.php` - CIS system integration for customer registration
 - **`/unit/`** - Individual unit detail page
 - **`/css/`** - Tailwind input/output files
-- **`/js/`** - JavaScript modules (script.js, Swiper, lightbox libraries)
+- **`/js/`** - JavaScript modules:
+  - `script.js` - Main entry point (orchestration)
+  - `modules/` - Modular code structure:
+    - `api.js` - AJAX requests & API calls
+    - `auth.js` - Authentication & OTP handling
+    - `member.js` - Member CRUD operations
+    - `modals.js` - Modal UI interactions
+    - `units.js` - Unit listing & filtering
+    - `carousel.js` - Swiper initialization
+    - `utils.js` - Helper functions & utilities
 
 ### Key Architecture Patterns
 
@@ -52,6 +61,10 @@ Install PHPMailer and other PHP dependencies
    - WordPress API for project facilities/gallery
 4. **JWT Authentication**: Member login uses JWT tokens stored in localStorage
 5. **Base URL Management**: `BASE_URL` constant set to `/hotdeal/` for relative paths
+6. **Modular JavaScript**: ES6 modules with clear separation of concerns (see `/js/modules/README.md`)
+   - Each module has single responsibility
+   - Import/export pattern for code reusability
+   - Main `script.js` orchestrates all modules
 
 ### Important Configuration
 
