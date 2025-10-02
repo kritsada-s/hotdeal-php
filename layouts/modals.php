@@ -137,7 +137,7 @@
     <span class="text-sm mx-auto block mb-3 text-center" id="otp-modal-subtitle"></span>
     <div class="form-group flex">
       <label for="otp" class="hidden">รหัส OTP</label>
-      <input type="text" id="otp" name="otp" class="input input-xl input-bordered w-2/3 mx-auto text-center">
+      <input type="text" id="otp" name="otp" autofocus class="input input-xl input-bordered w-2/3 mx-auto text-center">
     </div>
     <div class="flex justify-end gap-4 w-full mt-5">
       <button id="verifyOTPBtn" class="btn btn-primary">
@@ -163,6 +163,7 @@
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <input type="hidden" id="projectID" name="projectID">
+      <input type="hidden" id="utmCmp" name="utmCmp">
       <div class="form-group flex flex-col gap-2">
         <label for="summaryFirstName">ชื่อ</label>
         <input type="text" id="summaryFirstName" name="summaryFirstName" class="input input-bordered w-full">

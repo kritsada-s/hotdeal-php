@@ -34,7 +34,7 @@ function fetch_from_api($method, $url, $data = false, $token = null) {
             curl_setopt($curl, CURLOPT_POST, true);
             if ($data) {
                 // Always send JSON to upstream API for POST
-                log_api_request($method, $url, $data);
+                //log_api_request($method, $url, $data);
                 $headers[] = 'Content-Type: application/json';
                 curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data, JSON_UNESCAPED_UNICODE));
             }

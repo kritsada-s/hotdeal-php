@@ -170,7 +170,7 @@
             </div>
             <div class="reserved-price"></div>
             <div class="h-4"></div>
-            <button class="unitBtn bg-accent rounded cursor-pointer w-full h-fit text-2xl text-white font-medium px-10 py-5 hover:scale-105 transition-all duration-300 hover:shadow-lg" data-unit="<?= $unit_detail['unitCode'] ?>" data-project="<?= $projectData['nameTH'] ?>" data-cisid="<?= $projectData['ProjectID'] ?>">
+            <button class="unitBtn bg-accent rounded cursor-pointer w-full h-fit text-2xl text-white font-medium px-10 py-5 hover:scale-105 transition-all duration-300 hover:shadow-lg" data-unit="<?= $unit_detail['unitCode'] ?>" data-project="<?= $projectData['nameTH'] ?>" data-cisid="<?= $projectData['ProjectID'] ?>" data-utm-cmp="<?= getCmpUtmByID($unit_detail['campaignID']) ?>">
               สนใจยูนิตนี้
             </button>
           </div>

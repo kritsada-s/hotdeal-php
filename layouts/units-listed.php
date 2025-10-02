@@ -1,12 +1,6 @@
 <?php
 include_once 'utils/api.php';
 $units = get_units()['data']['units'];
-$activeProjects = get_active_projects()['data'];
-$locations = get_locations()['data'];
-
-// echo "<pre>";
-// print_r($locations);
-// echo "</pre>";
 
 ?>
 <section id="unitsListed" class="pt-10 pb-8">
@@ -21,75 +15,7 @@ $locations = get_locations()['data'];
       <div class="h-3"></div>
 
       <div id="unit_display_filter" class="w-full grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-5">
-        <div class="units_filter_panel col-span-1 md:col-span-6 lg:col-span-3">
-          <div class="sorting-search w-full bg-neutral-100 px-4 py-5 rounded-lg flex flex-col gap-5">
-            <div class="flex items-start gap-5 flex-col">
-              <div class="flex flex-col gap-2 w-full">
-                <span class="font-medium text-[14px]">เลือกดูตามโครงการ</span>
-                <div class="relative">
-                  <input type="hidden" name="projects" id="project_selector" value="">
-                  <div class="project-dropdown relative">
-                    <button type="button" class="project-dropdown-toggle flex items-center justify-between w-full bg-white rounded px-4 py-2 border border-neutral-300" id="projectsDropdownToggler">
-                      <span id="projectsDropdownTogglerText" class="selected-text text-[14px]">ทั้งหมด</span>
-                      <svg class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                      </svg>
-                    </button>
-                  </div>
-                  <div class="project-dropdown-menu absolute top-[45px] left-0 right-0 bg-white border border-neutral-300 rounded-md shadow-lg z-10 max-h-60 overflow-y-auto hidden" id="projectsDropdownMenu">
-                    <div class="p-2">
-                      <label class="flex items-center gap-2 p-2 hover:bg-neutral-50 cursor-pointer">
-                        <input type="checkbox" id="projectsCheckboxAll" class="projects-checkbox-all" checked>
-                        <span class="text-sm">ทั้งหมด</span>
-                      </label>
-                      <?php foreach ($activeProjects as $project) : ?>
-                        <label class="flex items-center gap-2 p-2 hover:bg-neutral-50 cursor-pointer">
-                          <input type="checkbox" class="project-checkbox" value="<?= $project['projectID'] ?>">
-                          <span class="text-sm"><?= $project['projectNameTH'] ?></span>
-                        </label>
-                      <?php endforeach; ?>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="flex flex-col gap-2 w-full">
-                <span class="font-medium text-[14px]">เลือกดูตามพื้นที่</span>
-                <div class="relative">
-                  <input type="hidden" name="locations" id="location_selector" value="">
-                  
-                  <div class="location-dropdown relative">
-                    <button type="button" class="location-dropdown-toggle flex items-center justify-between w-full bg-white rounded px-4 py-2 border border-neutral-300" id="locationDropdownToggler">
-                      <span id="locationDropdownTogglerText" class="selected-text text-[14px]">ทั้งหมด</span>
-                      <svg class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                      </svg>
-                    </button>
-                    
-                    <div class="location-dropdown-menu absolute top-[45px] left-0 right-0 bg-white border border-neutral-300 rounded-md shadow-lg z-10 max-h-60 overflow-y-auto hidden" id="locationDropdownMenu">
-                      <div class="p-2">
-                        <label class="flex items-center gap-2 p-2 hover:bg-neutral-50 cursor-pointer">
-                          <input type="checkbox" id="locationCheckboxAll" class="location-checkbox-all" checked>
-                          <span class="text-sm">ทั้งหมด</span>
-                        </label>
-                        <?php foreach ($locations as $location) : ?>
-                          <label class="flex items-center gap-2 p-2 hover:bg-neutral-50 cursor-pointer">
-                            <input type="checkbox" class="location-checkbox" value="<?= $location['id'] ?>">
-                            <span class="text-sm"><?= $location['name'] ?></span>
-                          </label>
-                        <?php endforeach; ?>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <button id="searchBtn" type="button" class="btn btn-primary text-white rounded-full w-[80px] text-[16px] font-medium">ค้นหา</button>
-            </div>
-            <form action="" id="searchForm" class="hidden items-center gap-2">
-              <input type="text" id="searchUnit" name="search" placeholder="ค้นหายูนิตที่คุณสนใจ" class="md:min-w-[250px] w-full border border-neutral-500 rounded-full px-4 py-2 text-neutral-700 focus:bg-white transition">
-              <button type="submit" class="btn btn-primary text-white rounded-full w-[80px] text-[16px] font-medium">ค้นหา</button>
-            </form>
-          </div>
-        </div>
+        <?php include 'filter.php'; ?>
 
         <div class="units_display_panel col-span-1 md:col-span-6 lg:col-span-9">
 

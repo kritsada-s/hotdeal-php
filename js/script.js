@@ -12,8 +12,8 @@ import { initModalListeners } from './modules/modals.js';
 import { 
   attachUnitButtonEvents, 
   initUnitFilters,
-  initLocationDropdown,
-  initProjectsDropdown,
+  //initLocationDropdown,
+  //initProjectsDropdown,
   initSortingDropdown
 } from './modules/units.js';
 import { 
@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize authentication state
   initAuthState();
 
+  // Initialize local storage project
+  initLocalStorageProject();
+
   // Initialize modal event listeners
   initModalListeners();
 
@@ -41,8 +44,8 @@ document.addEventListener('DOMContentLoaded', function() {
   initUnitDetailGalleries();
 
   // Initialize dropdowns
-  initLocationDropdown();
-  initProjectsDropdown();
+  //initLocationDropdown();
+  //initProjectsDropdown();
   initSortingDropdown();
 
   // Initialize animations
@@ -51,11 +54,32 @@ document.addEventListener('DOMContentLoaded', function() {
   console.log('✅ Application Initialized Successfully');
 });
 
+$(document).ready(function() {
+  const locationSelector = $('#location_selector');
+  const locationsListed = $('#locationsListed');
+  if (locationSelector) {
+    locationSelector.select2({
+      placeholder: 'พิมพ์เพื่อเลือก...',
+    });
+  }
+
+  locationSelector.on('select2:select', function(e) {
+    console.log('selected locations : ', e.params.data.id);
+    let loc = locationsListed.val();
+    if (loc) {
+      loc = loc + ',' + e.params.data.id;
+    } else {
+      loc = e.params.data.id;
+    }
+    locationsListed.val(loc);
+  });
+});
+
 /**
  * Initialize authentication state and update UI
  */
 function initAuthState() {
-  const memberName = document.getElementById('memberName');
+  const memberName = document.getElementById('memberName');  
   
   if (checkAuthToken()) {
     const token = localStorage.getItem('hotdeal_token');
@@ -63,6 +87,18 @@ function initAuthState() {
     if (memberName) memberName.textContent = user.Firstname;
   } else {
     if (memberName) memberName.textContent = 'เข้าสู่ระบบ';
+    if (localStorage.getItem('tmp_p')) {
+      localStorage.removeItem('tmp_p');
+    }
+  }
+}
+
+/**
+ * Initialize local storage project
+ */
+function initLocalStorageProject() {
+  if (localStorage.getItem('tmp_p')) {
+    localStorage.removeItem('tmp_p');
   }
 }
 
@@ -81,16 +117,16 @@ function initUnitFunctionality() {
  * Initialize animations
  */
 function initAnimations() {
-  const unitsContainer = document.getElementById('unitsContainer');
+  // const unitsContainer = document.getElementById('unitsContainer');
   
-  if (unitsContainer) {
-    animate('#unitsContainer .unit', {
-      translateY: ['100px', '0px'],
-      opacity: [0, 1],
-      duration: 1000,
-      easing: 'out(3)',
-      delay: stagger(100),
-    });
-  }
+  // if (unitsContainer) {
+  //   animate('#unitsContainer .unit', {
+  //     translateY: ['100px', '0px'],
+  //     opacity: [0, 1],
+  //     duration: 1000,
+  //     easing: 'out(3)',
+  //     delay: stagger(100),
+  //   });
+  // }
 }
 

@@ -138,7 +138,17 @@ export function requestOTP(contactValue, method = 'phone') {
         resetRequestOTPBtn();
         resetVerifyOTPBtn();
         if (otpModal) otpModal.showModal();
-        if (verifyOTPBtn) verifyOTPBtn.focus();
+        
+        // Focus on OTP input after modal is fully rendered
+        // Use requestAnimationFrame to ensure DOM is updated
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            const otpInput = document.getElementById('otp');
+            if (otpInput) {
+              otpInput.focus();
+            }
+          });
+        });
       }
     }, 'POST', data);
   } catch (error) {

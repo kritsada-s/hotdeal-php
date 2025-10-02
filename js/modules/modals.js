@@ -8,6 +8,7 @@ import { showSwal, setSummarySubmitBtn } from './utils.js';
 import { requestOTP, verifyOTP, checkAuthToken, logout } from './auth.js';
 import { addMember, updateMember, updateMemberModal, setMemberName } from './member.js';
 import { decodeToken } from './utils.js';
+import { updateLocalStorageProject } from './units.js';
 
 /**
  * Update summary modal with member and unit data
@@ -23,6 +24,7 @@ export function updateSummaryModal(member, unit) {
   const summaryProject = document.getElementById('summaryProject');
   const summaryUnit = document.getElementById('summaryUnit');
   const summaryProjectID = document.getElementById('projectID');
+  const summaryUtmCmp = document.getElementById('utmCmp');
 
   if (summaryFirstName) summaryFirstName.value = member.Firstname;
   if (summaryLastName) summaryLastName.value = member.Lastname;
@@ -33,6 +35,7 @@ export function updateSummaryModal(member, unit) {
   if (summaryProject) summaryProject.textContent = unit.project;
   if (summaryUnit) summaryUnit.textContent = unit.unit;
   if (summaryProjectID) summaryProjectID.value = unit.cisid;
+  if (summaryUtmCmp) summaryUtmCmp.value = unit.utm;
 }
 
 /**
@@ -218,7 +221,7 @@ export function initModalListeners() {
       const summaryProjectID = document.getElementById('projectID');
       const summaryProjectName = document.getElementById('summaryProject');
       const summaryModal = document.getElementById('summaryModal');
-
+      const summaryUtmCmp = document.getElementById('utmCmp');
       setSummarySubmitBtn(summarySubmitBtn, 'sending');
       
       // Create FormData to send as form data, not JSON
@@ -232,6 +235,7 @@ export function initModalListeners() {
       data.append('unitID', summaryUnit.textContent);
       data.append('projectName', summaryProjectName.textContent);
       data.append('RefID', new Date().getTime());
+      data.append('utm_campaign', summaryUtmCmp.value);
       data.append('Ref', "Register from AssetWise Hot Deal Website : interested in unit " + summaryUnit.textContent);
 
       try {
@@ -261,6 +265,7 @@ export function initModalListeners() {
   if (summaryCancelBtn) {
     summaryCancelBtn.addEventListener('click', function() {
       const summaryModal = document.getElementById('summaryModal');
+      updateLocalStorageProject(null);
       if (summaryModal) summaryModal.close();
     });
   }
