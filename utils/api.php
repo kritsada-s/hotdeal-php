@@ -111,6 +111,12 @@ function get_units($params = array()) {
     if (!isset($params['sortingUnit'])) {
         $params['sortingUnit'] = 'DESC';
     }
+    if (!isset($params['page'])) {
+        $params['page'] = 1;
+    }
+    if (!isset($params['perPage'])) {
+        $params['perPage'] = 6;
+    }
     return fetch_from_api('GET', $endpoint, $params);
 }
 
@@ -206,7 +212,7 @@ if (!empty($_REQUEST['action'])) {
                 }
 
                 // Also merge in known top-level filters if present
-                $known_filters = ['searchStr', 'projectIDs', 'locationIDs', 'sortingUnit'];
+                $known_filters = ['searchStr', 'projectIDs', 'locationIDs', 'sortingUnit', 'page', 'perPage'];
                 foreach ($known_filters as $filter_key) {
                     if (isset($_REQUEST[$filter_key]) && $_REQUEST[$filter_key] !== '') {
                         $params[$filter_key] = $_REQUEST[$filter_key];

@@ -18,32 +18,31 @@ import { animate, stagger } from 'https://cdn.jsdelivr.net/npm/animejs/+esm';
  */
 export function unitBox(unit, nameMap, cmpUtm) {
   // Determine base URL based on domain
-  let baseUrl;
-  if (window.location.hostname.endsWith('.test')) {
-    baseUrl = 'https://aswinno.assetwise.co.th/hotdealuat/';
-  } else {
-    baseUrl = 'https://aswinno.assetwise.co.th/hotdeal/';
-  }
+  const baseUrl = 'https://aswservice.com/hotdeal/';
+  
   return `
     <div class="unit-box rounded-lg overflow-hidden shadow-lg border border-neutral-200 relative" style="opacity: 0;">
-      ${unit.isSoldOut ? `<span class="text-white text-[12px] lg:text-xl font-medium flex items-center justify-center px-5 py-2 w-full bg-red-500 rotate-45 absolute top-[20px] lg:top-[10%] left-[40px] lg:left-[30%]">SOLD OUT</span>` : ''}
-      <div class="unit-wrapper ${unit.isSoldOut ? 'sold-out' : ''}">
-        <a href="${window.BASE_URL}unit?id=${unit.id}">
-          <img src="${baseUrl}${unit.headerImage.resource.filePath}" class="w-full aspect-square object-cover">
+      ${unit.isSoldOut ? `<span class="text-white text-[12px] lg:text-[16px] font-medium flex items-center justify-center px-5 py-2 w-full bg-red-500 rotate-45 absolute top-[20px] lg:top-[5%] left-[40px] lg:left-[30%] z-[3]">SOLD OUT</span>` : ''}
+      <div class="unit-wrapper flex flex-col h-full ${unit.isSoldOut ? 'sold-out' : ''}">
+        <a href="${window.BASE_URL}unit/${unit.id}" class="relative">
+          ${unit.campaignOverlay?.resource?.filePath ? `<img class="absolute top-0 left-0 w-full h-full object-cover z-[2]" src="https://aswservice.com/hotdealassets${unit.campaignOverlay.resource.filePath}">` : ''}
+          <img src="https://aswservice.com/hotdealassets${unit.headerImage.resource.filePath}" class="w-full aspect-square object-cover z-[1]">
         </a>
-        <div class="unit-detail px-2 py-3 lg:px-4 lg:py-6 relative">
-          ${unit.highlightText ? `<div class="bg-accent text-[10px] lg:text-[16px] lg:mb-2 text-white font-medium px-3 py-1 lg:px-5 lg:py-2 rounded-full absolute -top-3 -lg:top-5 right-3 lg:right-5">${unit.highlightText}</div>` : ''}
-          <p class="text-[#00a9a5] mb-2 lg:font-medium text-[11px] lg:text-base">${unit.projectName}</p>
-          <h3 class="leading-none font-medium mb-2 text-[18px] lg:text-3xl">${unit.unitCode}</h3>
-          <p class="text-primary">
-            <span class="text-neutral-500 relative line-through text-[10px] lg:text-xl">ปกติ ${(unit.sellingPrice/1000000).toFixed(2)} ล้าน</span>
-          </p>
-          <p class="text-primary mb-4 lg:mb-7">
-            <span class="text-accent text-[14px] lg:text-xl">พิเศษ</span> <span class="text-accent font-bold text-[18px] lg:text-4xl">${(unit.discountPrice/1000000).toFixed(2)}</span> <span class="text-accent text-[16px] lg:text-xl">ล้าน</span>
-          </p>
-          <div class="btn-group flex flex-col lg:flex-row justify-between lg:items-center gap-4 lg:gap-0">
-            <a href="${window.BASE_URL}unit?id=${unit.id}" class="text-neutral-500 hover:text-neutral-800 text-[12px] lg:text-base font-light">ดูรายละเอียด</a>
-            <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2 hover:shadow-lg transition-all duration-300 text-[14px] lg:text-base" data-unit="${unit.unitCode}" data-project="${nameMap[unit.projectID] ?? unit.projectID}" data-cisid="${unit.projectCode}" data-utm-cmp="${cmpUtm}">สนใจยูนิตนี้</button>
+        <div class="unit-detail px-2 py-3 lg:px-4 lg:pt-6 lg:pb-4 relative flex flex-col h-full justify-between">
+          ${unit.highlightText ? `<div class="highlight-tag">${unit.highlightText}</div>` : ''}
+          <div class="unit-info">
+            <p class="text-[#00a9a5] mb-3 text-[11px] lg:text-[16px] leading-none">${unit.projectName}</p>
+            <h3 class="text-primary leading-none font-medium mb-2 text-[16px] lg:text-2xl">${unit.unitCode}</h3>
+            <p>
+              <span class="text-neutral-500 relative line-through text-[10px] lg:text-[16px] font-light">ปกติ ${(unit.sellingPrice/1000000).toFixed(2)} ล้าน</span>
+            </p>
+            <p class="mb-4 lg:mb-7">
+              <span class="text-accent text-[14px] lg:text-xl">พิเศษ</span> <span class="text-accent font-bold text-[18px] lg:text-4xl">${(unit.discountPrice/1000000).toFixed(2)}</span> <span class="text-accent text-[16px] lg:text-xl">ล้าน</span>
+            </p>
+          </div>
+          <div class="unit-action btn-group flex flex-col justify-between lg:items-center gap-4">
+            <a href="${window.BASE_URL}unit?id=${unit.id}" class="text-neutral-500 hover:text-neutral-800 text-[12px] lg:text-[16px] font-light">ดูรายละเอียด</a>
+            <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2 hover:shadow-lg transition-all duration-300 text-[14px] lg:text-base w-full" data-unit="${unit.unitCode}" data-project="${nameMap[unit.projectID] ?? unit.projectID}" data-cisid="${unit.projectCode ?? ''}" data-utm-cmp="${cmpUtm}">สนใจยูนิตนี้</button>
           </div>
         </div>
       </div>
@@ -103,12 +102,95 @@ function showNoDataMessage(container) {
 }
 
 /**
+ * Render pagination controls
+ * @param {number} currentPage - Current page number
+ * @param {number} totalPages - Total number of pages
+ * @param {number} totalItems - Total number of items
+ */
+function renderPagination(currentPage, totalPages, totalItems) {
+  const paginationContainer = document.getElementById('paginationContainer');
+  const pageNumbers = document.getElementById('pageNumbers');
+  const prevBtn = document.getElementById('prevPage');
+  const nextBtn = document.getElementById('nextPage');
+  const currentPageInfo = document.getElementById('currentPageInfo');
+  const totalPagesInfo = document.getElementById('totalPagesInfo');
+  const totalItemsInfo = document.getElementById('totalItemsInfo');
+  
+  if (!paginationContainer || !pageNumbers || !prevBtn || !nextBtn) return;
+  
+  // Update page info display
+  if (currentPageInfo) currentPageInfo.textContent = `หน้า ${currentPage}`;
+  if (totalPagesInfo) totalPagesInfo.textContent = totalPages;
+  if (totalItemsInfo) totalItemsInfo.textContent = totalItems;
+  
+  // Show/hide pagination based on total pages
+  if (totalPages <= 1) {
+    paginationContainer.style.display = 'none';
+    return;
+  }
+  
+  paginationContainer.style.display = 'flex';
+  
+  // Update prev/next buttons
+  prevBtn.disabled = currentPage <= 1;
+  nextBtn.disabled = currentPage >= totalPages;
+  
+  // Generate page numbers
+  let pageNumbersHtml = '';
+  const maxVisiblePages = 3;
+  let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+  let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+  
+  // Adjust start page if we're near the end
+  if (endPage - startPage + 1 < maxVisiblePages) {
+    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+  }
+  
+  // Add first page and ellipsis if needed
+  if (startPage > 1) {
+    pageNumbersHtml += `<button class="page-btn px-3 py-2 text-sm font-medium text-neutral-700 bg-white border border-neutral-300 rounded-md hover:bg-neutral-50" data-page="1">1</button>`;
+    if (startPage > 2) {
+      pageNumbersHtml += `<span class="px-3 py-2 text-sm text-neutral-500">...</span>`;
+    }
+  }
+  
+  // Add visible page numbers
+  for (let i = startPage; i <= endPage; i++) {
+    const isActive = i === currentPage;
+    const activeClass = isActive ? 'bg-primary text-white border-primary' : 'text-neutral-700 bg-white border-neutral-300 hover:bg-neutral-50';
+    pageNumbersHtml += `<button class="page-btn px-3 py-2 text-sm font-medium border rounded-md ${activeClass}" data-page="${i}">${i}</button>`;
+  }
+  
+  // Add last page and ellipsis if needed
+  if (endPage < totalPages) {
+    if (endPage < totalPages - 1) {
+      pageNumbersHtml += `<span class="px-3 py-2 text-sm text-neutral-500">...</span>`;
+    }
+    pageNumbersHtml += `<button class="page-btn px-3 py-2 text-sm font-medium text-neutral-700 bg-white border border-neutral-300 rounded-md hover:bg-neutral-50" data-page="${totalPages}">${totalPages}</button>`;
+  }
+  
+  pageNumbers.innerHTML = pageNumbersHtml;
+  
+  // Add event listeners to page buttons
+  const pageButtons = pageNumbers.querySelectorAll('.page-btn');
+  pageButtons.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const page = parseInt(this.dataset.page);
+      if (page !== currentPage) {
+        loadPage(page);
+      }
+    });
+  });
+}
+
+/**
  * Render units to container
  * @param {Array} units - Array of unit objects
  * @param {HTMLElement} container - Container element
  * @param {HTMLElement} loadingAnimation - Loading element
+ * @param {Object} paginationData - Pagination information
  */
-async function renderUnits(units, container, loadingAnimation) {
+async function renderUnits(units, container, loadingAnimation, paginationData = null) {
   if (!container) return;
   
   if (loadingAnimation) loadingAnimation.style.display = 'none';
@@ -155,8 +237,18 @@ async function renderUnits(units, container, loadingAnimation) {
         delay: stagger(80, { start: 0 })
       });
     });
+    
+    // Update pagination if pagination data is provided
+    if (paginationData) {
+      renderPagination(paginationData.currentPage, paginationData.totalPages, paginationData.totalItems);
+    }
   } else {
     showNoDataMessage(container);
+    // Hide pagination when no data
+    const paginationContainer = document.getElementById('paginationContainer');
+    if (paginationContainer) {
+      paginationContainer.style.display = 'none';
+    }
   }
 }
 
@@ -175,6 +267,84 @@ export function initUnitFilters() {
   const searchForm = document.getElementById('searchForm');
   let selectedProjects = [];
   let selectedLocations = [];
+  
+  // Responsive helpers
+  const isMobile = () => window.matchMedia('(max-width: 767px)').matches;
+  
+  // Pagination state
+  let currentPage = 1;
+  let totalPages = 1;
+  let totalItems = 0;
+  let itemsPerPage = 6; // Default items per page
+  
+  /**
+   * Load a specific page
+   * @param {number} page - Page number to load
+   */
+  function loadPage(page) {
+    currentPage = page;
+    
+    // Get current filter values
+    const selectedProjectCheckboxes = document.querySelectorAll('.project-checkbox:checked');
+    const project = Array.from(selectedProjectCheckboxes).map(cb => cb.value).join(',');
+    const locations = locationsListed ? locationsListed.value : '';
+    const sort = sortingUnit ? sortingUnit.value : 'DESC';
+    
+    // Fade out animation
+    if (unitsContainer) {
+      const unitBoxes = unitsContainer.querySelectorAll('.unit-box');
+      if (unitBoxes.length > 0) {
+        // Animate out with stagger
+        animate(unitBoxes, {
+          opacity: [1, 0],
+          translateY: ['0px', '-15px'],
+          scale: [1, 0.98],
+          duration: 250,
+          easing: 'easeInQuart',
+          delay: stagger(30, { direction: 'reverse' })
+        });
+      }
+    }
+    
+    if (loadingAnimation) loadingAnimation.style.display = 'flex';
+    
+    // Load new page
+    setTimeout(() => {
+      if (unitsContainer) {
+        unitsContainer.innerHTML = '';
+        // Reset container opacity for new content
+        unitsContainer.style.opacity = '1';
+        unitsContainer.style.transform = 'translateY(0)';
+        unitsContainer.style.transition = 'none';
+      }
+      
+      fetchUnits({
+        sortingUnit: sort,
+        projectIDs: project,
+        locationIDs: locations,
+        page: currentPage,
+        perPage: itemsPerPage
+      }, async function(response) {
+        // Normalize response
+        const fetchedUnits = response?.data?.units || response?.units || [];
+        const normalizedTotalItems = response?.data?.totalItems || response?.totalItems || response?.data?.total || fetchedUnits.length;
+        const normalizedTotalPages = response?.data?.totalPages || response?.totalPages || response?.data?.totalPage || Math.ceil(normalizedTotalItems / itemsPerPage);
+        const normalizedCurrentPage = response?.data?.currentPage || response?.currentPage || response?.data?.page || currentPage;
+
+        // Sync pagination state
+        currentPage = normalizedCurrentPage;
+        totalPages = normalizedTotalPages;
+        totalItems = normalizedTotalItems;
+
+        const paginationData = {
+          currentPage: currentPage,
+          totalPages: totalPages,
+          totalItems: totalItems
+        };
+        await renderUnits(fetchedUnits, unitsContainer, loadingAnimation, paginationData);
+      });
+    }, 200);
+  }
 
   // Sorting change handler
   if (sortingUnit) {
@@ -224,9 +394,27 @@ export function initUnitFilters() {
         fetchUnits({
           sortingUnit: sort,
           projectIDs: project,
-          locationIDs: locations
+          locationIDs: locations,
+          page: 1, // Reset to first page when filters change
+          perPage: itemsPerPage
         }, async function(response) {
-          await renderUnits(response.data?.units, unitsContainer, loadingAnimation);
+          // Normalize
+          const fetchedUnits = response?.data?.units || response?.units || [];
+          const normalizedTotalItems = response?.data?.totalItems || response?.totalItems || response?.data?.total || fetchedUnits.length;
+          const normalizedTotalPages = response?.data?.totalPages || response?.totalPages || response?.data?.totalPage || Math.ceil(normalizedTotalItems / itemsPerPage);
+          const normalizedCurrentPage = response?.data?.currentPage || response?.currentPage || response?.data?.page || 1;
+
+          // Sync pagination state
+          currentPage = normalizedCurrentPage;
+          totalPages = normalizedTotalPages;
+          totalItems = normalizedTotalItems;
+
+          const paginationData = {
+            currentPage: currentPage,
+            totalPages: totalPages,
+            totalItems: totalItems
+          };
+          await renderUnits(fetchedUnits, unitsContainer, loadingAnimation, paginationData);
         });
       }, 200);
     });
@@ -235,6 +423,9 @@ export function initUnitFilters() {
   // Project selector change handler
   if (projectSelectorCheckboxes) {    
     projectSelectorCheckboxes.forEach(checkbox => {
+      // Disable auto-change behavior on mobile
+      if (isMobile()) return;
+      
       checkbox.addEventListener('change', function() {
         if (this.checked) {
           selectedProjects.push(this.value);
@@ -295,12 +486,36 @@ export function initUnitFilters() {
         }
         if (loadingAnimation) loadingAnimation.style.display = 'flex';
         
+        // Close mobile drawer after search on mobile
+        const mobileFilterPanel = document.getElementById('mobile_filter_panel');
+        const mobileFilterOverlay = document.getElementById('mobile_filter_overlay');
+        if (mobileFilterPanel && isMobile()) mobileFilterPanel.classList.add('-translate-x-full');
+        if (mobileFilterOverlay && isMobile()) mobileFilterOverlay.classList.add('hidden');
+        
         fetchUnits({
           sortingUnit: sort,
           projectIDs: project,
-          locationIDs: locations
+          locationIDs: locations,
+          page: 1, // Reset to first page when filters change
+          perPage: itemsPerPage
         }, async function(response) {
-          await renderUnits(response.data?.units, unitsContainer, loadingAnimation);
+          // Normalize
+          const fetchedUnits = response?.data?.units || response?.units || [];
+          const normalizedTotalItems = response?.data?.totalItems || response?.totalItems || response?.data?.total || fetchedUnits.length;
+          const normalizedTotalPages = response?.data?.totalPages || response?.totalPages || response?.data?.totalPage || Math.ceil(normalizedTotalItems / itemsPerPage);
+          const normalizedCurrentPage = response?.data?.currentPage || response?.currentPage || response?.data?.page || 1;
+
+          // Sync pagination state
+          currentPage = normalizedCurrentPage;
+          totalPages = normalizedTotalPages;
+          totalItems = normalizedTotalItems;
+
+          const paginationData = {
+            currentPage: currentPage,
+            totalPages: totalPages,
+            totalItems: totalItems
+          };
+          await renderUnits(fetchedUnits, unitsContainer, loadingAnimation, paginationData);
         });
       }, 200);
     });
@@ -314,12 +529,61 @@ export function initUnitFilters() {
       
       if (search) {
         fetchUnits({
-          searchStr: search
+          searchStr: search,
+          page: 1, // Reset to first page when searching
+          perPage: itemsPerPage
         }, async function(response) {
-          await renderUnits(response.data?.units, unitsContainer, loadingAnimation);
+        console.log('API Response:', response); // Debug log
+        
+        // Extract pagination data from various possible response structures
+        const units = response.data?.units || response.units || [];
+        const totalItems = response.data?.totalItems || response.totalItems || response.data?.total || units.length;
+        const totalPages = response.data?.totalPages || response.totalPages || response.data?.totalPage || Math.ceil(totalItems / itemsPerPage);
+        
+        const paginationData = {
+          currentPage: response.data?.currentPage || response.currentPage || response.data?.page || 1,
+          totalPages: totalPages,
+          totalItems: totalItems
+        };
+        
+        console.log('Pagination Data:', paginationData); // Debug log
+          await renderUnits(units, unitsContainer, loadingAnimation, paginationData);
         });
       }
     });
+  }
+  
+  // Pagination event listeners
+  const prevBtn = document.getElementById('prevPage');
+  const nextBtn = document.getElementById('nextPage');
+  
+  if (prevBtn) {
+    prevBtn.addEventListener('click', function() {
+      if (currentPage > 1) {
+        loadPage(currentPage - 1);
+      }
+    });
+  }
+  
+  if (nextBtn) {
+    nextBtn.addEventListener('click', function() {
+      if (currentPage < totalPages) {
+        loadPage(currentPage + 1);
+      }
+    });
+  }
+
+  // Initialize pagination state from server-rendered attributes on first load
+  const paginationContainer = document.getElementById('paginationContainer');
+  if (paginationContainer) {
+    const ssrCurrent = parseInt(paginationContainer.getAttribute('data-current-page')) || 1;
+    const ssrTotalPages = parseInt(paginationContainer.getAttribute('data-total-pages')) || 1;
+    const ssrTotalItems = parseInt(paginationContainer.getAttribute('data-total-items')) || 0;
+    currentPage = ssrCurrent;
+    totalPages = ssrTotalPages;
+    totalItems = ssrTotalItems;
+    // Render pagination controls only, do not refetch or re-render units (avoid glitch)
+    renderPagination(currentPage, totalPages, totalItems);
   }
 }
 
@@ -436,6 +700,10 @@ export function initSortingDropdown() {
   const sortingOptionDropdownMenu = document.getElementById('sortingOptionDropdownMenu');
   const sortingText = document.getElementById('sortingText');
   const sortingInput = document.getElementById('sortingUnit');
+  const mobileFilterPanelToggler = document.getElementById('mobile_filter_panel_toggler');
+  const mobileFilterPanel = document.getElementById('mobile_filter_panel');
+  const mobileFilterOverlay = document.getElementById('mobile_filter_overlay');
+  const mobileFilterClose = document.getElementById('mobile_filter_panel_close');
 
   if (sortingOptionDropdownToggler && sortingOptionDropdownMenu) {
     // Set default value
@@ -460,6 +728,31 @@ export function initSortingDropdown() {
         }
       });
     });
+  }
+
+  // Mobile filter panel toggle
+  if (mobileFilterPanelToggler && mobileFilterPanel) {
+    mobileFilterPanelToggler.addEventListener('click', function() {
+      // Open drawer
+      mobileFilterPanel.classList.remove('hidden');
+      mobileFilterPanel.classList.remove('-translate-x-full');
+      if (mobileFilterOverlay) mobileFilterOverlay.classList.remove('hidden');
+    });
+  }
+
+  function closeMobileFilter() {
+    // Close drawer
+    mobileFilterPanel.classList.add('-translate-x-full');
+    if (mobileFilterOverlay) mobileFilterOverlay.classList.add('hidden');
+    // Keep element in DOM for transitions; hide after animation if desired
+  }
+
+  if (mobileFilterClose && mobileFilterPanel) {
+    mobileFilterClose.addEventListener('click', closeMobileFilter);
+  }
+
+  if (mobileFilterOverlay && mobileFilterPanel) {
+    mobileFilterOverlay.addEventListener('click', closeMobileFilter);
   }
 }
 

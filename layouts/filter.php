@@ -4,8 +4,17 @@ $activeProjects = get_active_projects()['data'];
 $locations = get_locations()['data'];
 ?>
 <div class="units_filter_panel col-span-1 md:col-span-6 lg:col-span-3">
-  <div class="sorting-search w-full bg-neutral-100 px-4 py-5 rounded-lg flex flex-col gap-5">
-    <h3 class="text-lg font-medium">ค้นหายูนิต</h3>
+  <!-- Mobile overlay -->
+  <div id="mobile_filter_overlay" class="fixed inset-0 bg-black/40 z-40 hidden md:hidden"></div>
+
+  <div id="mobile_filter_panel" class="sorting-search bg-neutral-100 px-4 py-5 rounded-lg flex flex-col gap-5 fixed inset-y-0 left-0 z-50 max-w-[360px] w-full shadow-xl transform -translate-x-full transition-transform duration-300 md:static md:translate-x-0 md:transform-none md:shadow-none md:max-w-none md:w-auto md:block">
+    <!-- Close button (mobile only) -->
+    <button id="mobile_filter_panel_close" type="button" class="md:hidden absolute top-3 right-3 w-10 h-10 rounded-full flex items-center justify-center bg-white/90 border border-neutral-300 shadow-sm">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+    <h3 class="text-lg font-medium mb-3">ค้นหายูนิต</h3>
     <div class="flex items-start gap-5 flex-col">
       <div class="flex flex-col w-full">
         <div class="border bg-primary border-primary text-white rounded-tl-lg rounded-tr-lg p-4 leading-none">

@@ -1,7 +1,13 @@
 <?php
 include_once 'utils/api.php';
-$units = get_units()['data']['units'];
-
+// Server-side first render with pagination defaults
+$response = get_units(['page' => 1, 'perPage' => 6]);
+$data = isset($response['data']) ? $response['data'] : [];
+$units = isset($data['units']) ? $data['units'] : [];
+$currentPage = isset($data['currentPage']) ? (int)$data['currentPage'] : 1;
+$totalItems = isset($data['total']) ? (int)$data['total'] : count($units);
+$perPage = 6;
+$totalPages = isset($data['totalPages']) ? (int)$data['total'] : max(1, (int)ceil($totalItems / $perPage));
 ?>
 <section id="unitsListed" class="pt-10 pb-8">
   <div class="container">
@@ -18,7 +24,7 @@ $units = get_units()['data']['units'];
         <?php include 'filter.php'; ?>
 
         <div class="units_display_panel col-span-1 md:col-span-6 lg:col-span-9">
-
+          <pre class="hidden"><?php print_r($response); ?></pre>
           <div id="sorting_wrapper" class="w-full flex justify-between lg:justify-end gap-3 items-center mb-5">
             <button id="mobile_filter_panel_toggler" class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg border border-neutral-300 bg-white hover:bg-neutral-50 transition-colors">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -49,10 +55,45 @@ $units = get_units()['data']['units'];
 
           <div class="unit-container-wrapper">
             <?php if (count($units) > 0) : ?>
-              <div id="unitsContainer" class="grid grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-5">
+              <div id="unitsContainer" class="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-5">
                 <?php foreach ($units as $unit) : ?>
                   <?php include 'unit-box.php'; ?>
                 <?php endforeach; ?>
+              </div>
+              
+              <!-- Pagination -->
+              <div id="paginationContainer" class="mt-8 flex flex-col items-center space-y-4" data-current-page="<?php echo $currentPage; ?>" data-total-pages="<?php echo $totalPages; ?>" data-total-items="<?php echo $totalItems; ?>">
+                <!-- Page Info -->
+                <div id="pageInfo" class="text-sm text-neutral-600">
+                  <span id="currentPageInfo">หน้า <?php echo $currentPage; ?></span>
+                  <span class="mx-2">จาก</span>
+                  <span id="totalPagesInfo"><?php echo $totalPages; ?></span>
+                  <span class="mx-2">หน้า</span>
+                  <span>(</span>
+                  <span id="totalItemsInfo"><?php echo $totalItems; ?></span>
+                  <span>รายการ)</span>
+                </div>
+                
+                <!-- Pagination Controls -->
+                <nav class="flex items-center space-x-2" aria-label="Pagination">
+                  <button id="prevPage" class="pagination-btn px-3 py-2 text-sm font-medium text-neutral-500 bg-white border border-neutral-300 rounded-md hover:bg-neutral-50 hover:text-neutral-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center cursor-pointer" disabled>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                    <span class="ml-1">ก่อนหน้า</span>
+                  </button>
+                  
+                  <div id="pageNumbers" class="flex items-center space-x-1">
+                    <!-- Page numbers will be generated here -->
+                  </div>
+                  
+                  <button id="nextPage" class="pagination-btn px-3 py-2 text-sm font-medium text-neutral-500 bg-white border border-neutral-300 rounded-md hover:bg-neutral-50 hover:text-neutral-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center cursor-pointer" disabled>
+                    <span class="mr-1">ถัดไป</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                  </button>
+                </nav>
               </div>
             <?php else : ?>
               <div class="flex flex-col items-center justify-center gap-5 min-h-[500px]">
