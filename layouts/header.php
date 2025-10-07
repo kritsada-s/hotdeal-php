@@ -18,10 +18,37 @@ $csp .= "font-src 'self' data: https://cdn.jsdelivr.net; ";
 $csp .= "connect-src 'self' https://aswservice.com https://aswinno.assetwise.co.th https://assetwise.co.th https://cdn.jsdelivr.net https://ajax.googleapis.com https://cdnjs.cloudflare.com; ";
 $csp .= "frame-src 'none'; object-src 'none'; base-uri 'self'";
 header("Content-Security-Policy: " . $csp);
+$menus = [
+  [
+    "id" => 1,
+    "name" => "คอนโดมิเนียม",
+    "link" => "https://assetwise.co.th/condominium",
+  ],
+  [
+    "id" => 2,
+    "name" => "บ้านและทาวน์โฮม",
+    "link" => "https://assetwise.co.th/house",
+  ],
+  [
+    "id" => 3,
+    "name" => "โปรโมชั่น",
+    "link" => "https://assetwise.co.th/promotion",
+  ],
+  [
+    "id" => 4,
+    "name" => "รู้จักแอสเซทไวส์",
+    "link" => "https://assetwise.co.th/20th-anniversary",
+  ],
+  [
+    "id" => 5,
+    "name" => "นักลงทุนสัมพันธ์",
+    "link" => "https://investor.assetwise.co.th/th/home",
+  ],
+];
 ?>
 
 <!DOCTYPE html>
-<html lang="th">
+<html lang="th" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,11 +71,17 @@ header("Content-Security-Policy: " . $csp);
   <header class="px-2 md:px-0 py-3 md:py-4 shadow-md fixed top-0 left-0 right-0 z-50 bg-white">
     <div class="container">
       <div class="flex justify-between items-center">
-        <div class="hidden md:block md:w-1/3"></div>
-        <div class="logo w-1/2 md:w-1/3 flex  md:justify-center">
-          <a href="<?php echo BASE_URL; ?>">
+        <div class="logo w-1/2 md:w-2/3 flex items-center gap-7">
+          <a href="https://assetwise.co.th/">
             <img src="<?php echo BASE_URL; ?>images/logo-hr.svg" class="w-[165px]" alt="logo">
           </a>
+          <ul class="hidden md:flex items-center gap-4">
+            <?php foreach ($menus as $menu) : ?>
+              <li>
+                <a href="<?= $menu["link"] ?>" class="text-neutral-700 text-[15px]"><?= $menu["name"] ?></a>
+              </li>
+            <?php endforeach; ?>
+          </ul>
         </div>
         <div class="w-1/2 md:w-1/3 flex justify-end">
           <button id="memberBtn" class="cursor-pointer hover:bg-neutral-200 rounded-full px-3 py-2 flex gap-2">

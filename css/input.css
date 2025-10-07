@@ -2,6 +2,10 @@
 @source "./**/*.{php,html,js,css}";
 @plugin "daisyui";
 
+@theme {
+  --color-scheme: light;
+}
+
 :root {
   --color-primary: #123F6D;
   --color-secondary: #1B93FA;
@@ -133,4 +137,28 @@ p {
   border-radius: 25px;
   position: absolute;
   z-index: 3;
+}
+
+@media (max-width: 520px) {
+  .unit-box .unit-detail .highlight-tag {
+    font-size: 12px;
+    padding: 5px 10px;
+    top: -15px;
+    right: 5px;
+  }
+}
+
+.select2-container .select2-search--inline .select2-search__field {
+  font-family: 'DBHeavent', sans-serif;
+  font-size: 1rem;
+  height: 25px;
+}
+
+.span.select2.select2-container.select2-container--default {
+  max-width: 100%;
+}
+
+/* Prevent layout shift during content loading */
+#unitsContainer {
+  transition: min-height 0.3s ease;
 }

@@ -21,7 +21,7 @@ $locations = get_locations()['data'];
           <span class="font-medium text-[18px]">เลือกดูตามโครงการ</span>
         </div>
         <?php if (count($activeProjects) > 0) : ?>
-          <div id="projectSelectorList" class="border border-t-0 border-primary bg-white rounded-bl-lg rounded-br-lg px-2 py-4">
+          <div id="projectSelectorList" class="border border-t-0 border-primary bg-white rounded-bl-lg rounded-br-lg px-2 py-4 h-[500px] lg:h-auto overflow-y-auto">
             <?php foreach ($activeProjects as $project) : ?>
               <label class="flex items-center gap-2 p-2 hover:bg-neutral-50 cursor-pointer">
                 <input type="checkbox" class="project-checkbox w-4 h-4" value="<?= $project['projectID'] ?>">

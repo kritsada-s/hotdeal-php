@@ -1,7 +1,7 @@
 <?php
 include_once 'utils/api.php';
 // Server-side first render with pagination defaults
-$response = get_units(['page' => 1, 'perPage' => 6]);
+$response = get_units(['page' => 1, 'perPage' => 8]);
 $data = isset($response['data']) ? $response['data'] : [];
 $units = isset($data['units']) ? $data['units'] : [];
 $currentPage = isset($data['currentPage']) ? (int)$data['currentPage'] : 1;

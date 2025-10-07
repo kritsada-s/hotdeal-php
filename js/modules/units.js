@@ -17,27 +17,25 @@ import { animate, stagger } from 'https://cdn.jsdelivr.net/npm/animejs/+esm';
  * @returns {string} HTML string
  */
 export function unitBox(unit, nameMap, cmpUtm) {
-  // Determine base URL based on domain
-  const baseUrl = 'https://aswservice.com/hotdeal/';
-  
+  // Determine base URL based on domain  
   return `
     <div class="unit-box rounded-lg overflow-hidden shadow-lg border border-neutral-200 relative" style="opacity: 0;">
       ${unit.isSoldOut ? `<span class="text-white text-[12px] lg:text-[16px] font-medium flex items-center justify-center px-5 py-2 w-full bg-red-500 rotate-45 absolute top-[20px] lg:top-[5%] left-[40px] lg:left-[30%] z-[3]">SOLD OUT</span>` : ''}
       <div class="unit-wrapper flex flex-col h-full ${unit.isSoldOut ? 'sold-out' : ''}">
         <a href="${window.BASE_URL}unit/${unit.id}" class="relative">
-          ${unit.campaignOverlay?.resource?.filePath ? `<img class="absolute top-0 left-0 w-full h-full object-cover z-[2]" src="https://aswservice.com/hotdealassets${unit.campaignOverlay.resource.filePath}">` : ''}
-          <img src="https://aswservice.com/hotdealassets${unit.headerImage.resource.filePath}" class="w-full aspect-square object-cover z-[1]">
+          ${unit.campaignOverlay?.resource?.filePath ? `<img class="absolute top-0 left-0 w-full h-full object-cover z-[2]" src="https://aswservice.com/hotdeal/${unit.campaignOverlay.resource.filePath}">` : ''}
+          <img src="https://aswservice.com/hotdeal/${unit.headerImage.resource.filePath}" class="w-full aspect-square object-cover z-[1]">
         </a>
-        <div class="unit-detail px-2 py-3 lg:px-4 lg:pt-6 lg:pb-4 relative flex flex-col h-full justify-between">
+        <div class="unit-detail px-2 pb-4 pt-6 lg:px-4 lg:pt-6 lg:pb-4 relative flex flex-col h-full justify-between">
           ${unit.highlightText ? `<div class="highlight-tag">${unit.highlightText}</div>` : ''}
           <div class="unit-info">
-            <p class="text-[#00a9a5] mb-3 text-[11px] lg:text-[16px] leading-none">${unit.projectName}</p>
-            <h3 class="text-primary leading-none font-medium mb-2 text-[16px] lg:text-2xl">${unit.unitCode}</h3>
+            <p class="text-[#00a9a5] mb-3 text-[14px] lg:text-[16px] leading-none">${unit.projectName}</p>
+            <h3 class="text-primary leading-none font-medium mb-2 text-[22px] lg:text-2xl">${unit.unitCode}</h3>
             <p>
-              <span class="text-neutral-500 relative line-through text-[10px] lg:text-[16px] font-light">ปกติ ${(unit.sellingPrice/1000000).toFixed(2)} ล้าน</span>
+              <span class="text-neutral-500 relative line-through text-[14px] lg:text-[16px] font-light">ปกติ ${(unit.sellingPrice/1000000).toFixed(2)} ล้าน</span>
             </p>
             <p class="mb-4 lg:mb-7">
-              <span class="text-accent text-[14px] lg:text-xl">พิเศษ</span> <span class="text-accent font-bold text-[18px] lg:text-4xl">${(unit.discountPrice/1000000).toFixed(2)}</span> <span class="text-accent text-[16px] lg:text-xl">ล้าน</span>
+              <span class="text-accent text-[18px] lg:text-xl">พิเศษ</span> <span class="text-accent font-bold text-[22px] lg:text-4xl">${(unit.discountPrice/1000000).toFixed(2)}</span> <span class="text-accent text-[18px] lg:text-xl">ล้าน</span>
             </p>
           </div>
           <div class="unit-action btn-group flex flex-col justify-between lg:items-center gap-4">
@@ -106,8 +104,9 @@ function showNoDataMessage(container) {
  * @param {number} currentPage - Current page number
  * @param {number} totalPages - Total number of pages
  * @param {number} totalItems - Total number of items
+ * @param {Function} loadPageCallback - Callback function to load a specific page
  */
-function renderPagination(currentPage, totalPages, totalItems) {
+function renderPagination(currentPage, totalPages, totalItems, loadPageCallback) {
   const paginationContainer = document.getElementById('paginationContainer');
   const pageNumbers = document.getElementById('pageNumbers');
   const prevBtn = document.getElementById('prevPage');
@@ -176,8 +175,8 @@ function renderPagination(currentPage, totalPages, totalItems) {
   pageButtons.forEach(btn => {
     btn.addEventListener('click', function() {
       const page = parseInt(this.dataset.page);
-      if (page !== currentPage) {
-        loadPage(page);
+      if (page !== currentPage && loadPageCallback) {
+        loadPageCallback(page);
       }
     });
   });
@@ -239,8 +238,10 @@ async function renderUnits(units, container, loadingAnimation, paginationData = 
     });
     
     // Update pagination if pagination data is provided
-    if (paginationData) {
-      renderPagination(paginationData.currentPage, paginationData.totalPages, paginationData.totalItems);
+    // Note: renderPagination now requires a loadPageCallback parameter
+    // This will be handled by initUnitFilters where loadPage is defined
+    if (paginationData && paginationData.loadPageCallback) {
+      renderPagination(paginationData.currentPage, paginationData.totalPages, paginationData.totalItems, paginationData.loadPageCallback);
     }
   } else {
     showNoDataMessage(container);
@@ -289,6 +290,24 @@ export function initUnitFilters() {
     const project = Array.from(selectedProjectCheckboxes).map(cb => cb.value).join(',');
     const locations = locationsListed ? locationsListed.value : '';
     const sort = sortingUnit ? sortingUnit.value : 'DESC';
+    
+    // Scroll to container with 100px offset from top
+    if (unitsContainer) {
+      const containerTop = unitsContainer.getBoundingClientRect().top + window.pageYOffset - 100;
+      window.scrollTo({
+        top: containerTop,
+        behavior: 'smooth'
+      });
+    }
+    
+    // Capture current height to prevent layout shift
+    let containerHeight = 0;
+    if (unitsContainer) {
+      containerHeight = unitsContainer.offsetHeight;
+      if (containerHeight > 0) {
+        unitsContainer.style.minHeight = `${containerHeight}px`;
+      }
+    }
     
     // Fade out animation
     if (unitsContainer) {
@@ -339,9 +358,15 @@ export function initUnitFilters() {
         const paginationData = {
           currentPage: currentPage,
           totalPages: totalPages,
-          totalItems: totalItems
+          totalItems: totalItems,
+          loadPageCallback: loadPage
         };
         await renderUnits(fetchedUnits, unitsContainer, loadingAnimation, paginationData);
+        
+        // Remove min-height after content is rendered
+        if (unitsContainer) {
+          unitsContainer.style.minHeight = '';
+        }
       });
     }, 200);
   }
@@ -358,6 +383,24 @@ export function initUnitFilters() {
       
       // Get selected locations
       const locations = locationsListed ? locationsListed.value : '';
+
+      // Scroll to container with 100px offset from top
+      if (unitsContainer) {
+        const containerTop = unitsContainer.getBoundingClientRect().top + window.pageYOffset - 100;
+        window.scrollTo({
+          top: containerTop,
+          behavior: 'smooth'
+        });
+      }
+
+      // Capture current height to prevent layout shift
+      let containerHeight = 0;
+      if (unitsContainer) {
+        containerHeight = unitsContainer.offsetHeight;
+        if (containerHeight > 0) {
+          unitsContainer.style.minHeight = `${containerHeight}px`;
+        }
+      }
 
       // Fade out animation
       if (unitsContainer) {
@@ -412,9 +455,15 @@ export function initUnitFilters() {
           const paginationData = {
             currentPage: currentPage,
             totalPages: totalPages,
-            totalItems: totalItems
+            totalItems: totalItems,
+            loadPageCallback: loadPage
           };
           await renderUnits(fetchedUnits, unitsContainer, loadingAnimation, paginationData);
+          
+          // Remove min-height after content is rendered
+          if (unitsContainer) {
+            unitsContainer.style.minHeight = '';
+          }
         });
       }, 200);
     });
@@ -455,6 +504,24 @@ export function initUnitFilters() {
       const project = Array.from(selectedProjectCheckboxes).map(cb => cb.value).join(',');
       const locations = locationsListed ? locationsListed.value : '';
       const sort = sortingUnit ? sortingUnit.value : 'DESC';
+      
+      // Scroll to container with 100px offset from top
+      if (unitsContainer) {
+        const containerTop = unitsContainer.getBoundingClientRect().top + window.pageYOffset - 100;
+        window.scrollTo({
+          top: containerTop,
+          behavior: 'smooth'
+        });
+      }
+      
+      // Capture current height to prevent layout shift
+      let containerHeight = 0;
+      if (unitsContainer) {
+        containerHeight = unitsContainer.offsetHeight;
+        if (containerHeight > 0) {
+          unitsContainer.style.minHeight = `${containerHeight}px`;
+        }
+      }
       
       // Fade out animation
       if (unitsContainer) {
@@ -513,9 +580,15 @@ export function initUnitFilters() {
           const paginationData = {
             currentPage: currentPage,
             totalPages: totalPages,
-            totalItems: totalItems
+            totalItems: totalItems,
+            loadPageCallback: loadPage
           };
           await renderUnits(fetchedUnits, unitsContainer, loadingAnimation, paginationData);
+          
+          // Remove min-height after content is rendered
+          if (unitsContainer) {
+            unitsContainer.style.minHeight = '';
+          }
         });
       }, 200);
     });
@@ -528,27 +601,77 @@ export function initUnitFilters() {
       const search = document.getElementById('searchUnit')?.value;
       
       if (search) {
-        fetchUnits({
-          searchStr: search,
-          page: 1, // Reset to first page when searching
-          perPage: itemsPerPage
-        }, async function(response) {
-        console.log('API Response:', response); // Debug log
+        // Scroll to container with 100px offset from top
+        if (unitsContainer) {
+          const containerTop = unitsContainer.getBoundingClientRect().top + window.pageYOffset - 100;
+          window.scrollTo({
+            top: containerTop,
+            behavior: 'smooth'
+          });
+        }
         
-        // Extract pagination data from various possible response structures
-        const units = response.data?.units || response.units || [];
-        const totalItems = response.data?.totalItems || response.totalItems || response.data?.total || units.length;
-        const totalPages = response.data?.totalPages || response.totalPages || response.data?.totalPage || Math.ceil(totalItems / itemsPerPage);
+        // Capture current height to prevent layout shift
+        let containerHeight = 0;
+        if (unitsContainer) {
+          containerHeight = unitsContainer.offsetHeight;
+          if (containerHeight > 0) {
+            unitsContainer.style.minHeight = `${containerHeight}px`;
+          }
+        }
         
-        const paginationData = {
-          currentPage: response.data?.currentPage || response.currentPage || response.data?.page || 1,
-          totalPages: totalPages,
-          totalItems: totalItems
-        };
+        // Fade out animation
+        if (unitsContainer) {
+          const unitBoxes = unitsContainer.querySelectorAll('.unit-box');
+          if (unitBoxes.length > 0) {
+            animate(unitBoxes, {
+              opacity: [1, 0],
+              translateY: ['0px', '-15px'],
+              scale: [1, 0.98],
+              duration: 250,
+              easing: 'easeInQuart',
+              delay: stagger(30, { direction: 'reverse' })
+            });
+          }
+        }
         
-        console.log('Pagination Data:', paginationData); // Debug log
-          await renderUnits(units, unitsContainer, loadingAnimation, paginationData);
-        });
+        if (loadingAnimation) loadingAnimation.style.display = 'flex';
+        
+        setTimeout(() => {
+          if (unitsContainer) {
+            unitsContainer.innerHTML = '';
+            unitsContainer.style.opacity = '1';
+            unitsContainer.style.transform = 'translateY(0)';
+            unitsContainer.style.transition = 'none';
+          }
+          
+          fetchUnits({
+            searchStr: search,
+            page: 1, // Reset to first page when searching
+            perPage: itemsPerPage
+          }, async function(response) {
+            console.log('API Response:', response); // Debug log
+            
+            // Extract pagination data from various possible response structures
+            const units = response.data?.units || response.units || [];
+            const totalItems = response.data?.totalItems || response.totalItems || response.data?.total || units.length;
+            const totalPages = response.data?.totalPages || response.totalPages || response.data?.totalPage || Math.ceil(totalItems / itemsPerPage);
+            
+            const paginationData = {
+              currentPage: response.data?.currentPage || response.currentPage || response.data?.page || 1,
+              totalPages: totalPages,
+              totalItems: totalItems,
+              loadPageCallback: loadPage
+            };
+            
+            console.log('Pagination Data:', paginationData); // Debug log
+            await renderUnits(units, unitsContainer, loadingAnimation, paginationData);
+            
+            // Remove min-height after content is rendered
+            if (unitsContainer) {
+              unitsContainer.style.minHeight = '';
+            }
+          });
+        }, 200);
       }
     });
   }
@@ -583,7 +706,7 @@ export function initUnitFilters() {
     totalPages = ssrTotalPages;
     totalItems = ssrTotalItems;
     // Render pagination controls only, do not refetch or re-render units (avoid glitch)
-    renderPagination(currentPage, totalPages, totalItems);
+    renderPagination(currentPage, totalPages, totalItems, loadPage);
   }
 }
 
