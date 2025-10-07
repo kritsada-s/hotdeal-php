@@ -23,17 +23,17 @@ $totalPages = isset($data['totalPages']) ? (int)$data['total'] : max(1, (int)cei
       <div id="unit_display_filter" class="w-full grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-5">
         <?php include 'filter.php'; ?>
 
-        <div class="units_display_panel col-span-1 md:col-span-6 lg:col-span-9">
+        <div class="units_display_panel col-span-1 md:col-span-4 lg:col-span-9">
           <pre class="hidden"><?php print_r($response); ?></pre>
-          <div id="sorting_wrapper" class="w-full flex justify-between lg:justify-end gap-3 items-center mb-5">
-            <button id="mobile_filter_panel_toggler" class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg border border-neutral-300 bg-white hover:bg-neutral-50 transition-colors">
+          <div id="sorting_wrapper" class="w-full flex justify-between md:justify-end gap-3 items-center mb-5">
+            <button id="mobile_filter_panel_toggler" class="md:hidden flex items-center justify-center w-10 h-10 rounded-lg border border-neutral-300 bg-white hover:bg-neutral-50 transition-colors">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
               </svg>
             </button>
             <div class="sorting_wrapper_inner flex items-center gap-3 relative">
               <div class="flex items-center cursor-pointer" id="sortingOptionDropdownToggler">
-                <span class="shrink-0 text-[14px] font-medium">เรียงลำดับ : ยูนิต</span>
+                <span class="shrink-0 text-[14px]">เรียงลำดับ : ยูนิต</span>
                 <span id="sortingText" class="text-[14px] font-medium">ใหม่ - เก่า</span>
               </div>
               <input type="hidden" name="sortingUnit" id="sortingUnit" value="">

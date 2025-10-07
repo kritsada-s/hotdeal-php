@@ -3,7 +3,7 @@ include_once 'utils/api.php';
 $activeProjects = get_active_projects()['data'];
 $locations = get_locations()['data'];
 ?>
-<div class="units_filter_panel col-span-1 md:col-span-6 lg:col-span-3">
+<div class="units_filter_panel col-span-1 md:col-span-2 lg:col-span-3">
   <!-- Mobile overlay -->
   <div id="mobile_filter_overlay" class="fixed inset-0 bg-black/40 z-40 hidden md:hidden"></div>
 
@@ -21,11 +21,11 @@ $locations = get_locations()['data'];
           <span class="font-medium text-[18px]">เลือกดูตามโครงการ</span>
         </div>
         <?php if (count($activeProjects) > 0) : ?>
-          <div id="projectSelectorList" class="border border-t-0 border-primary bg-white rounded-bl-lg rounded-br-lg px-2 py-4 h-[500px] lg:h-auto overflow-y-auto">
+          <div id="projectSelectorList" class="border border-t-0 border-primary bg-white rounded-bl-lg rounded-br-lg px-2 py-4 h-[400px] lg:h-auto overflow-y-auto">
             <?php foreach ($activeProjects as $project) : ?>
-              <label class="flex items-center gap-2 p-2 hover:bg-neutral-50 cursor-pointer">
-                <input type="checkbox" class="project-checkbox w-4 h-4" value="<?= $project['projectID'] ?>">
-                <span class="text-[16px]"><?= $project['projectNameTH'] ?></span>
+              <label class="flex lg:items-center gap-2 p-2 hover:bg-neutral-50 cursor-pointer">
+                <input type="checkbox" class="project-checkbox w-4 h-4 mt-[3px]" value="<?= $project['projectID'] ?>">
+                <span class="text-[13px] lg:text-[16px]"><?= $project['projectNameTH'] ?></span>
               </label>
             <?php endforeach; ?>
           </div>

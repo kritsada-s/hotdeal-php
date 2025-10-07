@@ -148,7 +148,7 @@ p {
   }
 }
 
-.select2-container .select2-search--inline .select2-search__field {
+.select2-container .select2-search--inline .select2-search__field, .select2-container--default .select2-search--inline .select2-search__field {
   font-family: 'DBHeavent', sans-serif;
   font-size: 1rem;
   height: 25px;
