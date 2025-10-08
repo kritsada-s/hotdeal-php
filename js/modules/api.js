@@ -85,6 +85,34 @@ export function getProjectName(projectCode) {
 }
 
 /**
+ * Get project PID by project code
+ * @param {string} projectCode - Project code
+ * @returns {Promise<string>} Project PID
+ */
+export function getProjectPID(projectCode) {  
+  return new Promise((resolve) => {
+    fetch(`${window.BASE_URL}utils/projects.json`)
+      .then(response => {
+        if (!response.ok) throw new Error('Failed to fetch projects.json');
+        return response.json();
+      })
+      .then(projects => {
+        const project = projects.projects_data.find(
+          p => String(p.ProjectCode) === String(projectCode)
+        );
+        if (project && typeof project.projectId !== 'undefined') {
+          resolve(project.projectId); // Only return the number id
+        } else {
+          resolve(null); // Return null if not found
+        }
+      })
+      .catch(() => {
+        resolve(null); // Return null on error
+      });
+  });
+}
+
+/**
  * Get campaign UTM by campaign ID
  * @param {string} cmpID - Campaign ID
  * @returns {Promise<Object>} Campaign UTM data
