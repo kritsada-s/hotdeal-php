@@ -4,7 +4,7 @@
     <span class="text-white text-[12px] lg:text-[16px] font-medium flex items-center justify-center px-5 py-2 w-full bg-red-500 rotate-45 absolute top-[20px] lg:top-[5%] left-[56px] lg:left-[30%] z-[3]">SOLD OUT</span>
   <?php endif; ?>
   <div class="unit-wrapper flex flex-col h-full <?= $unit['isSoldOut'] ? 'sold-out' : '' ?>">
-    <a href="<?php echo BASE_URL; ?>unit/<?= $unit['id'] ?>" class="relative">
+    <a href="<?php echo BASE_URL; ?>unit?id=<?= $unit['id'] ?>" class="relative">
       <?php if ($unit['campaignOverlay']['resource']['filePath']) : ?>
         <img class="absolute top-0 left-0 w-full h-full object-cover z-[2]" src="<?= env('HOTDEAL_ASSETS_PATH'); ?><?= $unit['campaignOverlay']['resource']['filePath'] ?>">
       <?php endif; ?>

@@ -3,7 +3,7 @@
  * Handles unit listing, filtering, search, and rendering
  */
 
-import { fetchUnits, getProjectName, getCmpUtmByID } from './api.js';
+import { fetchUnits, getProjectName, getCmpUtmByID, getProjectPID } from './api.js';
 import { checkAuthToken } from './auth.js';
 import { decodeToken } from './utils.js';
 import { updateSummaryModal } from './modals.js';
@@ -16,13 +16,12 @@ import { animate, stagger } from 'https://cdn.jsdelivr.net/npm/animejs/+esm';
  * @param {string} cmpUtm - Campaign UTM
  * @returns {string} HTML string
  */
-export function unitBox(unit, nameMap, cmpUtm) {
-  // Determine base URL based on domain  
+export function unitBox(unit, nameMap, pidMap, cmpUtm) {  
   return `
     <div class="unit-box rounded-lg overflow-hidden shadow-lg border border-neutral-200 relative" style="opacity: 0;">
       ${unit.isSoldOut ? `<span class="text-white text-[12px] lg:text-[16px] font-medium flex items-center justify-center px-5 py-2 w-full bg-red-500 rotate-45 absolute top-[20px] lg:top-[5%] left-[40px] lg:left-[30%] z-[3]">SOLD OUT</span>` : ''}
       <div class="unit-wrapper flex flex-col h-full ${unit.isSoldOut ? 'sold-out' : ''}">
-        <a href="${window.BASE_URL}unit/${unit.id}" class="relative">
+        <a href="${window.BASE_URL}unit?id=${unit.id}" class="relative">
           ${unit.campaignOverlay?.resource?.filePath ? `<img class="absolute top-0 left-0 w-full h-full object-cover z-[2]" src="https://aswservice.com/hotdeal/${unit.campaignOverlay.resource.filePath}">` : ''}
           <img src="https://aswservice.com/hotdeal/${unit.headerImage.resource.filePath}" class="w-full aspect-square object-cover z-[1]">
         </a>
@@ -40,7 +39,7 @@ export function unitBox(unit, nameMap, cmpUtm) {
           </div>
           <div class="unit-action btn-group flex flex-col justify-between lg:items-center gap-4">
             <a href="${window.BASE_URL}unit?id=${unit.id}" class="text-neutral-500 hover:text-neutral-800 text-[12px] lg:text-[16px] font-light">ดูรายละเอียด</a>
-            <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2 hover:shadow-lg transition-all duration-300 text-[14px] lg:text-base w-full" data-unit="${unit.unitCode}" data-project="${nameMap[unit.projectID] ?? unit.projectID}" data-cisid="${unit.projectCode ?? ''}" data-utm-cmp="${cmpUtm}">สนใจยูนิตนี้</button>
+            <button class="unitBtn cursor-pointer rounded-lg bg-primary text-white px-5 py-2 hover:shadow-lg transition-all duration-300 text-[14px] lg:text-base w-full" data-unit="${unit.unitCode}" data-project="${nameMap[unit.projectID] ?? unit.projectID}" data-cisid="${pidMap[unit.projectID] ?? ''}" data-utm-cmp="${cmpUtm}">สนใจยูนิตนี้</button>
           </div>
         </div>
       </div>
@@ -156,7 +155,7 @@ function renderPagination(currentPage, totalPages, totalItems, loadPageCallback)
   // Add visible page numbers
   for (let i = startPage; i <= endPage; i++) {
     const isActive = i === currentPage;
-    const activeClass = isActive ? 'bg-primary text-white border-primary' : 'text-neutral-700 bg-white border-neutral-300 hover:bg-neutral-50';
+    const activeClass = isActive ? 'bg-primary text-white border-primary' : 'text-neutral-700 bg-white border-neutral-300 hover:bg-neutral-50 cursor-pointer';
     pageNumbersHtml += `<button class="page-btn px-3 py-2 text-sm font-medium border rounded-md ${activeClass}" data-page="${i}">${i}</button>`;
   }
   
@@ -199,8 +198,13 @@ async function renderUnits(units, container, loadingAnimation, paginationData = 
     
     // Prefetch project names
     const ids = [...new Set(units.map(u => u.projectID))];
+    
     const nameMap = Object.fromEntries(
       await Promise.all(ids.map(async id => [id, await getProjectName(id)]))
+    );
+
+    const pidMap = Object.fromEntries(
+      await Promise.all(ids.map(async id => [id, await getProjectPID(id)]))
     );
 
     // Ensure container is visible first
@@ -210,7 +214,7 @@ async function renderUnits(units, container, loadingAnimation, paginationData = 
     
     for (const unit of units) {
       const cmpUtm = await getCmpUtmByID(unit.campaignID);
-      const unitBoxHtml = unitBox(unit, nameMap, cmpUtm);
+      const unitBoxHtml = unitBox(unit, nameMap, pidMap, cmpUtm);
       container.innerHTML += unitBoxHtml;
     }
     
@@ -276,7 +280,7 @@ export function initUnitFilters() {
   let currentPage = 1;
   let totalPages = 1;
   let totalItems = 0;
-  let itemsPerPage = 6; // Default items per page
+  let itemsPerPage = 8; // Default items per page
   
   /**
    * Load a specific page
