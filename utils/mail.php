@@ -21,7 +21,7 @@ function send_thank_you_email($email, $subject = 'ขอบคุณสำหร
       <table
         width="480px"
         style="
-          margin: 20px auto;
+          margin: 20px 0;
           border-width: 0;
           border: 1px solid #ddd;
           font-family: \'Segoe UI\', Tahoma, Geneva, Verdana, sans-serif;
