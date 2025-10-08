@@ -6,20 +6,20 @@
     <h3 class="text-2xl text-center font-bold mb-5">ข้อมูลส่วนตัว</h3>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="form-group flex flex-col gap-2">
-        <label for="firstName">ชื่อ</label>
-        <input type="text" id="firstName" name="firstName" class="input input-bordered w-full">
+        <label for="firstName">ชื่อ <span class="text-red-500">*</span></label>
+        <input type="text" id="firstName" required name="firstName" class="input input-bordered w-full">
       </div>
       <div class="form-group flex flex-col gap-2">
-        <label for="lastName">นามสกุล</label>
-        <input type="text" id="lastName" name="lastName" class="input input-bordered w-full">
+        <label for="lastName">นามสกุล <span class="text-red-500">*</span></label>
+        <input type="text" id="lastName" required name="lastName" class="input input-bordered w-full">
       </div>
       <div class="form-group flex flex-col gap-2">
-        <label for="phone">เบอร์โทรศัพท์</label>
-        <input type="text" id="phone" name="phone" autocomplete="off" class="input input-bordered w-full">
+        <label for="phone">เบอร์โทรศัพท์ <span class="text-red-500">*</span></label>
+        <input type="text" id="phone" required name="phone" autocomplete="off" class="input input-bordered w-full">
       </div>
       <div class="form-group flex flex-col gap-2">
-        <label for="email">อีเมล</label>
-        <input type="text" id="email" name="email" autocomplete="off" disabled readonly class="input input-bordered w-full">
+        <label for="email">อีเมล <span class="text-red-500">*</span></label>
+        <input type="text" id="email" required name="email" autocomplete="off" disabled readonly class="input input-bordered w-full">
       </div>
       <div class="form-group flex flex-col gap-2">
         <label for="lineId">Line ID</label>
@@ -50,20 +50,20 @@
     <h3 class="text-2xl text-center font-bold mb-5">ลงทะเบียน</h3>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="form-group flex flex-col gap-2">
-        <label for="registerFirstName">ชื่อ</label>
-        <input type="text" id="registerFirstName" name="registerFirstName" class="input input-bordered w-full">
+        <label for="registerFirstName">ชื่อ <span class="text-red-500">*</span></label>
+        <input type="text" id="registerFirstName" required name="registerFirstName" class="input input-bordered w-full">
       </div>
       <div class="form-group flex flex-col gap-2">
-        <label for="registerLastName">นามสกุล</label>
-        <input type="text" id="registerLastName" name="registerLastName" class="input input-bordered w-full">
+        <label for="registerLastName">นามสกุล <span class="text-red-500">*</span></label>
+        <input type="text" id="registerLastName" required name="registerLastName" class="input input-bordered w-full">
       </div>
       <div class="form-group flex flex-col gap-2">
-        <label for="registerPhone">เบอร์โทรศัพท์</label>
-        <input type="text" id="registerPhone" name="registerPhone" autocomplete="off" class="input input-bordered w-full">
+        <label for="registerPhone">เบอร์โทรศัพท์ <span class="text-red-500">*</span></label>
+        <input type="text" id="registerPhone" required name="registerPhone" autocomplete="off" class="input input-bordered w-full">
       </div>
       <div class="form-group flex flex-col gap-2">
-        <label for="registerEmail">อีเมล</label>
-        <input type="text" id="registerEmail" name="registerEmail" autocomplete="off" class="input input-bordered w-full">
+        <label for="registerEmail">อีเมล <span class="text-red-500">*</span></label>
+        <input type="text" id="registerEmail" required name="registerEmail" autocomplete="off" class="input input-bordered w-full">
       </div>
       <div class="form-group flex flex-col gap-2">
         <label for="registerLineId">Line ID</label>
@@ -137,7 +137,7 @@
     <span class="text-sm mx-auto block mb-3 text-center" id="otp-modal-subtitle"></span>
     <div class="form-group flex">
       <label for="otp" class="hidden">รหัส OTP</label>
-      <input type="text" id="otp" name="otp" class="input input-xl input-bordered w-2/3 mx-auto text-center">
+      <input type="text" id="otp" name="otp" autofocus class="input input-xl input-bordered w-2/3 mx-auto text-center">
     </div>
     <div class="flex justify-end gap-4 w-full mt-5">
       <button id="verifyOTPBtn" class="btn btn-primary">
@@ -163,21 +163,22 @@
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <input type="hidden" id="projectID" name="projectID">
+      <input type="hidden" id="utmCmp" name="utmCmp">
       <div class="form-group flex flex-col gap-2">
-        <label for="summaryFirstName">ชื่อ</label>
-        <input type="text" id="summaryFirstName" name="summaryFirstName" class="input input-bordered w-full">
+        <label for="summaryFirstName">ชื่อ <span class="text-red-500">*</span></label>
+        <input type="text" id="summaryFirstName" required name="summaryFirstName" class="input input-bordered w-full">
       </div>
       <div class="form-group flex flex-col gap-2">
-        <label for="summaryLastName">นามสกุล</label>
-        <input type="text" id="summaryLastName" name="summaryLastName" class="input input-bordered w-full">
+        <label for="summaryLastName">นามสกุล <span class="text-red-500">*</span></label>
+        <input type="text" id="summaryLastName" required name="summaryLastName" class="input input-bordered w-full">
       </div>
       <div class="form-group flex flex-col gap-2">
-        <label for="summaryEmail">อีเมล</label>
-        <input type="text" id="summaryEmail" name="summaryEmail" readonly disabled class="input input-bordered w-full">
+        <label for="summaryEmail">อีเมล <span class="text-red-500">*</span></label>
+        <input type="text" id="summaryEmail" required name="summaryEmail" readonly disabled class="input input-bordered w-full">
       </div>
       <div class="form-group flex flex-col gap-2">
-        <label for="summaryPhone">เบอร์โทรศัพท์</label>
-        <input type="text" id="summaryPhone" name="summaryPhone" class="input input-bordered w-full">
+        <label for="summaryPhone">เบอร์โทรศัพท์ <span class="text-red-500">*</span></label>
+        <input type="text" id="summaryPhone" required name="summaryPhone" class="input input-bordered w-full">
       </div>
       <div class="form-group flex flex-col gap-2">
         <label for="summaryLineId">Line ID</label>

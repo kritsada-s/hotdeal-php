@@ -1,5 +1,6 @@
 <?php
 
+require_once __DIR__ . '/bootstrap.php';
 include_once __DIR__ . '/mail.php';
 include_once __DIR__ . '/api.php';
 
@@ -38,19 +39,52 @@ if (!empty($missing_fields)) {
     exit;
 }
 
+// Sanitize and validate input data
+$projectID = filter_var($_POST['ProjectID'], FILTER_SANITIZE_NUMBER_INT);
+$refID = htmlspecialchars($_POST['RefID'], ENT_QUOTES, 'UTF-8');
+$fname = htmlspecialchars($_POST['Fname'], ENT_QUOTES, 'UTF-8');
+$lname = htmlspecialchars($_POST['Lname'], ENT_QUOTES, 'UTF-8');
+$tel = preg_replace('/[^0-9]/', '', $_POST['Tel']); // Only digits
+$email = filter_var($_POST['Email'], FILTER_SANITIZE_EMAIL);
+$ref = htmlspecialchars($_POST['Ref'], ENT_QUOTES, 'UTF-8');
+$unitID = htmlspecialchars($_POST['unitID'], ENT_QUOTES, 'UTF-8');
+$projectName = htmlspecialchars($_POST['projectName'], ENT_QUOTES, 'UTF-8');
+
+// Validate email
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $error_response = [
+        'error' => true,
+        'message' => 'Invalid email address'
+    ];
+    header('Content-Type: application/json');
+    echo json_encode($error_response);
+    exit;
+}
+
+// Validate phone number (Thai format: 10 digits starting with 0)
+if (!preg_match('/^0[0-9]{9}$/', $tel)) {
+    $error_response = [
+        'error' => true,
+        'message' => 'Invalid phone number format'
+    ];
+    header('Content-Type: application/json');
+    echo json_encode($error_response);
+    exit;
+}
+
 $data = [
-    'ProjectID' => $_POST['ProjectID'],
+    'ProjectID' => $projectID,
     'ContactChannelID' => 21, // Website
     'ContactTypeID' => 35, // Register
-    'RefID' => $_POST['RefID'],
-    'Fname' => $_POST['Fname'],
-    'Lname' => $_POST['Lname'],
-    'Tel' => $_POST['Tel'],
-    'Email' => $_POST['Email'],
-    'Ref' => $_POST['Ref'],
+    'RefID' => $refID,
+    'Fname' => $fname,
+    'Lname' => $lname,
+    'Tel' => $tel,
+    'Email' => $email,
+    'Ref' => $ref,
     'RefDate' => date('Y-m-d H:i:s', strtotime('+7 hours')), // GMT+7 Bangkok time
     'FollowUpID' => 42,
-    'utm_source' => 'ASW_HotDeal_New_Website_' . $_POST['unitID'],
+    'utm_source' => 'ASW_HotDeal_New_Website_' . $unitID,
     'FlagPersonalAccept' => 1,
     'FlagContactAccept' => 1,
 ];
@@ -60,9 +94,11 @@ log_cis_request($data);
 
 $curl = curl_init();
 
+// Generate Basic Auth header from environment variables
+$cis_auth = env('CIS_AUTH_TOKEN');
+
 curl_setopt_array($curl, array(
-    //CURLOPT_URL => 'https://api.assetwise.co.th/cis/api/Customer/SaveOtherSource',
-    CURLOPT_URL => 'https://aswinno.assetwise.co.th/CISUAT/api/Customer/SaveOtherSource',
+    CURLOPT_URL => env('CIS_API_URL'),
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => '',
     CURLOPT_MAXREDIRS => 10,
@@ -72,7 +108,7 @@ curl_setopt_array($curl, array(
     CURLOPT_CUSTOMREQUEST => 'POST',
     CURLOPT_POSTFIELDS => http_build_query($data),
     CURLOPT_HTTPHEADER => array(
-        'Authorization: Basic YXN3X2Npc19jdXN0b21lcjphc3dfY2lzX2N1c3RvbWVyQDIwMjMh',
+        'Authorization: Basic ' . $cis_auth,
         'Content-Type: application/x-www-form-urlencoded',
     ),
 ));
@@ -113,7 +149,7 @@ if ($http_code >= 400) {
 // Log successful response
 log_cis_request($data, $response);
 
-send_thank_you_email($_POST['Email'], 'ขอบคุณสำหรับการลงทะเบียน AssetWise Hot Deals', null, null, $_POST['unitID'], $_POST['projectName']);
+send_thank_you_email($email, 'ขอบคุณสำหรับการลงทะเบียน AssetWise Hot Deals', null, null, $unitID, $projectName);
 
 // Return the response
 header('Content-Type: application/json');

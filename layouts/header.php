@@ -1,11 +1,58 @@
-<?php define('BASE_URL', '/hotdeal/'); ?>
-<?php include __DIR__ . '/../utils/api.php'; ?>
+<?php
+define('BASE_URL', '/hotdeal/');
+include __DIR__ . '/../utils/api.php';
+
+// Security Headers
+header("X-Frame-Options: DENY");
+header("X-Content-Type-Options: nosniff");
+header("X-XSS-Protection: 1; mode=block");
+header("Referrer-Policy: strict-origin-when-cross-origin");
+header("Permissions-Policy: geolocation=(), microphone=(), camera=()");
+
+// Content Security Policy - Comprehensive configuration
+$csp = "default-src 'self'; ";
+$csp .= "script-src 'self' 'unsafe-inline' https://ajax.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; ";
+$csp .= "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; ";
+$csp .= "img-src 'self' data: https: blob:; ";
+$csp .= "font-src 'self' data: https://cdn.jsdelivr.net; ";
+$csp .= "connect-src 'self' https://aswservice.com https://aswinno.assetwise.co.th https://assetwise.co.th https://cdn.jsdelivr.net https://ajax.googleapis.com https://cdnjs.cloudflare.com; ";
+$csp .= "frame-src 'none'; object-src 'none'; base-uri 'self'";
+header("Content-Security-Policy: " . $csp);
+$menus = [
+  [
+    "id" => 1,
+    "name" => "คอนโดมิเนียม",
+    "link" => "https://assetwise.co.th/condominium",
+  ],
+  [
+    "id" => 2,
+    "name" => "บ้านและทาวน์โฮม",
+    "link" => "https://assetwise.co.th/house",
+  ],
+  [
+    "id" => 3,
+    "name" => "โปรโมชั่น",
+    "link" => "https://assetwise.co.th/promotion",
+  ],
+  [
+    "id" => 4,
+    "name" => "รู้จักแอสเซทไวส์",
+    "link" => "https://assetwise.co.th/20th-anniversary",
+  ],
+  [
+    "id" => 5,
+    "name" => "นักลงทุนสัมพันธ์",
+    "link" => "https://investor.assetwise.co.th/th/home",
+  ],
+];
+?>
 
 <!DOCTYPE html>
-<html lang="th">
+<html lang="th" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <?php echo CSRF::tokenMeta(); ?>
   <title>AssetWise Hot Deal - ยูนิตสวย ราคาโดน คอนโดใกล้มหาลัย</title>
   <link rel="icon" href="<?php echo BASE_URL; ?>/favicon.ico">
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>css/lity.min.css">
@@ -15,24 +62,29 @@
     // Make BASE_URL available to JavaScript
     window.BASE_URL = '<?php echo BASE_URL; ?>';
   </script>
-  
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>css/output.css?v=<?php echo time(); ?>">
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>fonts/style.css">
-  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 <body>
   <header class="px-2 md:px-0 py-3 md:py-4 shadow-md fixed top-0 left-0 right-0 z-50 bg-white">
     <div class="container">
       <div class="flex justify-between items-center">
-        <div class="hidden md:block md:w-1/3"></div>
-        <div class="logo w-1/2 md:w-1/3 flex  md:justify-center">
-          <a href="<?php echo BASE_URL; ?>">
-            <img src="<?php echo BASE_URL; ?>images/logo-hr.svg" class="w-[165px]" alt="logo">
+        <div class="logo w-1/2 md:w-4/5 lg:w-2/3 flex items-center gap-5 lg:gap-7">
+          <a href="https://assetwise.co.th/">
+            <img src="<?php echo BASE_URL; ?>images/logo-hr.svg" class="w-[120px] lg:w-[165px]" alt="logo">
           </a>
+          <ul class="main-menu hidden md:flex items-center gap-2 lg:gap-4">
+            <?php foreach ($menus as $menu) : ?>
+              <li>
+                <a href="<?= $menu["link"] ?>" class="text-neutral-700 text-[13px] xl:text-[16px]"><?= $menu["name"] ?></a>
+              </li>
+            <?php endforeach; ?>
+          </ul>
         </div>
-        <div class="w-1/2 md:w-1/3 flex justify-end">
-          <button id="memberBtn" class="cursor-pointer hover:bg-neutral-200 rounded-full px-3 py-2 flex gap-2">
-            <span id="memberName" class="text-neutral-700 text-[15px]">เข้าสู่ระบบ</span>
+        <div class="w-1/2 md:w-1/5 lg:w-1/3 flex justify-end">
+          <button id="memberBtn" class="cursor-pointer hover:bg-neutral-200 rounded-full px-3 py-2 flex gap-2 items-center">
+            <span id="memberName" class="text-neutral-700 text-[13px] lg:text-[16px]">เข้าสู่ระบบ</span>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 5.25C9.72188 5.25 7.875 7.09688 7.875 9.375C7.875 11.6531 9.72188 13.5 12 13.5C14.2781 13.5 16.125 11.6531 16.125 9.375C16.125 7.09688 14.2781 5.25 12 5.25ZM12 11.25C10.9659 11.25 10.125 10.4086 10.125 9.375C10.125 8.33906 10.9641 7.5 12 7.5C13.0359 7.5 13.875 8.34094 13.875 9.375C13.875 10.4109 13.0359 11.25 12 11.25ZM12 0C5.37188 0 0 5.37188 0 12C0 18.6281 5.37188 24 12 24C18.6281 24 24 18.6281 24 12C24 5.37188 18.6281 0 12 0ZM12 21.75C9.80953 21.75 7.7925 21.015 6.16406 19.7911C6.975 18.2344 8.55 17.25 10.3219 17.25H13.6823C15.4519 17.25 17.025 18.2348 17.8392 19.7911C16.2094 21.0141 14.1891 21.75 12 21.75ZM19.5094 18.2109C18.2438 16.2328 16.0875 15 13.6781 15H10.3219C7.91437 15 5.75859 16.2305 4.49063 18.21C3.09188 16.5234 2.25 14.3578 2.25 12C2.25 6.62344 6.62391 2.25 12 2.25C17.3761 2.25 21.75 6.62391 21.75 12C21.75 14.3578 20.9063 16.5234 19.5094 18.2109Z" fill="black"/>
             </svg>

@@ -2,3 +2,9 @@ node_modules
 utils/api_debug.log
 utils/cis_debug.log
 vendor/
+
+# Environment variables (NEVER commit!)
+.env
+
+# Log files
+*.log

@@ -1,8 +1,15 @@
 <?php
 
-define('SUPABASE_URL', 'https://orrfrdhhcoqtweftfdcl.supabase.co/rest/v1/');
-define('SUPABASE_KEY', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ycmZyZGhoY29xdHdlZnRmZGNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEzNTA5OTksImV4cCI6MjA2NjkyNjk5OX0.UIiBxoiZBK0KQst4Umwm2pjriUUzSc6Yasw4Igioc-o');
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/bootstrap.php';
+require_once __DIR__ . '/validator.php';
+require_once __DIR__ . '/csrf.php';
+require_once __DIR__ . '/rate-limiter.php';
+
+// Define constants from environment variables
+define('SUPABASE_URL', env('SUPABASE_URL', ''));
+define('SUPABASE_KEY', env('SUPABASE_KEY', ''));
+define('API_BASE_URL', env('HOTDEAL_API_URL'));
+define('ASSETS_PATH', env('HOTDEAL_ASSETS_PATH'));
 
 function log_api_request($method, $url, $data) {
     $log_file = __DIR__ . '/api_debug.log';
@@ -27,7 +34,7 @@ function fetch_from_api($method, $url, $data = false, $token = null) {
             curl_setopt($curl, CURLOPT_POST, true);
             if ($data) {
                 // Always send JSON to upstream API for POST
-                log_api_request($method, $url, $data);
+                //log_api_request($method, $url, $data);
                 $headers[] = 'Content-Type: application/json';
                 curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data, JSON_UNESCAPED_UNICODE));
             }
@@ -89,10 +96,6 @@ function fetch_from_api($method, $url, $data = false, $token = null) {
     return $decoded_result;
 }
 
-// --- Example API function ---
-// Replace with your actual API endpoint and logic
-define('API_BASE_URL', 'https://aswservice.com/hotdealapi');
-define('ASSETS_PATH', 'https://aswservice.com/hotdeal/');
 
 /**
  * Fetches hot deals from the API.
@@ -107,6 +110,12 @@ function get_units($params = array()) {
     // Set default sorting if not provided
     if (!isset($params['sortingUnit'])) {
         $params['sortingUnit'] = 'DESC';
+    }
+    if (!isset($params['page'])) {
+        $params['page'] = 1;
+    }
+    if (!isset($params['perPage'])) {
+        $params['perPage'] = 6;
     }
     return fetch_from_api('GET', $endpoint, $params);
 }
@@ -203,7 +212,7 @@ if (!empty($_REQUEST['action'])) {
                 }
 
                 // Also merge in known top-level filters if present
-                $known_filters = ['searchStr', 'projectIDs', 'locationIDs', 'sortingUnit'];
+                $known_filters = ['searchStr', 'projectIDs', 'locationIDs', 'sortingUnit', 'page', 'perPage'];
                 foreach ($known_filters as $filter_key) {
                     if (isset($_REQUEST[$filter_key]) && $_REQUEST[$filter_key] !== '') {
                         $params[$filter_key] = $_REQUEST[$filter_key];

@@ -2,6 +2,10 @@
 @source "./**/*.{php,html,js,css}";
 @plugin "daisyui";
 
+@theme {
+  --color-scheme: light;
+}
+
 :root {
   --color-primary: #123F6D;
   --color-secondary: #1B93FA;
@@ -94,4 +98,67 @@ p {
 }
 @keyframes l13{ 
   100%{transform: rotate(1turn)}
+}
+
+/* Custom select styling to match location dropdown */
+.select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' viewBox='0 0 24 24'%3e%3cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3e%3c/path%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+}
+
+/* Ensure select arrow works across browsers */
+.select::-ms-expand {
+  display: none;
+}
+
+/* Wrapper for select to ensure proper positioning */
+.select-wrapper {
+  position: relative;
+}
+
+.select-wrapper .select {
+  width: 100%;
+}
+
+.unit-box .unit-detail .highlight-tag {
+  font-size: 14px;
+  padding: 5px 15px;
+  top: -18px;
+  right: 10px;
+  font-weight: 400;
+  background-color: var(--color-accent);
+  color: #fff;
+  border-radius: 25px;
+  position: absolute;
+  z-index: 3;
+}
+
+@media (max-width: 520px) {
+  .unit-box .unit-detail .highlight-tag {
+    font-size: 12px;
+    padding: 5px 10px;
+    top: -15px;
+    right: 5px;
+  }
+}
+
+.select2-container .select2-search--inline .select2-search__field, .select2-container--default .select2-search--inline .select2-search__field {
+  font-family: 'DBHeavent', sans-serif;
+  font-size: 1rem;
+  height: 25px;
+}
+
+.span.select2.select2-container.select2-container--default {
+  max-width: 100%;
+}
+
+/* Prevent layout shift during content loading */
+#unitsContainer {
+  transition: min-height 0.3s ease;
 }
