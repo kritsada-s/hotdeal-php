@@ -8,3 +8,4 @@ vendor/
 
 # Log files
 *.log
+utils/cis_debug.log
