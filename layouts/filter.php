@@ -24,7 +24,6 @@ $locations = get_locations()['data'];
         <div class="border border-t-0 border-primary bg-white rounded-bl-lg rounded-br-lg px-2 py-4">
           <?php if (count($activeProjects) > 0) : ?>
             <select id="project_selector" class="w-full" name="projects[]" multiple>
-              <option value="">ทั้งหมด</option>
               <?php foreach ($activeProjects as $project) : ?>
                 <option value="<?= $project['projectID'] ?>"><?= $project['projectNameTH'] ?></option>
               <?php endforeach; ?>
@@ -42,7 +41,6 @@ $locations = get_locations()['data'];
         <div class="border border-t-0 border-primary bg-white rounded-bl-lg rounded-br-lg px-2 py-4">
           <?php if (count($locations) > 0) : ?>
             <select id="location_selector" class="w-full" name="locations[]" multiple>
-              <option value="">ทั้งหมด</option>
               <?php foreach ($locations as $location) : ?>
                 <option value="<?= $location['id'] ?>"><?= $location['name'] ?></option>
               <?php endforeach; ?>

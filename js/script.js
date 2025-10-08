@@ -67,6 +67,9 @@ $(document).ready(function() {
 
   projectSelector.on('select2:select', function(e) {
     //console.log('selected project : ', e.params.data.id);
+    // Skip empty values
+    if (!e.params.data.id || e.params.data.id === '') return;
+    
     let proj = projectsListed.val();
     if (proj) {
       proj = proj + ',' + e.params.data.id;
@@ -80,7 +83,7 @@ $(document).ready(function() {
     //console.log('unselected project : ', e.params.data.id);
     let proj = projectsListed.val();
     if (proj) {
-      const projArray = proj.split(',').filter(p => p !== e.params.data.id);
+      const projArray = proj.split(',').filter(p => p !== e.params.data.id && p !== '');
       projectsListed.val(projArray.join(','));
     }
   });
@@ -97,6 +100,9 @@ $(document).ready(function() {
 
   locationSelector.on('select2:select', function(e) {
     //console.log('selected locations : ', e.params.data.id);
+    // Skip empty values
+    if (!e.params.data.id || e.params.data.id === '') return;
+    
     let loc = locationsListed.val();
     if (loc) {
       loc = loc + ',' + e.params.data.id;
@@ -110,7 +116,7 @@ $(document).ready(function() {
     //console.log('unselected location : ', e.params.data.id);
     let loc = locationsListed.val();
     if (loc) {
-      const locArray = loc.split(',').filter(l => l !== e.params.data.id);
+      const locArray = loc.split(',').filter(l => l !== e.params.data.id && l !== '');
       locationsListed.val(locArray.join(','));
     }
   });
