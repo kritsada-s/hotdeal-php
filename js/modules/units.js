@@ -265,13 +265,11 @@ export function initUnitFilters() {
   const loadingAnimation = document.getElementById('loadingAnimation');
   const sortingUnit = document.getElementById('sortingUnit');
   const projectSelector = document.getElementById('project_selector');
-  const projectSelectorCheckboxes = document.querySelectorAll('.project-checkbox');
+  const projectsListed = document.getElementById('projectsListed');
   const locationInput = document.getElementById('location_selector');
   const locationsListed = document.getElementById('locationsListed');
   const searchBtn = document.getElementById('searchBtn');
   const searchForm = document.getElementById('searchForm');
-  let selectedProjects = [];
-  let selectedLocations = [];
   
   // Responsive helpers
   const isMobile = () => window.matchMedia('(max-width: 767px)').matches;
@@ -290,8 +288,7 @@ export function initUnitFilters() {
     currentPage = page;
     
     // Get current filter values
-    const selectedProjectCheckboxes = document.querySelectorAll('.project-checkbox:checked');
-    const project = Array.from(selectedProjectCheckboxes).map(cb => cb.value).join(',');
+    const project = projectsListed ? projectsListed.value : '';
     const locations = locationsListed ? locationsListed.value : '';
     const sort = sortingUnit ? sortingUnit.value : 'DESC';
     
@@ -378,12 +375,11 @@ export function initUnitFilters() {
   // Sorting change handler
   if (sortingUnit) {
     sortingUnit.addEventListener('change', async function() {
-      console.log('sorting: ', sortingUnit.value);
+      //console.log('sorting: ', sortingUnit.value);
       const sort = sortingUnit.value;
       
-      // Get selected projects from checkboxes
-      const selectedProjectCheckboxes = document.querySelectorAll('.project-checkbox:checked');
-      const project = Array.from(selectedProjectCheckboxes).map(cb => cb.value).join(',');
+      // Get selected projects
+      const project = projectsListed ? projectsListed.value : '';
       
       // Get selected locations
       const locations = locationsListed ? locationsListed.value : '';
@@ -473,39 +469,19 @@ export function initUnitFilters() {
     });
   }
 
-  // Project selector change handler
-  if (projectSelectorCheckboxes) {    
-    projectSelectorCheckboxes.forEach(checkbox => {
-      // Disable auto-change behavior on mobile
-      if (isMobile()) return;
-      
-      checkbox.addEventListener('change', function() {
-        if (this.checked) {
-          selectedProjects.push(this.value);
-        } else {
-          selectedProjects = selectedProjects.filter(project => project !== this.value);
-        }
-        const project = selectedProjects.join(',');
-        console.log('selected projects : ', project);
-        
-        // Trigger sorting update when projects change
-        if (sortingUnit) {
-          sortingUnit.dispatchEvent(new Event('change'));
-        }
-      });
-    });
-  }
+  // Project selector change handler (Select2)
+  // Note: Select2 events are handled in script.js
+  // The hidden input projectsListed is updated by Select2 events
 
   // Search button handler
   if (searchBtn) {
     searchBtn.addEventListener('click', function() {
-      console.log('project: ', selectedProjects);
-      console.log('locations: ', locationsListed ? locationsListed.value : '');
-      console.log('sorting: ', sortingUnit ? sortingUnit.value : '');
+      //console.log('project: ', projectsListed ? projectsListed.value : '');
+      //console.log('locations: ', locationsListed ? locationsListed.value : '');
+      //console.log('sorting: ', sortingUnit ? sortingUnit.value : '');
       
       // Get current filter values
-      const selectedProjectCheckboxes = document.querySelectorAll('.project-checkbox:checked');
-      const project = Array.from(selectedProjectCheckboxes).map(cb => cb.value).join(',');
+      const project = projectsListed ? projectsListed.value : '';
       const locations = locationsListed ? locationsListed.value : '';
       const sort = sortingUnit ? sortingUnit.value : 'DESC';
       
@@ -653,7 +629,7 @@ export function initUnitFilters() {
             page: 1, // Reset to first page when searching
             perPage: itemsPerPage
           }, async function(response) {
-            console.log('API Response:', response); // Debug log
+            //console.log('API Response:', response); // Debug log
             
             // Extract pagination data from various possible response structures
             const units = response.data?.units || response.units || [];
@@ -667,7 +643,7 @@ export function initUnitFilters() {
               loadPageCallback: loadPage
             };
             
-            console.log('Pagination Data:', paginationData); // Debug log
+            //console.log('Pagination Data:', paginationData); // Debug log
             await renderUnits(units, unitsContainer, loadingAnimation, paginationData);
             
             // Remove min-height after content is rendered

@@ -53,7 +53,7 @@ export function initHeroBanners() {
 export function initUnitDetailGalleries() {
   // Main gallery swiper
   if (document.getElementById('mainGallerySwiper')) {
-    console.log('Initializing main gallery swiper');
+    //console.log('Initializing main gallery swiper');
     
     new Swiper('#mainGallerySwiper', {
       loop: true,

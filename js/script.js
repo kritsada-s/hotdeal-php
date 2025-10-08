@@ -51,20 +51,52 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize animations
   initAnimations();
 
-  console.log('✅ Application Initialized Successfully');
+  //console.log('✅ Application Initialized Successfully');
 });
 
 $(document).ready(function() {
+  // Initialize Project Selector
+  const projectSelector = $('#project_selector');
+  const projectsListed = $('#projectsListed');
+  if (projectSelector.length) {
+    projectSelector.select2({
+      allowClear: true,
+      placeholder: 'พิมพ์เพื่อเลือก...',
+    });
+  }
+
+  projectSelector.on('select2:select', function(e) {
+    //console.log('selected project : ', e.params.data.id);
+    let proj = projectsListed.val();
+    if (proj) {
+      proj = proj + ',' + e.params.data.id;
+    } else {
+      proj = e.params.data.id;
+    }
+    projectsListed.val(proj);
+  });
+
+  projectSelector.on('select2:unselect', function(e) {
+    //console.log('unselected project : ', e.params.data.id);
+    let proj = projectsListed.val();
+    if (proj) {
+      const projArray = proj.split(',').filter(p => p !== e.params.data.id);
+      projectsListed.val(projArray.join(','));
+    }
+  });
+
+  // Initialize Location Selector
   const locationSelector = $('#location_selector');
   const locationsListed = $('#locationsListed');
-  if (locationSelector) {
+  if (locationSelector.length) {
     locationSelector.select2({
+      allowClear: true,
       placeholder: 'พิมพ์เพื่อเลือก...',
     });
   }
 
   locationSelector.on('select2:select', function(e) {
-    console.log('selected locations : ', e.params.data.id);
+    //console.log('selected locations : ', e.params.data.id);
     let loc = locationsListed.val();
     if (loc) {
       loc = loc + ',' + e.params.data.id;
@@ -72,6 +104,15 @@ $(document).ready(function() {
       loc = e.params.data.id;
     }
     locationsListed.val(loc);
+  });
+
+  locationSelector.on('select2:unselect', function(e) {
+    //console.log('unselected location : ', e.params.data.id);
+    let loc = locationsListed.val();
+    if (loc) {
+      const locArray = loc.split(',').filter(l => l !== e.params.data.id);
+      locationsListed.val(locArray.join(','));
+    }
   });
 });
 

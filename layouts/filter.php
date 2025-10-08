@@ -20,18 +20,19 @@ $locations = get_locations()['data'];
         <div class="border bg-primary border-primary text-white rounded-tl-lg rounded-tr-lg p-4 leading-none">
           <span class="font-medium text-[18px]">เลือกดูตามโครงการ</span>
         </div>
-        <?php if (count($activeProjects) > 0) : ?>
-          <div id="projectSelectorList" class="border border-t-0 border-primary bg-white rounded-bl-lg rounded-br-lg px-2 py-4 h-[400px] lg:h-auto overflow-y-auto">
-            <?php foreach ($activeProjects as $project) : ?>
-              <label class="flex lg:items-center gap-2 p-2 hover:bg-neutral-50 cursor-pointer">
-                <input type="checkbox" class="project-checkbox w-4 h-4 mt-[3px]" value="<?= $project['projectID'] ?>">
-                <span class="text-[13px] lg:text-[16px]"><?= $project['projectNameTH'] ?></span>
-              </label>
-            <?php endforeach; ?>
-          </div>
-        <?php else : ?>
-          <span class="text-sm">ไม่มีโครงการ</span>
-        <?php endif; ?>
+        <input type="hidden" id="projectsListed" name="projectsListed" value="">
+        <div class="border border-t-0 border-primary bg-white rounded-bl-lg rounded-br-lg px-2 py-4">
+          <?php if (count($activeProjects) > 0) : ?>
+            <select id="project_selector" class="w-full" name="projects[]" multiple>
+              <option value="">ทั้งหมด</option>
+              <?php foreach ($activeProjects as $project) : ?>
+                <option value="<?= $project['projectID'] ?>"><?= $project['projectNameTH'] ?></option>
+              <?php endforeach; ?>
+            </select>
+          <?php else : ?>
+            <span class="text-sm">ไม่มีโครงการ</span>
+          <?php endif; ?>
+        </div>
       </div>
       <div class="flex flex-col w-full">
         <div class="border bg-primary border-primary text-white rounded-tl-lg rounded-tr-lg p-4 leading-none">

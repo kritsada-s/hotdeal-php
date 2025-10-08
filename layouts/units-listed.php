@@ -71,7 +71,7 @@ $totalPages = isset($data['totalPages']) ? (int)$data['total'] : max(1, (int)cei
                   <span class="mx-2">หน้า</span>
                   <span>(</span>
                   <span id="totalItemsInfo"><?php echo $totalItems; ?></span>
-                  <span>รายการ)</span>
+                  <span>รายการ )</span>
                 </div>
                 
                 <!-- Pagination Controls -->
